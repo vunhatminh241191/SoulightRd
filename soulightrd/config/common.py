@@ -36,27 +36,12 @@ TEMPLATE_DEBUG = DEBUG
 ########## MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Your Name', 'your_email@example.com'),
+    ('Dang Nguyen', 'dangnguyen_1712@yahoo.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 ########## END MANAGER CONFIGURATION
-
-
-########## DATABASE CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
-########## END DATABASE CONFIGURATION
 
 
 ########## GENERAL CONFIGURATION
@@ -132,6 +117,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    'django_mobile.context_processors.flavour',
+    'allauth.account.context_processors.account',
+    "allauth.socialaccount.context_processors.socialaccount",
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -142,7 +130,11 @@ TEMPLATE_LOADERS = (
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_DIRS = (
-    normpath(join(DJANGO_ROOT, 'templates')),
+    normpath(join(DJANGO_ROOT, 'assets/templates')),
+    normpath(join(DJANGO_ROOT, 'assets/templates/web')),
+    normpath(join(DJANGO_ROOT, 'assets/templates/mobile')),
+    normpath(join(DJANGO_ROOT, 'assets/templates/web/auth')),
+    normpath(join(DJANGO_ROOT, 'assets/templates/mobile/auth')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -188,6 +180,12 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
+    # Allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    
     # Database migration helpers:
     'south',
 
@@ -196,6 +194,9 @@ THIRD_PARTY_APPS = (
 
     # Asynchronous task queue:
     'djcelery',
+    
+    # Others
+    'django_mobile'
 )
 
 LOCAL_APPS = (
@@ -213,41 +214,82 @@ LOCAL_APPS = (
     "soulightrd.apps.search",
 )
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-########## END APP CONFIGURATION
 
 
-########## LOGGING CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'filters': {
-    'require_debug_false': {
-        '()': 'django.utils.log.RequireDebugFalse'
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
         }
     },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
     'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+        'console':{
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'console': {
+        'logfile_soulightrd': {
             'level': 'DEBUG',
-            'class': 'logging.StreamHandler'
-        }
+            'class': 'logging.FileHandler',
+            'filename':  os.path.join(ROOT_PATH, "logs/soulightrd.log"),
+        }, 
+        'logfile_dajaxice': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename':  os.path.join(ROOT_PATH, "logs/dajaxice.log"),
+        }, 
+        'logfile_facebook': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename':  os.path.join(ROOT_PATH, "logs/django_facebook.log"),
+        },
+
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins', 'console'],
-            'level': 'ERROR',
+        'django': {
+            'handlers': ['null'],
             'propagate': True,
+            'level': 'INFO',
         },
-    }
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'dajaxice': {
+            'handlers': ['logfile_dajaxice'],
+            'level': 'ERROR',
+        },
+        'django_facebook':{
+            'handlers': ['logfile_facebook'],
+            'level': 'DEBUG',
+        },
+        'soulightrd': {
+            'handlers': ['logfile_soulightrd'],
+            'level': 'ERROR',
+        },
+    }, 
 }
-########## END LOGGING CONFIGURATION
 
 
 ########## CELERY CONFIGURATION
@@ -285,3 +327,47 @@ COMPRESS_JS_FILTERS = [
     'compressor.filters.template.TemplateFilter',
 ]
 ########## END COMPRESSION CONFIGURATION
+
+
+
+AUTH_PROFILE_MODULE = 'main.UserProfile'
+
+SERIALIZATION_MODULES = {
+    'json': "django.core.serializers.json",
+}
+
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend', 
+)
+
+ACCOUNT_ACTIVATION_DAYS = 7
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_PASSWORD_MIN_LENGTH = 4
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+
+#HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+#HAYSTACK_DEFAULT_OPERATOR = 'OR'
+
+LOGIN_URL = '/accounts/login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "/?action=confirm_email&result=success"
+ACCOUNT_USERNAME_BLACKLIST = KEYWORDS_URL
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[SoulightRd]"
+ACCOUNT_ADAPTER = "frittie.apps.auth.adapters.CustomAccountAdapter"
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['email', 'publish_stream',"user_about_me","user_birthday","user_location","user_events","user_friends","read_friendlists"],
+        'METHOD': 'js_sdk',
+        'VERIFIED_EMAIL': False
+    }
+}
+
+SOCIALACCOUNT_ADAPTER = "frittie.apps.auth.adapters.CustomSocialAccountAdapter"

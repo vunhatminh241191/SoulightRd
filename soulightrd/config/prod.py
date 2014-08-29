@@ -135,3 +135,13 @@ SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 ALLOWED_HOSTS = ['.herokuapp.com']
 ########## END ALLOWED HOST CONFIGURATION
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}
