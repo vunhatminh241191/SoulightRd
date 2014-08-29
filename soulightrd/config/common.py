@@ -112,11 +112,8 @@ STATICFILES_FINDERS = (
 
 ########## SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = r"chbrc3p7q%g9e80a(&bm$ci6ygdc_ak99q6ep90!#evq7yc@@@"
-########## END SECRET CONFIGURATION
+SECRET_KEY = "chbrc3p7q%g9e80a(&bm$ci6ygdc_ak99q6ep90!#evq7yc@@@"
 
-
-########## FIXTURE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
     normpath(join(DJANGO_ROOT, 'fixtures')),
@@ -202,6 +199,18 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
+    "soulightrd.apps.about",
+    "soulightrd.apps.auth",
+    "soulightrd.apps.explore",
+    "soulightrd.apps.mailer",
+    "soulightrd.apps.main",
+    "soulightrd.apps.member",
+    "soulightrd.apps.message",
+    "soulightrd.apps.notification",
+    "soulightrd.apps.organization",
+    "soulightrd.apps.payment",
+    "soulightrd.apps.project",
+    "soulightrd.apps.search",
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
