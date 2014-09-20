@@ -9,9 +9,9 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 from django.contrib.auth.models import User
 
-from frittie.apps.main.models import Photo
-from frittie.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
-from frittie.apps.app_helper import get_any_admin_object, generate_unique_id
+from soulightrd.apps.main.models import Photo
+from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
+from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 
 
 names = ["Smith","Anderson","Clark","Wright","Mitchell","Johnson","Thomas","Rodriguez","Lopez","Perez","Williams","Jackson","Lewis","Hill","Roberts","Jones","White","Lee","Scott","Turner","Brown","Harris","Walker","Green","Phillips","Davis","Martin","Hall","Adams","Campbell","Miller","Thompson","Allen","Baker","Parker","Wilson","Garcia","Young","Gonzalez","Evans","Moore","Martinez","Hernandez","Nelson","Edwards","Taylor","Robinson","King","Carter","Collin"]
@@ -34,8 +34,8 @@ def main():
 		i = 0
 		for name in names:
 			i = i + 1 
-			test_email = "test"+str(i)+"@frittie.com"
-			user = User.objects.create_user(name.lower(),test_email, 'frittie4success')
+			test_email = "test"+str(i)+"@soulightrd.com"
+			user = User.objects.create_user(name.lower(),test_email, 'soulightrd4success')
 			user.first_name = name 
 			user.save()
 			user.get_profile().avatar = avatar
@@ -48,5 +48,5 @@ def main():
 
 if __name__ == "__main__":
 	stage = sys.argv[1]
-	if stage != "prod" and len(User.objects.filter(email='test1@frittie.com')) == 0: 
+	if stage != "prod" and len(User.objects.filter(email='test1@soulightrd.com')) == 0: 
 		main()

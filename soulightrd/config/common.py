@@ -1,27 +1,20 @@
 """Common settings and globals."""
-
+import os
 
 from datetime import timedelta
 from os.path import abspath, basename, dirname, join, normpath
+from os import environ
 from sys import path
+
+from django.utils.translation import ugettext_lazy as _
 
 from djcelery import setup_loader
 
+ROOT_PATH = os.path.dirname(__file__)
+path.append(ROOT_PATH)
 
-########## PATH CONFIGURATION
-# Absolute filesystem path to the Django project directory:
-DJANGO_ROOT = dirname(dirname(abspath(__file__)))
-
-# Absolute filesystem path to the top-level project folder:
-SITE_ROOT = dirname(DJANGO_ROOT)
-
-# Site name:
-SITE_NAME = basename(DJANGO_ROOT)
-
-# Add our project to our pythonpath, this way we don't need to type our project
-# name in our dotted import paths:
-path.append(DJANGO_ROOT)
-########## END PATH CONFIGURATION
+SITE_NAME = os.path.basename(ROOT_PATH)
+SITE_DOMAIN = SITE_NAME + ".com"
 
 
 ########## DEBUG CONFIGURATION
@@ -39,10 +32,24 @@ ADMINS = (
     ('Dang Nguyen', 'dangnguyen_1712@yahoo.com'),
 )
 
+ADMINS_USERNAME = (
+    "dtn29",
+    "dtn1712",
+)
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 ########## END MANAGER CONFIGURATION
 
+MANDRILL_API_KEY = environ.get("MANDRILL_API_KEY") 
+SERVER_EMAIL=environ.get('SERVER_EMAIL')
+
+EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
+EMAIL_HOST = 'smtp.mandrillapp.com'
+EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD')
+
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 ########## GENERAL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
@@ -67,7 +74,7 @@ USE_TZ = True
 
 ########## MEDIA CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
+MEDIA_ROOT = os.path.join(ROOT_PATH, 'assets/media')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
@@ -76,14 +83,11 @@ MEDIA_URL = '/media/'
 
 ########## STATIC FILE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = normpath(join(DJANGO_ROOT, 'static'))
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(ROOT_PATH, 'assets/static')
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
-    normpath(join(DJANGO_ROOT, 'assets')),
+    os.path.join(ROOT_PATH, 'assets/static'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -101,7 +105,7 @@ SECRET_KEY = "chbrc3p7q%g9e80a(&bm$ci6ygdc_ak99q6ep90!#evq7yc@@@"
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
-    normpath(join(DJANGO_ROOT, 'fixtures')),
+    os.path.join(ROOT_PATH, 'fixtures'),
 )
 ########## END FIXTURE CONFIGURATION
 
@@ -130,29 +134,13 @@ TEMPLATE_LOADERS = (
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_DIRS = (
-    normpath(join(DJANGO_ROOT, 'assets/templates')),
-    normpath(join(DJANGO_ROOT, 'assets/templates/web')),
-    normpath(join(DJANGO_ROOT, 'assets/templates/mobile')),
-    normpath(join(DJANGO_ROOT, 'assets/templates/web/auth')),
-    normpath(join(DJANGO_ROOT, 'assets/templates/mobile/auth')),
+    os.path.join(ROOT_PATH, 'assets/templates'),
+    os.path.join(ROOT_PATH, 'assets/templates/web'),
+    os.path.join(ROOT_PATH, 'assets/templates/mobile'),
+    os.path.join(ROOT_PATH, 'assets/templates/web/auth'),
+    os.path.join(ROOT_PATH, 'assets/templates/mobile/auth'),
 )
 ########## END TEMPLATE CONFIGURATION
-
-
-########## MIDDLEWARE CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
-MIDDLEWARE_CLASSES = (
-    # Use GZip compression to reduce bandwidth.
-    'django.middleware.gzip.GZipMiddleware',
-
-    # Default Django middleware.
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-)
-########## END MIDDLEWARE CONFIGURATION
 
 
 ########## URL CONFIGURATION
@@ -196,7 +184,10 @@ THIRD_PARTY_APPS = (
     'djcelery',
     
     # Others
-    'django_mobile'
+    'django_mobile',
+    "cities_light",
+    "djmoney",
+    'profiler',
 )
 
 LOCAL_APPS = (
@@ -358,9 +349,12 @@ LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "/?action=confirm_email&result=success"
-ACCOUNT_USERNAME_BLACKLIST = KEYWORDS_URL
+
+# from soulightrd.apps.app_settings import KEYWORDS_URL
+# ACCOUNT_USERNAME_BLACKLIST = KEYWORDS_URL
+
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[SoulightRd]"
-ACCOUNT_ADAPTER = "frittie.apps.auth.adapters.CustomAccountAdapter"
+ACCOUNT_ADAPTER = "soulightrd.apps.auth.adapters.CustomAccountAdapter"
 
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
@@ -370,4 +364,17 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SOCIALACCOUNT_ADAPTER = "frittie.apps.auth.adapters.CustomSocialAccountAdapter"
+CITIES_FILES = {
+    'city': {
+       'filename': 'cities1000.zip',
+       'urls':     ['http://download.geonames.org/export/dump/'+'{filename}']
+    },
+}
+
+SOCIALACCOUNT_ADAPTER = "soulightrd.apps.auth.adapters.CustomSocialAccountAdapter"
+
+SOCIAL_FRIENDS_USING_ALLAUTH = True
+
+MAX_MANDRILL_EMAIL_ALLOW = 12000
+
+OW_LY_API_KEY = "6sv891CJpDcuiz8eyRHfy"

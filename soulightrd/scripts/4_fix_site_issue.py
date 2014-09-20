@@ -3,8 +3,8 @@ import sys,os
 SETTING_PATH = os.path.abspath(__file__ + "/../../")
 PROJECT_PATH = os.path.abspath(__file__ + "/../../../")
 
-PROJECT_NAME = "frittie"
-PROJECT_DOMAIN = "frittie.com"
+PROJECT_NAME = "soulightrd"
+PROJECT_DOMAIN = "soulightrd.com"
 
 sys.path.append(SETTING_PATH)
 sys.path.append(PROJECT_PATH)

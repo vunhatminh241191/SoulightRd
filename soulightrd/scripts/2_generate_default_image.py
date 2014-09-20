@@ -8,9 +8,9 @@ sys.path.append(SETTING_PATH)
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from frittie.apps.main.models import Photo
-from frittie.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
-from frittie.apps.app_helper import get_any_admin_object, generate_unique_id
+from soulightrd.apps.main.models import Photo
+from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
+from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 from django import db
 
 def main():

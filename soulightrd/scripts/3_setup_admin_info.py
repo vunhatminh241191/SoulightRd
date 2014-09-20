@@ -16,8 +16,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 from django.contrib.auth.models import User
 
-from frittie.apps.main.models import UserProfile, Photo
-from frittie.apps.app_settings import DEFAULT_IMAGE_UNIQUE_ID
+from soulightrd.apps.main.models import UserProfile, Photo
+from soulightrd.apps.app_settings import DEFAULT_IMAGE_UNIQUE_ID
 
 from django import db  
       

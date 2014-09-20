@@ -1,7 +1,7 @@
 import urllib
 
-DAJAXICE_LINK = "https://frittie.s3.amazonaws.com/dajaxice/dajaxice.core.js"
-DAJAXICE_DOWNLOAD_PLACE = "frittie/assets/static/js/dajaxice.core.js"
+DAJAXICE_LINK = "https://soulightrd.s3.amazonaws.com/dajaxice/dajaxice.core.js"
+DAJAXICE_DOWNLOAD_PLACE = "soulightrd/assets/static/js/dajaxice.core.js"
 
 def main():
 	print "...DOWNLOADING DAJAIXCE SCRIPT..."

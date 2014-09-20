@@ -8,7 +8,7 @@ sys.path.append(PROJECT_ROOT)
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from frittie.settings import FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, FACEBOOK_PROVIDER, FACEBOOK_APP_NAME
+from soulightrd.settings import FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, FACEBOOK_PROVIDER, FACEBOOK_APP_NAME
 
 from allauth.socialaccount.models import SocialApp
 

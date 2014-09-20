@@ -1,6 +1,6 @@
 import sys, shutil, os
 
-PROJECT_PATH = "frittie"
+PROJECT_PATH = "soulightrd"
 
 def setupConfig(stage): 
 	common = PROJECT_PATH + "/config/common.py"

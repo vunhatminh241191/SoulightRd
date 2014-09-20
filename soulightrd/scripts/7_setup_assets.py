@@ -1,7 +1,7 @@
 import sys,os, shutil
 
 PROJECT_PATH = os.path.abspath(__file__ + "/../../")
-PROJECT_NAME = "frittie"
+PROJECT_NAME = "soulightrd"
 
 CATALOGUE = "CATALOGUE"
 COMMENT_CHARACTER = "<!--"
