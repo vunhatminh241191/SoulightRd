@@ -182,18 +182,24 @@ THIRD_PARTY_APPS = (
 
     # Asynchronous task queue:
     'djcelery',
+
+    # Search
+    "haystack",
     
     # Others
+    "dajaxice",
     'django_mobile',
     "cities_light",
     "djmoney",
     'profiler',
+    "djrill",
+    'sorl.thumbnail'
 )
 
 LOCAL_APPS = (
     "soulightrd.apps.about",
     "soulightrd.apps.auth",
-    "soulightrd.apps.explore",
+    "soulightrd.apps.discover",
     "soulightrd.apps.mailer",
     "soulightrd.apps.main",
     "soulightrd.apps.member",

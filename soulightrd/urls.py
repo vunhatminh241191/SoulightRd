@@ -20,17 +20,16 @@ urlpatterns = patterns('',
     url(r'^accounts/', include("soulightrd.apps.auth.urls")),
 
     # Haystack app URL
-    #url(r'^search/', include("soulightrd.apps.search.urls")),
+    url(r'^search/', include("soulightrd.apps.search.urls")),
 
     # soulightrd URL
     url(r'^$', include('soulightrd.apps.main.urls')),
     url(r'^settings/$','soulightrd.apps.member.views.settings_page',name="account_settings"),
 
-    url(r'^discover/',include('soulightrd.apps.explore.urls')),
+    url(r'^discover/',include('soulightrd.apps.discover.urls')),
     url(r'^about/',include('soulightrd.apps.about.urls')),
     url(r"^notification/",include("soulightrd.apps.notification.urls")),
     url(r'^messages/',include('soulightrd.apps.message.urls')),
-    url(r'^friends/',include('soulightrd.apps.friend.urls')),
     url(r'^people/(?P<username>\w+)/',include('soulightrd.apps.member.urls')),
 
     # Error page
