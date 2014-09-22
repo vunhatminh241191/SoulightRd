@@ -20,15 +20,9 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Setup ###
 
-
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* Step 1 - create virtual environment for the project: virtualenv venv-soulightrd
+* Step 2 - source the virtual environment: source venv-soulightd/bin/activate
+* Step 3 - install dependencies: pip install -r reqs/dev.txt. Note: you might need to install python-dev and libxml to be able to install dependency lxml ( apt-get install libxml2-dev libxslt1-dev python-dev). Use google if you failed to install some dependency. The problem is just missing some library package.
+* Step 4 - build the configuration: python build.py dev. The build.py script is written to ease the process of adding support script. It basically run all the script file in the folder soulightrd/scripts. You can always add your own script in the file CATALOGUE. Currently, the scripts contain code to build the final settings.py file (combine common.py configuration and the stage configuration file), and also script for dev ops and minimize static file.
+* Step 5 - setup database: python manage.py syncdb && python manage.py migrate allauth.socialaccount && python manage.py migrate allauth.socialaccount.providers.facebook && python manage.py migrate djcelery && python manage.py migrate cities_light && python manage.py migrate main ( For the migrate command, you can view the migration line in Procfile)
+* Step 6 - run the server: for dev, python manage.py runserver
