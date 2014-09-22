@@ -259,13 +259,21 @@ class Project(models.Model):
 
 class ProjectActivity(models.Model):
 	title = models.CharField(max_length=100)
+	project = models.ForeignKey(Project,related_name='project_activity')
 	description = models.TextField()
 	responsible_member = models.ForeignKey(User,related_name='project_activity_responsible_member')
 	image_proof = models.ManyToManyField(Photo,related_name='project_activity_image_proof',blank=True,null=True)
 	date = models.DateTimeField()
 
-class Payment(models.Model):
-	user = models.ForeignKey(User,related_name='payment_user')
+class Volunteer(models.Model):
+	user = models.ForeignKey(User,related_name='volunteer_user')
+	project = models.ForeignKey(Project,related_name='volunteer_project')
+	is_signed_confirmation = models.BooleanField()
+	register_date = models.DateTimeField(auto_now_add=True)
+
+class Donation(models.Model):
+	user = models.ForeignKey(User,related_name='donation_user')
+	project = models.ForeignKey(Project,related_name='donation_project')
 	amount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
 	transaction_date = models.DateTimeField(auto_now_add=True)
 
