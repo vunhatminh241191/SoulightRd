@@ -18,6 +18,10 @@ This README would normally document whatever steps are necessary to get your app
 
 * Dependencies: View folder reqs. There are common dependencies and also dependencies for dev stage and prod stage
 
+### Setup ###
+
+
+
 ### Contribution guidelines ###
 
 * Writing tests
