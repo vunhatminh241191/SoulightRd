@@ -12,7 +12,7 @@ This README would normally document whatever steps are necessary to get your app
 
 * OS: Linux-based. No Window support.
 
-* Requirement: python-pip (**sudo apt-get install python-pip** for Linux or sudo easy_install pip for Mac), virtualenv (**pip install virtualenv**)
+* Requirement: python-pip (**sudo apt-get install python-pip** for Linux or **sudo easy_install pip** for Mac), virtualenv (**pip install virtualenv**)
 
 * Configuration: View folder soulightrd/config. There are common configuration for all stages and separate configuration for each stage (dev and prod).  
 
