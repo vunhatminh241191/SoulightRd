@@ -8,24 +8,15 @@ This README would normally document whatever steps are necessary to get your app
 
 * Version: 1.0
 
-### How do I get set up? ###
+### Before set up? ###
 
 * OS: Linux-based. No Window support.
 
-* Requirement: python-pip, virtualenv
+* Requirement: python-pip (sudo apt-get install python-pip for Linux or sudo easy_install pip for Mac), virtualenv (pip install virtualenv)
 
-* Install python-pip: sudo apt-get install python-pip
-
-* Configuration
+* Configuration: View folder soulightrd/config. There are common configuration for all stages and separate configuration for each stage (dev and prod).  
 
 * Dependencies: View folder reqs. There are common dependencies and also dependencies for dev stage and prod stage
-
-* Database configuration
-C
-* How to run tests
-No documents
-
-* Deployment instructions
 
 ### Contribution guidelines ###
 
