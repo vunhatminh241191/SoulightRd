@@ -5,6 +5,7 @@ This README would normally document whatever steps are necessary to get your app
 ### What is this repository for? ###
 
 * Quick summary
+
 SoulightRd is a web application that helps non-profit organization to crowd-funding their projects. 
 
 * Version: 1.0
