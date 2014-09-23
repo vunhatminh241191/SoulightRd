@@ -59,6 +59,7 @@ python-dateutil==2.1
 python-openid==2.2.5
 pytz==2014.4
 queuelib==1.0
+redis==2.10.3
 requests==1.2.3
 requests-oauthlib==0.4.0
 shortuuid==0.4.2
