@@ -1,0 +1,13 @@
+<!-- Define the order of the global plugin css -->
+
+bootstrap.css
+bootstrap-formhelpers.css
+bootstrap-tagsinput.css
+<!-- bootstrap-theme.min.css -->
+jquery-ui-1.10.4.custom.min.css
+font-awesome.css
+datepicker3.css
+nprogress.css
+
+<!-- jquery.mCustomScrollbar.css -->
+<!-- jquery.rollbar.css -->

@@ -8,6 +8,8 @@ from S3 import CallingFormat
 
 STAGE = "prod"
 
+WEBSITE_HOMEPAGE = "http://www.soulightrd.org"
+
 MIDDLEWARE_CLASSES = (
     # Use GZip compression to reduce bandwidth.
     'django.middleware.gzip.GZipMiddleware',

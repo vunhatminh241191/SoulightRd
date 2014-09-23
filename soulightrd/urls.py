@@ -30,6 +30,8 @@ urlpatterns = patterns('',
     url(r'^about/',include('soulightrd.apps.about.urls')),
     url(r"^notification/",include("soulightrd.apps.notification.urls")),
     url(r'^messages/',include('soulightrd.apps.message.urls')),
+    url(r'^organization/',include('soulightrd.apps.organization.urls')),
+    url(r'^project/',include('soulightrd.apps.project.urls')),
     url(r'^people/(?P<username>\w+)/',include('soulightrd.apps.member.urls')),
 
     # Error page

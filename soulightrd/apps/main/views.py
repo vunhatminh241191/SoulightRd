@@ -6,8 +6,9 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.utils import simplejson, timezone
 from django.core import serializers
 
-
 import json, logging, datetime
+
+logger = logging.getLogger(__name__)
 
 APP_NAME = "main"
 

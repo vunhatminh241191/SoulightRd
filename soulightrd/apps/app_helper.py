@@ -215,8 +215,8 @@ def is_str_unique_id(s):
 
 def get_template_path(app_name,template_name,flavour):
 	if flavour == None:
-		return "apps/web/" + app_name + "/page/" + template_name + ".html"
+		return "sites/non-responsive/apps/" + app_name + "/page/" + template_name + ".html"
 	else:
-		prefix = "mobile" if flavour == "mobile" else "web"
-		return "apps/" + app_name + "/page/" + prefix + "/" + template_name + ".html"
+		prefix = "responsive" if flavour == "mobile" else "non-responsive"
+		return "sites/" + prefix + "/apps/" + app_name + "/page/" + template_name + ".html"
 
