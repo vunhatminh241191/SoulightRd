@@ -1,0 +1,102 @@
+{% extends "apps/auth/auth_base.html" %}
+
+{% load socialaccount %}
+{% load i18n %}
+{% block header_scripts %}
+    {% providers_media_js %}
+{% endblock %}
+
+{% block main_section %}
+            <div class="register-section">
+                <div class="register-header row">
+                   <div class="header-text extra-large-text large-margin-left pull-left">
+                        {% trans "Signup" %}
+                    </div>
+                    <div class="join-fb pull-right large-margin-right small-margin-bottom">
+                       <a href="{% provider_login_url "facebook" method="js_sdk" %}">
+                            <input src="{{STATIC_URL}}img/apps/account/signin-fb-btn.png" type="image" class="small-margin-top" alt="Signin with Facebook">
+                        </a>
+                    </div>
+                </div>
+                <div class="register-content row">
+                     <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">{% csrf_token %}
+                        <div class='non-field-error row'>
+                            {{ form.non_field_errors }}
+                        </div>
+                        <div class="name-section row">
+                            <div class="firstname-field pull-left">
+                                <label for="id_first_name" class="bold small-margin-bottom">
+                                    {% trans "First Name" %}
+                                </label>
+                                {{ form.first_name.errors }}
+                                <div class="input-field">
+                                    {{form.first_name}}
+                                </div>
+                            </div>
+                            <div class="lastname-field pull-right">
+                                <label for="id_last_name" class="bold small-margin-bottom">
+                                    {% trans "Last Name" %}
+                                </label>
+                                {{form.last_name.errors}}
+                                <div class="input-field">
+                                    {{form.last_name}}                                
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="password-section medium-margin-top row">
+                            <div class="password-field pull-left">
+                                <label for="id_password1" class="bold small-margin-bottom">
+                                    {% trans "Password" %}
+                                </label>
+                                {{form.password1.errors}}
+                                <div class="input-field">
+                                    {{form.password1}}
+                                </div>
+                            </div>
+                            <div class="confirm-password-field pull-right">
+                                <label for="id_password2" class="bold small-margin-bottom">
+                                    {% trans "Confirm Password" %}
+                                </label>
+                                {{form.password2.errors}}
+                                <div class="input-field">
+                                    {{form.password2}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="email-gender-section medium-margin-top row">
+                            <div class="email-field pull-left">
+                                <label for="id_email" class="bold small-margin-bottom">
+                                    {% trans "Email" %}
+                                </label>
+                                {{form.email.errors}}
+                                <div class="input-field">
+                                    {{form.email}}
+                                </div>
+                            </div>
+                            <div class="gender-section pull-left">
+                                <label for="id_gender" class="bold small-margin-bottom">
+                                    {% trans "Gender" %}
+                                </label>
+                                {{form.gender.errors}}
+                                <div class="input-field">
+                                    {{form.gender}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="complete-section medium-margin-top row">
+                            <div class='left-content pull-left'>
+                                <div class="register-btn pull-right">
+                                    <button id="register_btn" class="btn btn-warning btn-sm" alt="Register">{% trans "Register" %}</button>
+                                </div>
+                            </div>
+                            <div class="right-content pull-right">
+                                {% trans "Already a member?" %} <a href="{% url 'account_login' %}"> {% trans "Sign In" %} </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% endblock %}

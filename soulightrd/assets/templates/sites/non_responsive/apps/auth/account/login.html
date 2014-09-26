@@ -1,0 +1,71 @@
+{% extends "apps/auth/auth_base.html" %}
+{% load i18n %}
+{% load socialaccount %}
+
+{% block header_scripts %}
+	{% providers_media_js %}
+{% endblock %}
+
+{% block main_section %}
+<div class="signin-section">
+	<div class="signin-header row">
+		<div class="header-text extra-large-text large-margin-left pull-left">
+			{% trans "Sign In" %}
+		</div>
+		<div class="signin-fb pull-right large-margin-right small-margin-bottom">
+			<a href="{% provider_login_url "facebook" method="js_sdk" %}">
+				<input src="{{STATIC_URL}}img/apps/account/signin-fb-btn.png" class="small-margin-top" type="image" alt="Signin with Facebook">
+			</a>
+		</div>
+	</div>
+	<div class="signin-content row large-margin">
+		 <form class="login" id="login_form" method="post" action="{% url 'account_login' %}">{% csrf_token %}
+			<div class='non-field-error row'>
+                {{ form.non_field_errors }}
+            </div>
+			<div class="email-password-section row">
+				<div class="email-field pull-left small-margin-left">
+					<label for="id_login" class="bold small-margin-bottom">
+						{% trans "Email" %}
+					</label>
+					{{form.login.errors}}
+					<div class="input-field">
+						{{form.login}}
+					</div>
+				</div>
+				<div class="password-field pull-left extra-large-margin-left">
+					<label for="id_password" class="bold small-margin-bottom">
+						{% trans "Password" %}
+					</label>
+					{{form.password.errors}}
+					<div class="input-field">
+						{{form.password}}
+					</div>
+				</div>
+			</div>
+			<div class="complete-section medium-margin-top small-margin-right row">
+				 {% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+				{% endif %}
+				<div class="signin-btn pull-right">
+					<button id="signin-btn" class="btn btn-warning btn-sm" alt="Sign in">{% trans "Sign in" %}</button>
+				</div>
+				<div class="remember-me pull-right mini-margin-top medium-margin-right">
+					<input type="checkbox" name="remember_me" checked="checked" class="no-margin">
+					<span class="mini-text">{% trans "Remember Me" %}</span>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="signin-footer row">
+		<div class="forgot-section small-margin-top pull-left">
+			<div class="forgot-item pull-left">
+				<a href="{% url 'account_reset_password' %}" class="gray-color mini-text underline">{% trans "Forgot Password" %}?</a>
+			</div>
+		</div>
+		<div class="content small-margin-top pull-right bold">
+			{% trans "New to Frittie" %}? <a href="{% url 'account_signup' %}">{% trans "Register" %}</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

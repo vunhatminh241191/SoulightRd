@@ -83,7 +83,7 @@ MEDIA_URL = '/media/'
 
 ########## STATIC FILE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = os.path.join(ROOT_PATH, 'assets/static')
+STATIC_ROOT = 'staticfiles'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
@@ -124,10 +124,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django_mobile.context_processors.flavour',
     'allauth.account.context_processors.account',
     "allauth.socialaccount.context_processors.socialaccount",
+    "soulightrd.apps.main.context_processors.site_data",
+    "soulightrd.apps.main.context_processors.global_data",
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
 TEMPLATE_LOADERS = (
+    "django_mobile.loader.Loader",
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
@@ -369,6 +372,11 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERIFIED_EMAIL': False
     }
 }
+
+
+GEOIP_PATH = os.path.join(ROOT_PATH, "db/geolocation")  ### path for geoip dat
+
+GEOIP_DATABASE = os.path.join(ROOT_PATH, "db/geolocation/GeoLiteCity.dat")
 
 CITIES_FILES = {
     'city': {

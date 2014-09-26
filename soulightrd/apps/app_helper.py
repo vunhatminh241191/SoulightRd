@@ -27,6 +27,20 @@ import shortuuid, random, math, pycountry, pytz, requests
 
 logger = logging.getLogger(__name__)
 
+CATALOGUE = "CATALOGUE"
+COMMENT_CHARACTER = "<!--"
+
+
+def read_catalogue(list_file,path):
+	catalogue_path = path
+	if CATALOGUE not in path:
+		catalogue_path = path + CATALOGUE if path[len(path)-1] == "/" else path + "/" + CATALOGUE
+	f = open(catalogue_path,"r")
+	for filename in f:
+		if len(filename.replace("\n","")) != 0 and filename.startswith(COMMENT_CHARACTER) == False:
+			list_file.append(filename.replace("\n",""))
+
+
 def make_two_numbers(original):
 	if len(original)==1:
 		return "0"+original
@@ -217,6 +231,8 @@ def get_template_path(app_name,template_name,flavour):
 	if flavour == None:
 		return "sites/non-responsive/apps/" + app_name + "/page/" + template_name + ".html"
 	else:
-		prefix = "responsive" if flavour == "mobile" else "non-responsive"
+		prefix = "non_responsive" if flavour == "full" else "responsive"
 		return "sites/" + prefix + "/apps/" + app_name + "/page/" + template_name + ".html"
+
+
 

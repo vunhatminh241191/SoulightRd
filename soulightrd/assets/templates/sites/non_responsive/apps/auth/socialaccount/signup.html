@@ -1,0 +1,36 @@
+{% extends "apps/auth/auth_base.html" %}
+{% load i18n %}
+{% block main_section %}
+            <div class="social-signup-section">
+                <div class="social-signup-header row">
+                    <div class="header-text pull-left">
+                        {% trans "Signup with Facebook" %}
+                    </div>
+                </div>
+                <div class="social-signup-content row">
+                    <form class="signup" id="social_signup_form" method="post" action="">{% csrf_token %}
+                        <div class='non-field-error row'>
+                            {{ form.non_field_errors }}
+                        </div>
+
+                        <div class="email-section data-row row">
+                            <div class="email-field pull-left">
+                                <label for="id_email" class="title">
+                                    {% trans "Email" %}
+                                </label>
+                                {{form.email.errors}}
+                                <div class="input-field">
+                                    {{form.email}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="complete-section row">
+                            <div class="submit-btn">
+                                <input id="social-signup_btn" type="image" src="{{STATIC_URL}}img/apps/account/register-btn.png" alt="social-signup">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% endblock %}

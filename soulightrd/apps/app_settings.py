@@ -18,7 +18,7 @@ SITE_DATA = {
   "SITE_NAME" : SITE_NAME,
   "SITE_NAME_INITIAL_CAPITAL": SITE_NAME_INITIAL_CAPITAL, 
   "SITE_DESCRIPTION": SITE_NAME_INITIAL_CAPITAL + " is a web application provide users opportunity to connect with other people by joining in activity in their favourite location",
-  #"FACEBOOK_APP_ID": FACEBOOK_APP_ID,S
+  #"FACEBOOK_APP_ID": FACEBOOK_APP_ID,
   "DEFAULT_TIMEZONE": DEFAULT_TIMEZONE
 }
 

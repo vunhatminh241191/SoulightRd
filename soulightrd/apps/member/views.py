@@ -9,8 +9,6 @@ from django.utils import simplejson
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 
-from helper import is_email_settings_valid, validate_username_setting
-
 import logging, json, datetime
 
 logger = logging.getLogger(__name__)

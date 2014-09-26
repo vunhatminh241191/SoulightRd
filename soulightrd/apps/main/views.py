@@ -6,6 +6,8 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.utils import simplejson, timezone
 from django.core import serializers
 
+from soulightrd.apps.app_helper import get_template_path
+
 import json, logging, datetime
 
 logger = logging.getLogger(__name__)
@@ -13,7 +15,11 @@ logger = logging.getLogger(__name__)
 APP_NAME = "main"
 
 def main_page(request):
-	return HttpResponse("HELLO WORLD")
+	context_instance = RequestContext(request)
+	template_name = "index"
+	data = {}
+	template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'])
+	return render_to_response(template_path,data,context_instance=context_instance)
 
 # This will show a general page for all kind of error
 def error_page(request):

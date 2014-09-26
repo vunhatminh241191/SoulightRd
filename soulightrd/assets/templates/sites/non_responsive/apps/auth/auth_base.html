@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block header_css %}
+	{% if stage == "dev" %}
+        <link rel="stylesheet" href="{{STATIC_URL}}css/apps/auth.css" type="text/css" />
+    {% else %}
+        <link rel="stylesheet" href="{{STATIC_URL}}css/prod/stylesheets/auth.min.css" type="text/css" />
+    {% endif %}
+{% endblock %}
+
+{% block footer_internal_scripts %}
+
+	{% if stage == "dev" %}
+		<script type="text/javascript" src="{{STATIC_URL}}js/apps/auth/ajax.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/apps/auth/function.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}js/apps/auth/main.js"></script>
+	{% else %}
+    	<script type="text/javascript" src="{{STATIC_URL}}js/apps/auth/prod/frittie.script.app.min.js"></script> 
+	{% endif %}
+
+{% endblock %}

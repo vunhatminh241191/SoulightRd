@@ -1,0 +1,136 @@
+{% load dajaxice_templatetags %}
+{% load soulightrd_templatetags %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    {% block title %}
+        <title> {{SITE_NAME_INITIAL_CAPITAL}} - Home </title>
+    {% endblock %}
+
+    {% block meta %}
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="Copyright" content="{{SITE_NAME}} LLC" />
+        <meta name="keywords" content="{{SITE_KEYWORD}}" />        
+        <meta name="description" content="{{SITE_DESCRIPTION}} " />
+    {% endblock %}
+    <link rel="icon" href="{{STATIC_URL}}img/ico/favicon.ico" type="image/x-icon" />
+
+    {% block plugins_css %}
+    {% endblock %}
+
+    {% if stage == "dev" %} 
+        
+        {% load_plugin_css %}
+        {% load_global_css %}
+
+    {% endif %}
+    
+    {% block header_css %}
+    {% endblock %}
+
+    {% block header_scripts %}
+    {% endblock %}
+
+</head>
+<body>
+    {% block header %} 
+        {% include "sites/non_responsive/common/header.html" %}
+    {% endblock %}  
+
+    <!-- Content block -->
+    {% block content %} 
+    <div id='Content' class='row'>
+        {% if request_message %}
+            <div class="flash-messages">
+                <div class="container">
+                    <div class="alert text-info">
+                        <button class="close" data-dismiss="alert" type="button">
+                            <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                        </button>
+                        {{ request_message }}
+                        <input type="hidden" id="is_activate_message" value="{{is_activate_message}}"/>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        <div id='alert_message' class="bold medium-text small-padding-top small-padding-bottom"></div>
+
+        <div id='main_section'>
+            {% block main_section %}
+            {% endblock %}
+        </div>
+
+        <div id="scroll_top_btn" class="hide">
+            <div class="wrapper">
+                <div class='sprite-go-top-icon pointer-cursor'></div>
+            </div>
+        </div>
+
+        <div id="ajax_loading_icon" class='hide'>
+            <div class='wrapper'>
+                <img src="{{STATIC_URL}}img/apps/body/ajax-loader.gif"/>
+            </div>
+        </div>
+
+    </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include "sites/non_responsive/common/footer.html" %}
+    {% endblock %}
+
+
+    <!--  Modal field-->
+    <div id='modal_section'> 
+        
+        {% block modal %}        
+        {% endblock %}
+
+    </div>
+
+    <!--  Hidden field-->
+    <div id="hidden_section">
+        {% if user_login %}
+            <input type='hidden' id='is_user_login' value="True">
+            <input type='hidden' id='user_login_username' value='{{user_login.username}}'>
+        {% else %}
+            <input type='hidden' id='is_user_login' value='False'>
+        {% endif %}
+
+        {% block hidden %}
+        {% endblock %}     
+
+    </div>        
+    
+    {% block footer_script %} 
+
+        {% if stage == 'prod' %}
+            <script type="text/javascript" src="{{STATIC_URL}}js/prod/dajaxice.core.min.js"></script>
+        {% else %}
+            {% dajaxice_js_import %}
+        {% endif %}
+
+        {% block footer_plugin_scripts %}
+            {% if stage == "dev" %}
+                {% load_plugin_js %}
+            {% endif %}
+        {% endblock %}
+
+        {% if stage == "dev" %}
+            {% load_global_js %}
+        {% endif %}
+
+        {% block footer_external_scripts %} {% endblock %}
+        
+        {% block footer_internal_scripts %} {% endblock %}
+
+        {% block footer_custom_scripts %} {% endblock %}
+        
+    {% endblock %}
+
+</body>
+</html>
