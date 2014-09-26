@@ -36,6 +36,7 @@
 
 </head>
 <body>
+
     {% block header %} 
         {% include "sites/non_responsive/common/header.html" %}
     {% endblock %}  
@@ -108,11 +109,7 @@
     
     {% block footer_script %} 
 
-        {% if stage == 'prod' %}
-            <script type="text/javascript" src="{{STATIC_URL}}js/prod/dajaxice.core.min.js"></script>
-        {% else %}
-            {% dajaxice_js_import %}
-        {% endif %}
+        {% dajaxice_js_import %}
 
         {% block footer_plugin_scripts %}
             {% if stage == "dev" %}

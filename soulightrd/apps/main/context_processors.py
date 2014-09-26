@@ -1,4 +1,5 @@
 from django.contrib.gis.geoip import GeoIP
+from django.template import RequestContext
 
 from soulightrd.apps.app_settings import SITE_DATA, DEFAULT_LATITUDE
 from soulightrd.apps.app_settings import DEFAULT_LONGITUDE, DEFAULT_CITY

@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import *
 
 urlpatterns = patterns('soulightrd.apps.organization.views',
    url(r'^create/$','create_organization',name="create_organization"),

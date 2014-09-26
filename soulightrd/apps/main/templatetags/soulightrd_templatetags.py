@@ -1,4 +1,4 @@
-import logging
+import logging, os
 
 from django import template
 from django.middleware.csrf import get_token
@@ -19,17 +19,16 @@ def load_plugin_css():
 	read_catalogue(list_file,css_plugins)
 	result = ""
 	for filename in list_file:
-		result = result + '<link rel="stylesheet" href="' + STATIC_URL + 'css/plugins/global/stylesheets/' + filename +'" type="text/css" />' + '\n'
+		result = result + '<link rel="stylesheet" href="' + STATIC_URL + 'css/plugins/global/stylesheets/' + filename +'" type="text/css" />\n'
 	return result
 
-@register.simple_tag
-def load_global_css():
-	css_global = ROOT_PATH + "/assets/static/css/global/"
-	list_file = []
-	read_catalogue(list_file,css_global)
-	result = ""
-	for filename in list_file:
-		result = result + '<link rel="stylesheet" href="' + STATIC_URL + 'css/global/' + filename +'" type="text/css" />' + '\n'
+@register.simple_tag(takes_context=True)
+def load_global_css(context):
+	responsive_type = "non_responsive" if context['flavour'] == 'full' else "responsive" 
+	css_global = ROOT_PATH + "/assets/static/css/global/" + responsive_type
+	result = '<link rel="stylesheet" href="' + STATIC_URL + 'css/global/common.css" type="text/css" />\n'
+	for filename in os.listdir(css_global):
+		result = result + '<link rel="stylesheet" href="' + STATIC_URL + 'css/global/' + responsive_type + "/" + filename +'" type="text/css" />\n'
 	return result
 
 @register.simple_tag
@@ -39,7 +38,7 @@ def load_plugin_js():
 	read_catalogue(list_file,js_global)
 	result = ""
 	for filename in list_file:
-		result = result + '<script type="text/javascript" src="' + STATIC_URL + 'js/plugins/' + filename +'"></script>' + '\n'
+		result = result + '<script type="text/javascript" src="' + STATIC_URL + 'js/plugins/' + filename +'"></script>\n'
 	return result
 
 @register.simple_tag
@@ -49,7 +48,7 @@ def load_global_js():
 	read_catalogue(list_file,js_global)
 	result = ""
 	for filename in list_file:
-		result = result + '<script type="text/javascript" src="' + STATIC_URL + 'js/global/' + filename +'"></script>' + '\n'
+		result = result + '<script type="text/javascript" src="' + STATIC_URL + 'js/global/' + filename +'"></script>\n'
 	return result
 
 

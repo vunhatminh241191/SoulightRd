@@ -1,9 +1,3 @@
-####################################
-#	Author: Dang Nguyen	,Duc Vu    #
-#	File: app_helpers.py	       #
-####################################
-
-# Some common function used for any kind of app
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -39,7 +33,6 @@ def read_catalogue(list_file,path):
 	for filename in f:
 		if len(filename.replace("\n","")) != 0 and filename.startswith(COMMENT_CHARACTER) == False:
 			list_file.append(filename.replace("\n",""))
-
 
 def make_two_numbers(original):
 	if len(original)==1:
