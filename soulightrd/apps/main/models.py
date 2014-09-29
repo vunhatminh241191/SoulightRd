@@ -15,6 +15,7 @@ from soulightrd.settings import MEDIA_URL, SERVER_EMAIL
 from soulightrd.settings import MANDRILL_API_KEY, MAX_MANDRILL_EMAIL_ALLOW
 from soulightrd.settings import EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_USE_TLS
 
+from soulightrd.apps.main.constants import JOIN_REQUEST_STATUS, PENDING, BOARD_MEMBER_INVITATION_STATUS
 from soulightrd.apps.main.constants import PROJECT_TYPE, GENDER, NEW, OLD
 from soulightrd.apps.main.constants import PHOTO_TYPE, NOTIFICATION_STATUS, NOTIFICATION_TYPE
 from soulightrd.apps.main.constants import MESSAGE_STATUS, COMMENT_TYPE, REPORT_TYPE
@@ -257,6 +258,20 @@ class Organization(models.Model):
 	def get_board_members(self):
 		return OrganizationBoardMember.objects.filter(organization=self)
 
+# Board Member invite other member to be a board member of the organization
+# Ex: I'm CEO of Organization A and I invite user B to be CFO of the organization
+class OrganizationBoardMemberInvitation(models.Model):
+	board_member_invite = models.ForeignKey(OrganizationBoardMember, related_name='board_member_invite')
+	invited_member = models.ForeignKey(User, related_name='invited_member')
+	invitation_status = models.CharField(max_length=1,choices=BOARD_MEMBER_INVITATION_STATUS,default=PENDING)
+	date = models.DateTimeField(auto_now_add=True)
+
+class OrganizationJoinRequest(models.Model):
+	organization = models.ForeignKey(Organization, related_name='organization')
+	user_request = models.ForeignKey("Volunteer", related_name='user_request')
+	request_status = models.CharField(max_length=1,choices=JOIN_REQUEST_STATUS,default=PENDING)
+	date = models.DateTimeField(auto_now_add=True)
+
 class ProjectActivity(models.Model):
 	title = models.CharField(max_length=100)
 	project = models.ForeignKey(Project,related_name='project_activity')
@@ -276,14 +291,6 @@ class Donation(models.Model):
 	project = models.ForeignKey(Project,related_name='donation_project')
 	amount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
 	transaction_date = models.DateTimeField(auto_now_add=True)
-
-class Invitation_Member(models.Model):
-	board_member = models.ForeignKey(OrganizationBoardMember, related_name='board_member_invitation')
-	normal_member = models.ForeignKey(Organization, related_name='normal_member_invitation')
-
-class Request(models.Model):
-	normal_member = models.ForeignKey(Organization, related_name='normal_member_invitation_volunteer')
-	volunteer = models.ForeignKey(Volunteer, related_name='volunteer_invitation')
 
 class UserProfile(models.Model):
 	user = models.ForeignKey(User, unique=True,related_name='profile')   

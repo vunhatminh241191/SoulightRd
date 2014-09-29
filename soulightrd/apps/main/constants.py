@@ -13,6 +13,10 @@ OLD = "0"
 HIDE = "0"
 SHOW = "1"
 
+ACCEPT = "1"
+PENDING = "0"
+DECLINE = "-1"
+
 YES_VALUE = "1"
 NO_VALUE = "0"
 
@@ -184,6 +188,18 @@ PROJECT_TYPE = (
 
 PHOTO_TYPE = (
 
+)
+
+JOIN_REQUEST_STATUS = (
+  (PENDING,"Pending"),
+  (ACCEPT,"Accept"),
+  (DECLINE,"Decline"),
+)
+
+BOARD_MEMBER_INVITATION_STATUS = (
+  (PENDING,"Pending"),
+  (ACCEPT,"Accept"),
+  (DECLINE,"Decline"),
 )
 
 
