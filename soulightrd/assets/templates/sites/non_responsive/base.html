@@ -21,14 +21,11 @@
     {% block plugins_css %}
     {% endblock %}
 
-    {% if stage == "dev" %} 
-        
-        {% load_plugin_css %}
-        {% load_global_css %}
-
-    {% endif %}
+    {% load_plugin_css %}
+    {% load_global_css %}
     
     {% block header_css %}
+        {% load_final_level_css %}
     {% endblock %}
 
     {% block header_scripts %}
@@ -112,18 +109,16 @@
         {% dajaxice_js_import %}
 
         {% block footer_plugin_scripts %}
-            {% if stage == "dev" %}
-                {% load_plugin_js %}
-            {% endif %}
+            {% load_plugin_js %}
         {% endblock %}
 
-        {% if stage == "dev" %}
-            {% load_global_js %}
-        {% endif %}
+        {% load_global_js %}
 
         {% block footer_external_scripts %} {% endblock %}
         
-        {% block footer_internal_scripts %} {% endblock %}
+        {% block footer_internal_scripts %} 
+            {% load_final_level_js %}
+        {% endblock %}
 
         {% block footer_custom_scripts %} {% endblock %}
         

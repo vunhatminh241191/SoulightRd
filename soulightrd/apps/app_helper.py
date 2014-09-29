@@ -220,12 +220,12 @@ def is_str_unique_id(s):
 	return True
 
 
-def get_template_path(app_name,template_name,flavour):
+def get_template_path(app_name,template_name,flavour,sub_path='/page/'):
 	if flavour == None:
-		return "sites/non-responsive/apps/" + app_name + "/page/" + template_name + ".html"
+		return "sites/non-responsive/apps/" + app_name + sub_path + template_name + ".html"
 	else:
 		prefix = "non_responsive" if flavour == "full" else "responsive"
-		return "sites/" + prefix + "/apps/" + app_name + "/page/" + template_name + ".html"
+		return "sites/" + prefix + "/apps/" + app_name + sub_path + template_name + ".html"
 
 
 

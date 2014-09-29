@@ -1,0 +1,10 @@
+Welcome to Frittie
+
+Hi {{user.get_profile.get_user_fullname}}
+
+Please click the link below to confirm your email address.
+
+{{activate_url}}
+
+Thanks,
+The Frittie Team

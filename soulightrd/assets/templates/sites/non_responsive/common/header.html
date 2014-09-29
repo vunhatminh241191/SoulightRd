@@ -6,6 +6,108 @@
 
                 {% block header_content %}
 
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header_collapse">
+                            <span class="sr-only">{% trans "Toggle navigation" %}</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href='/' class="navbar-brand" id="brand_name"> 
+                            <div class='sprite-logo-white-small'></div>
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="header_collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li>
+                                <form id="search_form" name="search_form" action="/search/" method="get" class="navbar-form navbar-right" role="search" autocomplete='off'>
+                                    <input type="text" id="search_query" size="100" name='q' placeholder="" />
+                                    <div class='sprite-search-icon' id='search_submit_btn' onclick="document.search_form.submit()" class="pointer-cursor"></div> 
+                                    {% if search_type %}
+                                        <input type="hidden" id="search_type" name='search_type' value="{{search_type}}"/>
+                                    {% endif %}
+                                </form>
+                            </li>
+
+                        </ul>   
+
+                        {% if user_login %}
+                        <ul class='nav navbar-nav navbar-right'> 
+
+                            <li class='account-settings' role="presentation">
+                                <a href="{% url 'account_settings' %}" role="menuitem" tabindex="-1">
+                                    <i class="fa fa-gears mini-margin-right"></i>
+                                    {% trans "Settings" %}
+                                </a>
+                            </li>
+                            <li class="logout" role="presentation">   
+                                <a href="{% url 'account_logout' %}" role="menuitem" tabindex="-1">
+                                     <i class="fa fa-sign-out mini-margin-right"></i>
+                                    {% trans "Sign Out" %}
+                                </a>
+                            </li> 
+
+                            <li class='user-account header-item'>
+                                <div class='user-account-area'>
+                                    <a href="/people/{{user_login.username}}">
+                                        <div class='profile-picture pull-left'>
+                                            <img src="{{user_login.get_profile.avatar.image.url}}" id='user_account_avatar'/>  
+                                        </div>
+                                        <div class='fullname pull-left'>
+                                            {{user_login.first_name}} {{ user_login.last_name}}
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                            
+                            <!-- <li class='user-menu dropdown' id='user_menu'> 
+                                <div class='user-menu-area'>
+                                    <a href='#' id='handler_user_menu_dropdown' class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                        <div class='dropdown-icon'>     
+                                            <div class='arrow-icon sprite-arrow-icon'></div>   
+                                        </div>
+                                    </a>
+                                      
+                                    <ul id="user_action" class="dropdown-menu arrow right-arrow" role="menu">
+                                       
+                                        
+                                        <li class='account-settings' role="presentation">
+                                            <a href="{% url 'account_settings' %}" role="menuitem" tabindex="-1">
+                                                <i class="fa fa-gears mini-margin-right"></i>
+                                                {% trans "Settings" %}
+                                            </a>
+                                        </li>
+                                        <li class="logout" role="presentation">   
+                                            <a href="{% url 'account_logout' %}" role="menuitem" tabindex="-1">
+                                                 <i class="fa fa-sign-out mini-margin-right"></i>
+                                                {% trans "Sign Out" %}
+                                            </a>
+                                        </li> 
+                                    </ul>
+                                </div>                                     
+                            </li> -->
+                            
+                        </ul>
+
+                        {% else %}
+                        <ul class='nav navbar-nav navbar-right'>                               
+                            <li class='header-item pointer-cursor' id="login">     
+                                <a href='{% url "account_login" %}' >
+                                    {% trans "Login" %}
+                                </a>            
+                            </li>
+
+                            <li class='header-item pointer-cursor' id="signup">     
+                                <a href='{% url "account_signup" %}' >
+                                    {% trans "Signup" %}
+                                </a>            
+                            </li>
+                        </ul>
+                        {% endif %}
+
+
                 {% endblock %}
             </div>
     </nav>

@@ -30,8 +30,9 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 from soulightrd.apps.app_helper import generate_unique_id, get_client_ip
 from soulightrd.apps.main.models import Photo, SocialFriendList
-from soulightrd.apps.main.constants import GENDER_MAP_BY_NAME, DEFAULT_SERVER_EMAIL, DEFAULT_SITE_NAME
+from soulightrd.apps.main.constants import GENDER_MAP_BY_NAME
 from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
+from soulightrd.apps.app_settings import DEFAULT_SERVER_EMAIL, DEFAULT_SITE_NAME
 from soulightrd.settings import MEDIA_ROOT, SERVER_EMAIL, SITE_NAME
 
 import uuid, requests, tempfile
@@ -94,7 +95,7 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 		return msg
 
 	def send_mail(self, template_prefix, email, context):
-		prefix = "texts/email/apps/account/"
+		prefix = "emails/apps/auth/"
 		if "/" in template_prefix:
 			template_prefix = prefix + template_prefix[template_prefix.rfind("/")+1:]
 		else:
@@ -108,7 +109,6 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 		first_name = data["first_name"]
 		last_name = data["last_name"]
 		username = generate_unique_username([first_name,last_name,email,'user'])
-		gender = data['gender']
 		user_email(user, email)
 		user_username(user, username)
 		user_field(user, 'first_name', first_name or '')
@@ -119,16 +119,10 @@ class CustomAccountAdapter(DefaultAccountAdapter):
 		else:
 			user.set_unusable_password()
 		user.save()
-		user.get_profile().gender = gender
-		avatar = None
-		if gender == "m":
-			avatar = Photo.objects.create(caption=first_name + " " + last_name + " Avatar", \
+		avatar = Photo.objects.create(caption=first_name + " " + last_name + " Avatar", \
 							user_post=user,image=DEFAULT_IMAGE_PATH_MAPPING['default_male_icon'],
 							unique_id=generate_unique_id("photo"),photo_type='user_profile')
-		else:
-			avatar = Photo.objects.create(caption=first_name + " " + last_name + " Avatar", \
-							user_post=user,image=DEFAULT_IMAGE_PATH_MAPPING['default_female_icon'],
-							unique_id=generate_unique_id("photo"),photo_type='user_profile')
+
 		
 		cover_picture = Photo.objects.create(caption=first_name + " " + last_name + " Cover Picture", \
 							user_post=user,image=DEFAULT_IMAGE_PATH_MAPPING['default_cover_picture'],

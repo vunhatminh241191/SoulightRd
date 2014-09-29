@@ -41,12 +41,12 @@ MANAGERS = ADMINS
 ########## END MANAGER CONFIGURATION
 
 MANDRILL_API_KEY = environ.get("MANDRILL_API_KEY") 
-SERVER_EMAIL=environ.get('SERVER_EMAIL')
+SERVER_EMAIL=environ.get('SERVER_EMAIL','soulightrd@gmail.com')
 
 EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 EMAIL_HOST = 'smtp.mandrillapp.com'
-EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER','soulightrd@gmail.com')
+EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD','soulightrd4success')
 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -138,10 +138,13 @@ TEMPLATE_LOADERS = (
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_DIRS = (
     os.path.join(ROOT_PATH, 'assets/templates'),
-    os.path.join(ROOT_PATH, 'assets/templates/web'),
-    os.path.join(ROOT_PATH, 'assets/templates/mobile'),
-    os.path.join(ROOT_PATH, 'assets/templates/web/auth'),
-    os.path.join(ROOT_PATH, 'assets/templates/mobile/auth'),
+    os.path.join(ROOT_PATH, 'assets/templates/sites'),
+    os.path.join(ROOT_PATH, 'assets/templates/sites/non_responsive'),
+    os.path.join(ROOT_PATH, 'assets/templates/sites/non_responsive/apps'),
+    os.path.join(ROOT_PATH, 'assets/templates/sites/non_responsive/apps/auth'),
+    os.path.join(ROOT_PATH, 'assets/templates/sites/responsive'),
+    os.path.join(ROOT_PATH, 'assets/templates/sites/responsive/apps'),
+    os.path.join(ROOT_PATH, 'assets/templates/sites/responsive/apps/auth'),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -359,8 +362,12 @@ ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "/?action=confirm_email&result=success"
 
-# from soulightrd.apps.app_settings import KEYWORDS_URL
-# ACCOUNT_USERNAME_BLACKLIST = KEYWORDS_URL
+ACCOUNT_USERNAME_BLACKLIST = [
+    'admin','signup','login','password',"accounts"
+    'logout','confirm_email','search','settings',
+    'buzz','messages',"about",'api','asset','photo',
+    'feeds','friends'
+]
 
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[SoulightRd]"
 ACCOUNT_ADAPTER = "soulightrd.apps.auth.adapters.CustomAccountAdapter"
@@ -392,3 +399,6 @@ SOCIAL_FRIENDS_USING_ALLAUTH = True
 MAX_MANDRILL_EMAIL_ALLOW = 12000
 
 OW_LY_API_KEY = "6sv891CJpDcuiz8eyRHfy"
+
+FACEBOOK_PROVIDER = "facebook"
+FACEBOOK_APP_NAME = "SoulightRd Facebook App"

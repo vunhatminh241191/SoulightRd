@@ -17,8 +17,8 @@ APP_NAME = "main"
 def main_page(request):
 	context_instance = RequestContext(request)
 	template_name = "index"
-	data = {}
 	template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'])
+	data = {"app_name": APP_NAME}
 	return render_to_response(template_path,data,context_instance=context_instance)
 
 # This will show a general page for all kind of error

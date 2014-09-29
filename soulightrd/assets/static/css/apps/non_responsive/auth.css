@@ -1,0 +1,245 @@
+.error-field {
+    border: 1px solid red;
+}
+
+.errorlist{
+    list-style: none;
+    color:red;
+    width: auto;
+}
+
+.register-section {
+    border-radius: 3px;
+    border: 6px solid #b0b0b0;
+    height: auto;
+    width: 360px;
+    margin: 100px auto 70px auto;
+    background-color: #fcfcfc;
+}
+
+.signin-section input[type='email'],
+.signin-section input[type='text'],
+.signin-section input[type='password'],
+.register-section input[type='email'],
+.register-section input[type='text'],
+.register-section input[type='password'] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    height: 40px;
+    border-radius: 3px;
+    -webkit-appearance: none;
+}
+
+.register-section .register-header {
+    padding-top:7px;
+    padding-bottom:7px;
+    width: 100%;
+    border-bottom: 1px solid #bababa;
+    background: url('//db0dp9rjtl3zs.cloudfront.net/zaahah.com/v3/img/app/body/create-community-header-background.png');
+}
+
+.register-section .register-content {
+    margin:20px 30px 20px 30px;
+}
+
+.register-section .register-content .non-field-error ul.errorlist{
+    float:left;
+    margin-bottom: 20px;
+}
+
+.register-section .register-content .form-group {
+    margin-bottom:15px;
+}
+
+.register-section .register-content .complete-section {
+    margin-top:10px;
+}
+
+.register-section .register-content .complete-section .right-content {
+    font-weight: bold;
+    margin-top:10px;
+}
+
+.register-section .register-content .complete-section .right-content a{
+    color: #ff8400;
+}
+
+.register-section .register-content .complete-section .right-content a:hover {
+    text-decoration: none;
+}
+
+.signin-section {
+    border-radius: 3px;
+    border: 6px solid #b0b0b0;
+    height: auto;
+    width: 360px;
+    margin: 90px auto 70px auto;
+    background-color: #fcfcfc;
+}
+
+.signin-section .signin-header {
+    width: 100%;
+    border-bottom: 1px solid #bababa;
+    background: url('//db0dp9rjtl3zs.cloudfront.net/zaahah.com/v3/img/app/body/create-community-header-background.png');
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.signin-section .signin-content {
+    margin-left:30px;
+    margin-right:30px;
+    margin-top:30px;
+}
+
+.signin-section .signin-content .complete-section {
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.signin-section .signin-content .non-field-error ul.errorlist{
+    float:left;
+    margin-bottom: 20px;
+}
+
+.signin-section .signin-content .remember-me input {
+    margin: 0px;
+}
+
+.signin-section .signin-footer {
+    border-top: 1px solid #e0e0e0;
+    margin:5px 30px 15px 30px;
+}
+
+.signin-section .signin-footer .forgot-section .separate-divider {
+    height: 12px;
+    margin:5px 10px 0px 10px;
+    width: 2px;
+    border-left: 1px solid #b1b1b1;
+}
+
+.signin-section .signin-footer .content a{
+    color: #ff8400;
+}
+
+.signin-section .signin-footer .content a:hover {
+    text-decoration: none;
+}
+
+.change-password-section,
+.reset-password-section {
+    border-radius: 3px;
+    border: 6px solid rgba(0,0,0,0.3);
+    height: auto;
+    width:330px;
+    margin: 90px auto 70px auto;
+    background-color: #fcfcfc;
+}
+
+.change-password-section .change-password-header,
+.reset-password-section .reset-password-header {
+    height: 55px;
+    width: 100%;
+    border-bottom: 1px solid #bababa;
+    background: url('//db0dp9rjtl3zs.cloudfront.net/zaahah.com/v3/img/app/body/create-community-header-background.png');
+}
+
+.change-password-section .change-password-header .header-text,
+.reset-password-section .reset-password-header .header-text {
+    font-size: 24px;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.change-password-section .change-password-content,
+.reset-password-section .reset-password-content {
+    margin: 25px 35px 30px 35px;
+    width:auto;
+}
+
+.change-password-section .change-password-content input,
+.reset-password-section .reset-password-content input {
+    border: 1px solid #d6d6d6;
+}
+
+.change-password-section .change-password-content input:focus,
+.reset-password-section .reset-password-content input:focus {
+    border: 1px solid #d6d6d6;
+}
+
+.social-signup-section {
+    border-radius: 3px;
+    border: 6px solid rgba(0,0,0,0.3);
+    height: auto;
+    width:370px;
+    margin: 90px auto 70px auto;
+    background-color: #fcfcfc;
+}
+
+.social-signup-section .social-signup-header {
+    height: 55px;
+    width: 100%;
+    border-bottom: 1px solid #bababa;
+    background: url('//db0dp9rjtl3zs.cloudfront.net/zaahah.com/v3/img/app/body/create-community-header-background.png');
+}
+
+.social-signup-section .social-signup-header .header-text {
+    font-size: 25px;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    margin-top: 18px;
+    margin-left: 20px;
+}
+
+.social-signup-section .social-signup-content {
+    margin: 25px 35px 10px 35px;
+    width:auto;
+}
+
+.social-signup-section .social-signup-content .complete-message {
+    margin:10px 20px 20px 20px;
+    text-align: center
+}
+
+.social-signup-section .social-signup-content .title {
+    font-weight: bold;
+}
+
+.social-signup-section .social-signup-content .input-field
+{
+    height: 35px;
+    margin:0px;
+    padding: 0px;
+}
+
+.social-signup-section .social-signup-content .email-section {
+    height: 80px;
+}
+
+.social-signup-section .social-signup-content .email-section input {
+    width: 290px;
+    height: 25px;
+    border: 1px solid #d6d6d6;
+}
+
+.social-signup-section .social-signup-content .email-section input:focus {
+    border: 1px solid #d6d6d6;
+}
+
+.social-signup-section .social-signup-content .email-section .title {
+    margin-bottom: 15px;
+    width:auto;
+    float:left;
+}
+
+.social-signup-section .complete-section {
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+.social-signup-section .complete-section .submit-btn {
+    text-align: center;
+}

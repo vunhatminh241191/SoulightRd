@@ -1,4 +1,4 @@
-from soulightrd.settings import SITE_NAME
+from soulightrd.settings import SITE_NAME, FACEBOOK_APP_ID
 
 import datetime
 
@@ -11,14 +11,14 @@ DEFAULT_LONGITUDE = -122.322464
 DEFAULT_CITY = "Seattle"
 DEFAULT_COUNTRY = "United States"
 DEFAULT_TIMEZONE = "America/Los_Angeles"
-DEFAULT_SERVER_EMAIL = "team@soulightrd.com"
+DEFAULT_SERVER_EMAIL = "soulightrd@gmail.com"
 DEFAULT_SITE_NAME = 'soulightrd'
 
 SITE_DATA = {
   "SITE_NAME" : SITE_NAME,
   "SITE_NAME_INITIAL_CAPITAL": SITE_NAME_INITIAL_CAPITAL, 
   "SITE_DESCRIPTION": SITE_NAME_INITIAL_CAPITAL + " is a web application provide users opportunity to connect with other people by joining in activity in their favourite location",
-  #"FACEBOOK_APP_ID": FACEBOOK_APP_ID,
+  "FACEBOOK_APP_ID": FACEBOOK_APP_ID,
   "DEFAULT_TIMEZONE": DEFAULT_TIMEZONE
 }
 
@@ -70,7 +70,7 @@ DEFAULT_IMAGE_UNIQUE_ID = {
 }
 
 MESSAGE_SNIPPET_TEMPLATE =  { 
- 
+  "confirm_email_asking": "messages/apps/auth/confirm_email_asking.html",
 }
 
 HTML_SNIPPET_TEMPLATE = {
