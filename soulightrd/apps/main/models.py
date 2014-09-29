@@ -219,9 +219,28 @@ class Report(models.Model):
 	date = models.DateTimeField(auto_now_add=True)
 	report_content = models.TextField()
 
+class Project(models.Model):
+	unique_id = models.CharField(max_length=100)
+	title = models.CharField(max_length=300)
+	description = models.TextField()
+	project_image = models.ForeignKey(Photo,related_name="main_image")
+	organization = models.ForeignKey("Organization",related_name='project_organization')
+	project_type = models.CharField(max_length=1,choices=PROJECT_TYPE)
+	funding_goal = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
+	current_funding = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
+	volunteer_goal = models.IntegerField(blank=True,null=True)
+	current_volunteer = models.IntegerField(blank=True,null=True)
+	project_duration = models.IntegerField(blank=True)
+	project_start_date = models.DateTimeField()
+	project_end_date = models.DateTimeField(blank=True,null=True)
+	project_location = models.ForeignKey(City,related_name='project_location')
+	comments = models.ManyToManyField(Comment, related_name='project_comments',blank=True,null=True)
+	followers = models.ManyToManyField(User, related_name='project_followers',blank=True,null=True)
+
 class OrganizationBoardMember(models.Model):
 	user = models.ForeignKey(User,related_name='board_member_user')
 	organization = models.ForeignKey("Organization",related_name='board_member_organization')
+	projects = models.ManyToManyField(Project, related_name='board_member_projects')
 	role = models.CharField(max_length=100)
 
 class Organization(models.Model):
@@ -237,25 +256,6 @@ class Organization(models.Model):
 
 	def get_board_members(self):
 		return OrganizationBoardMember.objects.filter(organization=self)
-
-
-class Project(models.Model):
-	unique_id = models.CharField(max_length=100)
-	title = models.CharField(max_length=300)
-	description = models.TextField()
-	project_image = models.ForeignKey(Photo,related_name="main_image")
-	organization = models.ForeignKey(Organization,related_name='project_organization')
-	project_type = models.CharField(max_length=1,choices=PROJECT_TYPE)
-	funding_goal = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
-	current_funding = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
-	volunteer_goal = models.IntegerField(blank=True,null=True)
-	current_volunteer = models.IntegerField(blank=True,null=True)
-	project_duration = models.IntegerField(blank=True)
-	project_start_date = models.DateTimeField()
-	project_end_date = models.DateTimeField(blank=True,null=True)
-	project_location = models.ForeignKey(City,related_name='project_location')
-	comments = models.ManyToManyField(Comment, related_name='project_comments',blank=True,null=True)
-	followers = models.ManyToManyField(User, related_name='project_followers',blank=True,null=True)
 
 class ProjectActivity(models.Model):
 	title = models.CharField(max_length=100)
@@ -276,6 +276,14 @@ class Donation(models.Model):
 	project = models.ForeignKey(Project,related_name='donation_project')
 	amount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
 	transaction_date = models.DateTimeField(auto_now_add=True)
+
+class Invitation_Member(models.Model):
+	board_member = models.ForeignKey(OrganizationBoardMember, related_name='board_member_invitation')
+	normal_member = models.ForeignKey(Organization, related_name='normal_member_invitation')
+
+class Request(models.Model):
+	normal_member = models.ForeignKey(Organization, related_name='normal_member_invitation_volunteer')
+	volunteer = models.ForeignKey(Volunteer, related_name='volunteer_invitation')
 
 class UserProfile(models.Model):
 	user = models.ForeignKey(User, unique=True,related_name='profile')   

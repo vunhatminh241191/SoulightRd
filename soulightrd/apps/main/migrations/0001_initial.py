@@ -126,38 +126,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'main', ['Report'])
 
-        # Adding model 'OrganizationBoardMember'
-        db.create_table(u'main_organizationboardmember', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='board_member_user', to=orm['auth.User'])),
-            ('organization', self.gf('django.db.models.fields.related.ForeignKey')(related_name='board_member_organization', to=orm['main.Organization'])),
-            ('role', self.gf('django.db.models.fields.CharField')(max_length=100)),
-        ))
-        db.send_create_signal(u'main', ['OrganizationBoardMember'])
-
-        # Adding model 'Organization'
-        db.create_table(u'main_organization', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('unique_id', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=300)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-            ('website', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
-            ('phone', self.gf('phonenumber_field.modelfields.PhoneNumberField')(max_length=128)),
-            ('address', self.gf('django.db.models.fields.CharField')(max_length=300)),
-            ('is_verified', self.gf('django.db.models.fields.BooleanField')(default=False)),
-        ))
-        db.send_create_signal(u'main', ['Organization'])
-
-        # Adding M2M table for field normal_member on 'Organization'
-        m2m_table_name = db.shorten_name(u'main_organization_normal_member')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('organization', models.ForeignKey(orm[u'main.organization'], null=False)),
-            ('user', models.ForeignKey(orm[u'auth.user'], null=False))
-        ))
-        db.create_unique(m2m_table_name, ['organization_id', 'user_id'])
-
         # Adding model 'Project'
         db.create_table(u'main_project', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -198,10 +166,52 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['project_id', 'user_id'])
 
+        # Adding model 'OrganizationBoardMember'
+        db.create_table(u'main_organizationboardmember', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='board_member_user', to=orm['auth.User'])),
+            ('organization', self.gf('django.db.models.fields.related.ForeignKey')(related_name='board_member_organization', to=orm['main.Organization'])),
+            ('role', self.gf('django.db.models.fields.CharField')(max_length=100)),
+        ))
+        db.send_create_signal(u'main', ['OrganizationBoardMember'])
+
+        # Adding M2M table for field projects on 'OrganizationBoardMember'
+        m2m_table_name = db.shorten_name(u'main_organizationboardmember_projects')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('organizationboardmember', models.ForeignKey(orm[u'main.organizationboardmember'], null=False)),
+            ('project', models.ForeignKey(orm[u'main.project'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['organizationboardmember_id', 'project_id'])
+
+        # Adding model 'Organization'
+        db.create_table(u'main_organization', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('unique_id', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=300)),
+            ('description', self.gf('django.db.models.fields.TextField')()),
+            ('website', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
+            ('phone', self.gf('phonenumber_field.modelfields.PhoneNumberField')(max_length=128)),
+            ('address', self.gf('django.db.models.fields.CharField')(max_length=300)),
+            ('is_verified', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        ))
+        db.send_create_signal(u'main', ['Organization'])
+
+        # Adding M2M table for field normal_member on 'Organization'
+        m2m_table_name = db.shorten_name(u'main_organization_normal_member')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('organization', models.ForeignKey(orm[u'main.organization'], null=False)),
+            ('user', models.ForeignKey(orm[u'auth.user'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['organization_id', 'user_id'])
+
         # Adding model 'ProjectActivity'
         db.create_table(u'main_projectactivity', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('project', self.gf('django.db.models.fields.related.ForeignKey')(related_name='project_activity', to=orm['main.Project'])),
             ('description', self.gf('django.db.models.fields.TextField')()),
             ('responsible_member', self.gf('django.db.models.fields.related.ForeignKey')(related_name='project_activity_responsible_member', to=orm['auth.User'])),
             ('date', self.gf('django.db.models.fields.DateTimeField')()),
@@ -217,15 +227,42 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['projectactivity_id', 'photo_id'])
 
-        # Adding model 'Payment'
-        db.create_table(u'main_payment', (
+        # Adding model 'Volunteer'
+        db.create_table(u'main_volunteer', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='payment_user', to=orm['auth.User'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='volunteer_user', to=orm['auth.User'])),
+            ('project', self.gf('django.db.models.fields.related.ForeignKey')(related_name='volunteer_project', to=orm['main.Project'])),
+            ('is_signed_confirmation', self.gf('django.db.models.fields.BooleanField')()),
+            ('register_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+        ))
+        db.send_create_signal(u'main', ['Volunteer'])
+
+        # Adding model 'Donation'
+        db.create_table(u'main_donation', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='donation_user', to=orm['auth.User'])),
+            ('project', self.gf('django.db.models.fields.related.ForeignKey')(related_name='donation_project', to=orm['main.Project'])),
             ('amount_currency', self.gf('djmoney.models.fields.CurrencyField')(default='USD')),
             ('amount', self.gf('djmoney.models.fields.MoneyField')(max_digits=10, decimal_places=2, default_currency='USD')),
             ('transaction_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
-        db.send_create_signal(u'main', ['Payment'])
+        db.send_create_signal(u'main', ['Donation'])
+
+        # Adding model 'Invitation_Member'
+        db.create_table(u'main_invitation_member', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('board_member', self.gf('django.db.models.fields.related.ForeignKey')(related_name='board_member_invitation', to=orm['main.OrganizationBoardMember'])),
+            ('normal_member', self.gf('django.db.models.fields.related.ForeignKey')(related_name='normal_member_invitation', to=orm['main.Organization'])),
+        ))
+        db.send_create_signal(u'main', ['Invitation_Member'])
+
+        # Adding model 'Request'
+        db.create_table(u'main_request', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('normal_member', self.gf('django.db.models.fields.related.ForeignKey')(related_name='normal_member_invitation_volunteer', to=orm['main.Organization'])),
+            ('volunteer', self.gf('django.db.models.fields.related.ForeignKey')(related_name='volunteer_invitation', to=orm['main.Volunteer'])),
+        ))
+        db.send_create_signal(u'main', ['Request'])
 
         # Adding model 'UserProfile'
         db.create_table(u'main_userprofile', (
@@ -297,15 +334,6 @@ class Migration(SchemaMigration):
         # Deleting model 'Report'
         db.delete_table(u'main_report')
 
-        # Deleting model 'OrganizationBoardMember'
-        db.delete_table(u'main_organizationboardmember')
-
-        # Deleting model 'Organization'
-        db.delete_table(u'main_organization')
-
-        # Removing M2M table for field normal_member on 'Organization'
-        db.delete_table(db.shorten_name(u'main_organization_normal_member'))
-
         # Deleting model 'Project'
         db.delete_table(u'main_project')
 
@@ -315,14 +343,35 @@ class Migration(SchemaMigration):
         # Removing M2M table for field followers on 'Project'
         db.delete_table(db.shorten_name(u'main_project_followers'))
 
+        # Deleting model 'OrganizationBoardMember'
+        db.delete_table(u'main_organizationboardmember')
+
+        # Removing M2M table for field projects on 'OrganizationBoardMember'
+        db.delete_table(db.shorten_name(u'main_organizationboardmember_projects'))
+
+        # Deleting model 'Organization'
+        db.delete_table(u'main_organization')
+
+        # Removing M2M table for field normal_member on 'Organization'
+        db.delete_table(db.shorten_name(u'main_organization_normal_member'))
+
         # Deleting model 'ProjectActivity'
         db.delete_table(u'main_projectactivity')
 
         # Removing M2M table for field image_proof on 'ProjectActivity'
         db.delete_table(db.shorten_name(u'main_projectactivity_image_proof'))
 
-        # Deleting model 'Payment'
-        db.delete_table(u'main_payment')
+        # Deleting model 'Volunteer'
+        db.delete_table(u'main_volunteer')
+
+        # Deleting model 'Donation'
+        db.delete_table(u'main_donation')
+
+        # Deleting model 'Invitation_Member'
+        db.delete_table(u'main_invitation_member')
+
+        # Deleting model 'Request'
+        db.delete_table(u'main_request')
 
         # Deleting model 'UserProfile'
         db.delete_table(u'main_userprofile')
@@ -353,7 +402,7 @@ class Migration(SchemaMigration):
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Group']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -361,7 +410,7 @@ class Migration(SchemaMigration):
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
+            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
         u'cities_light.city': {
@@ -434,6 +483,15 @@ class Migration(SchemaMigration):
             'user1': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user1'", 'to': u"orm['auth.User']"}),
             'user2': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user2'", 'to': u"orm['auth.User']"})
         },
+        u'main.donation': {
+            'Meta': {'object_name': 'Donation'},
+            'amount': ('djmoney.models.fields.MoneyField', [], {'max_digits': '10', 'decimal_places': '2', 'default_currency': "'USD'"}),
+            'amount_currency': ('djmoney.models.fields.CurrencyField', [], {'default': "'USD'"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'donation_project'", 'to': u"orm['main.Project']"}),
+            'transaction_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'donation_user'", 'to': u"orm['auth.User']"})
+        },
         u'main.emailtracking': {
             'Meta': {'object_name': 'EmailTracking'},
             'context_data': ('django.db.models.fields.TextField', [], {}),
@@ -444,6 +502,12 @@ class Migration(SchemaMigration):
             'subject': ('django.db.models.fields.CharField', [], {'max_length': '350', 'blank': 'True'}),
             'text_content': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'to_emails': ('django.db.models.fields.TextField', [], {})
+        },
+        u'main.invitation_member': {
+            'Meta': {'object_name': 'Invitation_Member'},
+            'board_member': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_invitation'", 'to': u"orm['main.OrganizationBoardMember']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'normal_member': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'normal_member_invitation'", 'to': u"orm['main.Organization']"})
         },
         u'main.message': {
             'Meta': {'object_name': 'Message'},
@@ -483,16 +547,9 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'OrganizationBoardMember'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'organization': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_organization'", 'to': u"orm['main.Organization']"}),
+            'projects': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'board_member_projects'", 'symmetrical': 'False', 'to': u"orm['main.Project']"}),
             'role': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_user'", 'to': u"orm['auth.User']"})
-        },
-        u'main.payment': {
-            'Meta': {'object_name': 'Payment'},
-            'amount': ('djmoney.models.fields.MoneyField', [], {'max_digits': '10', 'decimal_places': '2', 'default_currency': "'USD'"}),
-            'amount_currency': ('djmoney.models.fields.CurrencyField', [], {'default': "'USD'"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'transaction_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'payment_user'", 'to': u"orm['auth.User']"})
         },
         u'main.photo': {
             'Meta': {'object_name': 'Photo'},
@@ -533,6 +590,7 @@ class Migration(SchemaMigration):
             'description': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image_proof': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'project_activity_image_proof'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['main.Photo']"}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'project_activity'", 'to': u"orm['main.Project']"}),
             'responsible_member': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'project_activity_responsible_member'", 'to': u"orm['auth.User']"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
@@ -544,6 +602,12 @@ class Migration(SchemaMigration):
             'report_type': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'unique_id': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'user_report': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user_report'", 'blank': 'True', 'to': u"orm['auth.User']"})
+        },
+        u'main.request': {
+            'Meta': {'object_name': 'Request'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'normal_member': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'normal_member_invitation_volunteer'", 'to': u"orm['main.Organization']"}),
+            'volunteer': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'volunteer_invitation'", 'to': u"orm['main.Volunteer']"})
         },
         u'main.socialfriendlist': {
             'Meta': {'object_name': 'SocialFriendList'},
@@ -567,6 +631,14 @@ class Migration(SchemaMigration):
             'privacy_status': ('django.db.models.fields.CharField', [], {'default': "'1'", 'max_length': '1'}),
             'reports': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'user_reports'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['main.Report']"}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['auth.User']"})
+        },
+        u'main.volunteer': {
+            'Meta': {'object_name': 'Volunteer'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_signed_confirmation': ('django.db.models.fields.BooleanField', [], {}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'volunteer_project'", 'to': u"orm['main.Project']"}),
+            'register_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'volunteer_user'", 'to': u"orm['auth.User']"})
         },
         u'socialaccount.socialaccount': {
             'Meta': {'unique_together': "(('provider', 'uid'),)", 'object_name': 'SocialAccount'},
