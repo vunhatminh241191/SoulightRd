@@ -277,9 +277,13 @@ class Donation(models.Model):
 	amount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
 	transaction_date = models.DateTimeField(auto_now_add=True)
 
-class Invitation(models.Model):
+class Invitation_Member(models.Model):
 	board_member = models.ForeignKey(OrganizationBoardMember, related_name='board_member_invitation')
-	normal_member = models.ForeignKey(User, related_name='normal_member_invitation')
+	normal_member = models.ForeignKey(Organization, related_name='normal_member_invitation')
+
+class Request(models.Model):
+	normal_member = models.ForeignKey(Organization, related_name='normal_member_invitation_volunteer')
+	volunteer = models.ForeignKey(Volunteer, related_name='volunteer_invitation')
 
 class UserProfile(models.Model):
 	user = models.ForeignKey(User, unique=True,related_name='profile')   
