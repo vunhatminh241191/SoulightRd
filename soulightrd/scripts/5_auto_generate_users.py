@@ -10,11 +10,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from django.contrib.auth.models import User
 
 from soulightrd.apps.main.models import Photo
-from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
+from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID, NAMES
 from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
-
-
-names = ["Smith","Anderson","Clark","Wright","Mitchell","Johnson","Thomas","Rodriguez","Lopez","Perez","Williams","Jackson","Lewis","Hill","Roberts","Jones","White","Lee","Scott","Turner","Brown","Harris","Walker","Green","Phillips","Davis","Martin","Hall","Adams","Campbell","Miller","Thompson","Allen","Baker","Parker","Wilson","Garcia","Young","Gonzalez","Evans","Moore","Martinez","Hernandez","Nelson","Edwards","Taylor","Robinson","King","Carter","Collin"]
 
 def main():
 	print "...RUNNING GENERATE USERS SCRIPT..."
@@ -32,7 +29,7 @@ def main():
 		except Photo.DoesNotExist:
 			cover_picture = Photo.objects.create(caption="default_male_icon",user_post=admin,image=DEFAULT_IMAGE_PATH_MAPPING['default_cover_picture'],unique_id=generate_unique_id("photo"))
 		i = 0
-		for name in names:
+		for name in NAMES:
 			i = i + 1 
 			test_email = "test"+str(i)+"@soulightrd.com"
 			user = User.objects.create_user(name.lower(),test_email, 'soulightrd4success')
