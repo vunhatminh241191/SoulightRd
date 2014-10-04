@@ -8,9 +8,12 @@ sys.path.append(PROJECT_PATH)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 from soulightrd.apps.main.models import Organization
+from django.contrib.auth.models import User
 
 organization_names = list(string.ascii_uppercase)
 string_integer = '1234567890'
+names = ["Smith","Anderson","Clark","Wright","Mitchell","Johnson","Thomas","Rodriguez","Lopez","Perez","Williams","Jackson","Lewis","Hill","Roberts","Jones","White","Lee","Scott","Turner","Brown","Harris","Walker","Green","Phillips","Davis","Martin","Hall","Adams","Campbell","Miller","Thompson","Allen","Baker","Parker","Wilson","Garcia","Young","Gonzalez","Evans","Moore","Martinez","Hernandez","Nelson","Edwards","Taylor","Robinson","King","Carter","Collin"]
+
 
 def generate_phone(word, length):
 	if len(word) == 1:
@@ -42,6 +45,7 @@ def main():
 		while i in range(len(organization_names)):
 			organization = Organization.objects.create(unique_id=organization_names[i]
 				, phone='+' + generated_phone[i], email= organization_names[i] + '@gmail.com')
+			organization.normal_member.add(User.objects.get(username=names[i].lower()))
 			organization.save()
 			i += 1
 		print "Generate Organization successfully"

@@ -207,6 +207,26 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['organization_id', 'user_id'])
 
+        # Adding model 'OrganizationBoardMemberInvitation'
+        db.create_table(u'main_organizationboardmemberinvitation', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('board_member_invite', self.gf('django.db.models.fields.related.ForeignKey')(related_name='board_member_invite', to=orm['main.OrganizationBoardMember'])),
+            ('invited_member', self.gf('django.db.models.fields.related.ForeignKey')(related_name='invited_member', to=orm['auth.User'])),
+            ('invitation_status', self.gf('django.db.models.fields.CharField')(default='0', max_length=1)),
+            ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+        ))
+        db.send_create_signal(u'main', ['OrganizationBoardMemberInvitation'])
+
+        # Adding model 'OrganizationJoinRequest'
+        db.create_table(u'main_organizationjoinrequest', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('organization', self.gf('django.db.models.fields.related.ForeignKey')(related_name='organization', to=orm['main.Organization'])),
+            ('user_request', self.gf('django.db.models.fields.related.ForeignKey')(related_name='user_request', to=orm['main.Volunteer'])),
+            ('request_status', self.gf('django.db.models.fields.CharField')(default='0', max_length=1)),
+            ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+        ))
+        db.send_create_signal(u'main', ['OrganizationJoinRequest'])
+
         # Adding model 'ProjectActivity'
         db.create_table(u'main_projectactivity', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -247,22 +267,6 @@ class Migration(SchemaMigration):
             ('transaction_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal(u'main', ['Donation'])
-
-        # Adding model 'Invitation_Member'
-        db.create_table(u'main_invitation_member', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('board_member', self.gf('django.db.models.fields.related.ForeignKey')(related_name='board_member_invitation', to=orm['main.OrganizationBoardMember'])),
-            ('normal_member', self.gf('django.db.models.fields.related.ForeignKey')(related_name='normal_member_invitation', to=orm['main.Organization'])),
-        ))
-        db.send_create_signal(u'main', ['Invitation_Member'])
-
-        # Adding model 'Request'
-        db.create_table(u'main_request', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('normal_member', self.gf('django.db.models.fields.related.ForeignKey')(related_name='normal_member_invitation_volunteer', to=orm['main.Organization'])),
-            ('volunteer', self.gf('django.db.models.fields.related.ForeignKey')(related_name='volunteer_invitation', to=orm['main.Volunteer'])),
-        ))
-        db.send_create_signal(u'main', ['Request'])
 
         # Adding model 'UserProfile'
         db.create_table(u'main_userprofile', (
@@ -355,6 +359,12 @@ class Migration(SchemaMigration):
         # Removing M2M table for field normal_member on 'Organization'
         db.delete_table(db.shorten_name(u'main_organization_normal_member'))
 
+        # Deleting model 'OrganizationBoardMemberInvitation'
+        db.delete_table(u'main_organizationboardmemberinvitation')
+
+        # Deleting model 'OrganizationJoinRequest'
+        db.delete_table(u'main_organizationjoinrequest')
+
         # Deleting model 'ProjectActivity'
         db.delete_table(u'main_projectactivity')
 
@@ -366,12 +376,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Donation'
         db.delete_table(u'main_donation')
-
-        # Deleting model 'Invitation_Member'
-        db.delete_table(u'main_invitation_member')
-
-        # Deleting model 'Request'
-        db.delete_table(u'main_request')
 
         # Deleting model 'UserProfile'
         db.delete_table(u'main_userprofile')
@@ -503,12 +507,6 @@ class Migration(SchemaMigration):
             'text_content': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'to_emails': ('django.db.models.fields.TextField', [], {})
         },
-        u'main.invitation_member': {
-            'Meta': {'object_name': 'Invitation_Member'},
-            'board_member': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_invitation'", 'to': u"orm['main.OrganizationBoardMember']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'normal_member': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'normal_member_invitation'", 'to': u"orm['main.Organization']"})
-        },
         u'main.message': {
             'Meta': {'object_name': 'Message'},
             'content': ('django.db.models.fields.TextField', [], {}),
@@ -550,6 +548,22 @@ class Migration(SchemaMigration):
             'projects': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'board_member_projects'", 'symmetrical': 'False', 'to': u"orm['main.Project']"}),
             'role': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_user'", 'to': u"orm['auth.User']"})
+        },
+        u'main.organizationboardmemberinvitation': {
+            'Meta': {'object_name': 'OrganizationBoardMemberInvitation'},
+            'board_member_invite': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_invite'", 'to': u"orm['main.OrganizationBoardMember']"}),
+            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'invitation_status': ('django.db.models.fields.CharField', [], {'default': "'0'", 'max_length': '1'}),
+            'invited_member': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'invited_member'", 'to': u"orm['auth.User']"})
+        },
+        u'main.organizationjoinrequest': {
+            'Meta': {'object_name': 'OrganizationJoinRequest'},
+            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'organization': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'organization'", 'to': u"orm['main.Organization']"}),
+            'request_status': ('django.db.models.fields.CharField', [], {'default': "'0'", 'max_length': '1'}),
+            'user_request': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user_request'", 'to': u"orm['main.Volunteer']"})
         },
         u'main.photo': {
             'Meta': {'object_name': 'Photo'},
@@ -602,12 +616,6 @@ class Migration(SchemaMigration):
             'report_type': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'unique_id': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'user_report': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user_report'", 'blank': 'True', 'to': u"orm['auth.User']"})
-        },
-        u'main.request': {
-            'Meta': {'object_name': 'Request'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'normal_member': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'normal_member_invitation_volunteer'", 'to': u"orm['main.Organization']"}),
-            'volunteer': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'volunteer_invitation'", 'to': u"orm['main.Volunteer']"})
         },
         u'main.socialfriendlist': {
             'Meta': {'object_name': 'SocialFriendList'},
