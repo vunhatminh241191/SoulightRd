@@ -1,8 +1,8 @@
 1_setup_config.py
+2_generate_default_image.py
 3_setup_admin_info.py
 4_fix_site_issue.py
 5_auto_generate_users.py
-2_generate_default_image.py
 <!-- 6_save_dajaxice_js.py
 <!-- 7_setup_assets.py
 8_add_facebook_app.py
