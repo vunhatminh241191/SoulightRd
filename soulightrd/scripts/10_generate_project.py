@@ -10,7 +10,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from soulightrd.apps.main.models import Project, Organization, Photo, City
 from dummy_database import PROJECT_TESTING, ORGANIZATION_NAMES
 from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
-from soulightrd.apps.app_helper import get_any_admin_object
+from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 
 def main():
 	print "... RUNNING GENERATE PROJECT SCRIPT ..."
