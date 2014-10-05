@@ -1,4 +1,4 @@
-import os, sys, string
+import os, sys, string, datetime
 
 SETTING_PATH = os.path.abspath(__file__ + "/../../")
 PROJECT_PATH = os.path.abspath(__file__ + "/../../../")
@@ -20,8 +20,9 @@ def main():
 	try:
 		while i in range(len(ORGANIZATION_NAMES)):
 			organization = Organization.objects.create(unique_id=ORGANIZATION_NAMES[i]
-				, phone='+' + generated_phone[i], email= ORGANIZATION_NAMES[i] + '@gmail.com')
+				, phone='+' + PHONE_TESTING[i], email= ORGANIZATION_NAMES[i] + '@gmail.com')
 			organization.normal_member.add(User.objects.get(username=NAMES[i].lower()))
+
 			organization.save()
 			i += 1
 		print "Generate Organization successfully"
