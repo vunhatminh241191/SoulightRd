@@ -20,6 +20,17 @@ def main():
 			organizationboardmember = OrganizationBoardMember.objects.create(
 				user = User.objects.get(username=NAMES[k].lower()),
 				organization = Organization.objects.get(unique_id=ORGANIZATION_NAMES[i]))
-			organizationboardmember.add(
-				Project.objects.get(organization=ORGANIZATION_NAMES[i]))
+			for project in Project.objects.filter(
+				organization=Organization.objects.get(unique_id=ORGANIZATION_NAMES[i])):
+				organizationboardmember.projects.add(project)
 			organizationboardmember.save()
+			k += 1
+		print "Generate Organization Board Member Successfully"
+	except:
+		print "Generate Organization Board Member Failed"
+		raise
+
+if __name__ == '__main__':
+	stage = sys.argv[1]
+	if stage != "prod":
+		main()
