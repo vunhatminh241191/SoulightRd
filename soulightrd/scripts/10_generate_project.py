@@ -7,8 +7,10 @@ sys.path.append(SETTING_PATH)
 sys.path.append(PROJECT_PATH)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
+from django.contrib.auth.models import User
+
 from soulightrd.apps.main.models import Project, Organization, Photo, City
-from dummy_database import PROJECT_TESTING, ORGANIZATION_NAMES
+from dummy_database import PROJECT_TESTING, ORGANIZATION_NAMES, NAMES
 from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
 from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 
@@ -35,6 +37,7 @@ def main():
 					project_duration=random.randint(1,12), 
 					project_start_date=datetime.datetime.today(),
 					project_location=City.objects.get(id=random.randint(1,23292)))
+				project.followers.add(User.objects.get(username=NAMES[random.randint(1,len(NAMES)]))
 				project.save()
 		print "Generate Project Successfully"
 	except:
