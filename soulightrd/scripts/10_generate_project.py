@@ -14,14 +14,21 @@ from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMA
 def main():
 	print "... RUNNING GENERATE PROJECT SCRIPT ..."
 
-	project_picture = Photo.objects.get(unique_id=DEFAULT_IMAGE_UNIQUE_ID['default_project_picture'])
-	
+	project_picture = None
+	try:
+		project_picture = Photo.objects.get(
+			unique_id=DEFAULT_IMAGE_UNIQUE_ID['default_project_picture'])
+	except Photo.DoesNotExist:
+		cover_picture = Photo.objects.create(caption="default_project_picture"
+			,user_post=admin,image=DEFAULT_IMAGE_PATH_MAPPING['default_project_picture']
+			,unique_id=generate_unique_id("photo"))	
+		
 	try:
 		for i in xrange(len(ORGANIZATION_NAMES)-1):
 			organization = Organization.objects.get(unique_id=ORGANIZATION_NAMES[i+1])
 			for k in xrange(3):
-				project = Project.objects.create(unique_id=PROJECT_TESTING[k], description='abcde', 
-					project_type=random.choice(string.ascii_lowercase),
+				project = Project.objects.create(unique_id=PROJECT_TESTING[k],
+					description='abcde', project_type=random.choice(string.ascii_lowercase),
 					funding_goal=random.randint(1,100), current_funding=random.randint(1,100),
 					project_image=project_picture,organization=organization, 
 					project_duration=random.randint(1,12), 
