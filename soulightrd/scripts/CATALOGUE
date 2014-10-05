@@ -8,3 +8,4 @@
 8_add_facebook_app.py
 9_generate_organizations.py
 10_generate_project.py
+11_generate_organization_board_member.py
