@@ -16,9 +16,8 @@ string_integer = '1234567890'
 def main():
 	print "... RUNNING GENERATE ORGANIZATION SCRIPT ..."
 
-	i = 0
 	try:
-		while i in range(len(ORGANIZATION_NAMES)):
+		for i in xrange(len(ORGANIZATION_NAMES)):
 			organization = Organization.objects.create(unique_id=ORGANIZATION_NAMES[i]
 				, phone='+' + PHONE_TESTING[i], email= ORGANIZATION_NAMES[i] + '@gmail.com')
 			organization.normal_member.add(User.objects.get(username=NAMES[i].lower()))

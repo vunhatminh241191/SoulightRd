@@ -25,8 +25,8 @@ def main():
 			,unique_id=generate_unique_id("photo"))	
 
 	try:
-		for i in xrange(len(ORGANIZATION_NAMES)-1):
-			organization = Organization.objects.get(unique_id=ORGANIZATION_NAMES[i+1])
+		for i in xrange(len(ORGANIZATION_NAMES)):
+			organization = Organization.objects.get(unique_id=ORGANIZATION_NAMES[i])
 			for k in xrange(3):
 				project = Project.objects.create(unique_id=PROJECT_TESTING[k],
 					description='abcde', project_type=random.choice(string.ascii_lowercase),
