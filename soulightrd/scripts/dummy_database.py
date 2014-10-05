@@ -13,5 +13,5 @@ PROJECT_TESTING = sorted(
 REPORT_TESTING = sorted(
 	["".join(x) for x in permutations(string.ascii_lowercase[:10], 4)])[:20]
 
-COMMENT_REPORT_TESTING = reversed(
-	["".join(x) for x in permutations(string.ascii_lowercase[:20], 8)])[:40])
+COMMENT_REPORT_TESTING = sorted(
+	["".join(x) for x in permutations(string.ascii_lowercase[:10], 8)])[:40]
