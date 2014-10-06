@@ -37,7 +37,7 @@ def main():
 					project_duration=random.randint(1,12), 
 					project_start_date=datetime.datetime.today(),
 					project_location=City.objects.get(id=random.randint(1,23292)))
-				project.followers.add(User.objects.get(username=NAMES[random.randint(1,len(NAMES))]))
+				project.followers.add(User.objects.get(username=NAMES[random.randint(0,len(NAMES))].lower()))
 				project.save()
 		print "Generate Project Successfully"
 	except:
