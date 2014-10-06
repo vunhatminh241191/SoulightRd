@@ -22,7 +22,7 @@ def main():
 			day = random.choice(range(1, 28))
 
 			volunteer = Volunteer.objects.create(
-				user=User.objects.get(username=NAMES[random.randint(54,102)]),
+				user=User.objects.get(username=NAMES[random.randint(54,len(NAMES))].lower()),
 				project=Project.objects.get(unique_id=PROJECT_TESTING[i]),
 				is_signed_confirmation=True, register_date = datetime(year,month,day))
 
