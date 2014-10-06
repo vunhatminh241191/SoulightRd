@@ -28,13 +28,15 @@ def main():
 
 	try:
 		for i in xrange(len(ORGANIZATION_NAMES)):
-			organization = Organization.objects.get(unique_id=ORGANIZATION_NAMES[i])
-			for k in xrange(3):
+			organization = )
+			for k in xrange(len(PROJECT_TESTING)):
+				if k %3 == 0:
+					i += 1
 				project = Project.objects.create(unique_id=PROJECT_TESTING[k],
 					description='abcde', project_type=random.choice(string.ascii_lowercase),
 					funding_goal=random.randint(1,100), current_funding=random.randint(1,100),
-					project_image=project_picture,organization=organization, 
-					project_duration=random.randint(1,12), 
+					project_image=project_picture, project_duration=random.randint(1,12),
+					organization=Organization.objects.get(unique_id=ORGANIZATION_NAMES[i]), 			 
 					project_start_date=datetime.datetime.today(),
 					project_location=City.objects.get(id=random.randint(1,23292)))
 				project.followers.add(User.objects.get(username=NAMES[random.randint(0,len(NAMES))].lower()))

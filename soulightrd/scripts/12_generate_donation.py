@@ -16,7 +16,10 @@ def main():
 
 	try:
 		for i in xrange(len(NAMES)):
-			testing_project = PROJECT_TESTING[random.randint(0,len(PROJECT_TESTING))]
+			ran = random.randint(0,len(PROJECT_TESTING))
+			print ran
+			testing_project = PROJECT_TESTING[ran]
+			print testing_project
 			donation = Donation.objects.create(
 				user = User.objects.get(username=NAMES[random.randint(0,len(NAMES))].lower()),
 				project = Project.objects.get(unique_id=testing_project),
