@@ -159,18 +159,41 @@ class Photo(models.Model):
 	def __unicode__(self):
 		return self.image.name
 
-class Notification(models.Model):
+class NotificationUser(models.Model):
 	unique_id = models.CharField(max_length=100)
 	content = models.TextField()
 	status = models.CharField(max_length=1,choices=NOTIFICATION_STATUS,default=NEW)
 	notification_type = models.CharField(max_length=30,choices=NOTIFICATION_TYPE,null=True)
-	notify_to = models.ManyToManyField(User, related_name='notify_to',blank=True,null=True)
-	notify_from = models.ForeignKey(User, related_name='notify_from')
+	notify_to = models.ManyToManyField(User, related_name='notify_to_user_user',blank=True,null=True)
+	notify_from = models.ForeignKey(User, related_name='notify_from_user_user')
 	date = models.DateTimeField(auto_now_add=True)
 	
 	def get_elapse_time(self):
 		return get_elapse_time_text(self.date)
 
+class NotificationUserOrganization(models.Model):
+	unique_id = models.CharField(max_length=100)
+	content = models.TextField()
+	status = models.CharField(max_length=1,choices=NOTIFICATION_STATUS,default=NEW)
+	notification_type = models.CharField(max_length=30,choices=NOTIFICATION_TYPE,null=True)
+	notify_to = models.ManyToManyField(Organization, related_name='notify_to_user_organization',blank=True,null=True)
+	notify_from = models.ForeignKey(User, related_name='notify_from_user_organization')
+	date = models.DateTimeField(auto_now_add=True)
+	
+	def get_elapse_time(self):
+		return get_elapse_time_text(self.date)
+
+class NotificationUserProject(models.Model):
+	unique_id = models.CharField(max_length=100)
+	content = models.TextField()
+	status = models.CharField(max_length=1,choices=NOTIFICATION_STATUS,default=NEW)
+	notification_type = models.CharField(max_length=30,choices=NOTIFICATION_TYPE,null=True)
+	notify_to = models.ManyToManyField(Project, related_name='notify_to_user_project',blank=True,null=True)
+	notify_from = models.ForeignKey(User, related_name='notify_from_user_project')
+	date = models.DateTimeField(auto_now_add=True)
+	
+	def get_elapse_time(self):
+		return get_elapse_time_text(self.date)
 
 class Message(models.Model):
 	unique_id = models.CharField(max_length=100)
@@ -212,11 +235,27 @@ class Comment(models.Model):
 			return get_elapse_time_text(self.edit_date)
 		return None 
 
-
-class Report(models.Model):
+class ReportUser(models.Model):
 	unique_id = models.CharField(max_length=100)
 	report_type = models.CharField(max_length=20,choices=REPORT_TYPE)
 	user_report = models.ForeignKey(User,related_name='user_report',blank=True)
+	user_reported = models.ForeignKey(User, related_name='user_reported')
+	date = models.DateTimeField(auto_now_add=True)
+	report_content = models.TextField()
+
+class ReportProject(models.Model):
+	unique_id = models.CharField(max_length=100)
+	report_type = models.CharField(max_length=20,choices=REPORT_TYPE)
+	user_report = models.ForeignKey(User,related_name='user_report',blank=True)
+	project_reported = models.ForeignKey(Project, related_name='project_reported')
+	date = models.DateTimeField(auto_now_add=True)
+	report_content = models.TextField()
+
+class ReportOrganization(models.Model):
+	unique_id = models.CharField(max_length=100)
+	report_type = models.CharField(max_length=20,choices=REPORT_TYPE)
+	user_report = models.ForeignKey(User,related_name='user_report',blank=True)
+	organization_reported = models.ForeignKey(User, related_name='organization_reported')
 	date = models.DateTimeField(auto_now_add=True)
 	report_content = models.TextField()
 
