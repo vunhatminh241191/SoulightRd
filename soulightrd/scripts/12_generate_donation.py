@@ -16,14 +16,10 @@ def main():
 
 	try:
 		for i in xrange(len(NAMES)):
-			ran = random.randint(0,len(PROJECT_TESTING))
-			print ran
-			testing_project = PROJECT_TESTING[ran]
-			print testing_project
 			donation = Donation.objects.create(
-				user = User.objects.get(username=NAMES[random.randint(0,len(NAMES))].lower()),
-				project = Project.objects.get(unique_id=testing_project),
-				amount = random.randint[1,200])
+				user = User.objects.get(username=NAMES[random.randint(0,len(NAMES)-1)].lower()),
+				project = Project.objects.get(unique_id=PROJECT_TESTING[random.randint(0,len(PROJECT_TESTING)-1)]),
+				amount = random.randint(1,200))
 			donation.save()
 		print "Generate Donation Successfully"
 	except:

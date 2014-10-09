@@ -1,4 +1,5 @@
-import os, sys,random, datetime
+import os, sys,random
+from datetime import datetime
 
 SETTING_PATH = os.path.abspath(__file__ + "/../../")
 PROJECT_PATH = os.path.abspath(__file__ + "/../../../")
@@ -7,7 +8,7 @@ sys.path.append(SETTING_PATH)
 sys.path.append(PROJECT_PATH)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-from soulightrd.apps.main.models import ProjectActivity, Project, Photo
+from soulightrd.apps.main.models import ProjectActivity, Project, Photo, OrganizationBoardMember
 from django.contrib.auth.models import User
 from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
@@ -17,6 +18,8 @@ def main():
 	print "... RUNNING GENERATE PROJECT ACTIVITY ..."
 
 	admin = get_any_admin_object()
+
+	project_activity_picture = None
 	try:
 		project_activity_picture = Photo.objects.get(
 			unique_id=DEFAULT_IMAGE_UNIQUE_ID['default_project_activity_picture'])
@@ -35,8 +38,11 @@ def main():
 
 			project_activity = ProjectActivity.objects.create(
 				title='abcdef', project = project, description='done', 
-				user = project.followers, image_proof=project_activity_picture,
-				date = datetime(year,month,day))
+				responsible_member = User.objects.get(username=OrganizationBoardMember.objects.get(
+					projects=project).user)
+					,date = datetime(year,month,day))
+
+			project_activity.image_proof.add(project_activity_picture)
 			
 			project_activity.save()
 		print "Generate Project Activity Successfully"

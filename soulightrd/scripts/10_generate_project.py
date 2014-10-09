@@ -1,4 +1,5 @@
-import os, sys, random, string, datetime
+import os, sys, random, string
+from datetime import datetime
 
 SETTING_PATH = os.path.abspath(__file__ + "/../../")
 PROJECT_PATH = os.path.abspath(__file__ + "/../../../")
@@ -18,6 +19,8 @@ def main():
 	print "... RUNNING GENERATE PROJECT SCRIPT ..."
 
 	admin = get_any_admin_object()
+
+	project_picture = None
 	try:
 		project_picture = Photo.objects.get(
 			unique_id=DEFAULT_IMAGE_UNIQUE_ID['default_project_picture'])
@@ -26,21 +29,25 @@ def main():
 			,user_post=admin,image=DEFAULT_IMAGE_PATH_MAPPING['default_project_picture']
 			,unique_id=generate_unique_id("photo"))	
 
+	i = 0
 	try:
-		for i in xrange(len(ORGANIZATION_NAMES)):
-			organization = )
-			for k in xrange(len(PROJECT_TESTING)):
-				if k %3 == 0:
-					i += 1
-				project = Project.objects.create(unique_id=PROJECT_TESTING[k],
-					description='abcde', project_type=random.choice(string.ascii_lowercase),
-					funding_goal=random.randint(1,100), current_funding=random.randint(1,100),
-					project_image=project_picture, project_duration=random.randint(1,12),
-					organization=Organization.objects.get(unique_id=ORGANIZATION_NAMES[i]), 			 
-					project_start_date=datetime.datetime.today(),
-					project_location=City.objects.get(id=random.randint(1,23292)))
-				project.followers.add(User.objects.get(username=NAMES[random.randint(0,len(NAMES))].lower()))
-				project.save()
+		for k in xrange(len(PROJECT_TESTING)):
+			if k %3 == 0 and k != 0:
+				i += 1
+
+			year = random.choice(range(2005, 2014))
+			month = random.choice(range(1, 12))
+			day = random.choice(range(1, 28))
+
+			project = Project.objects.create(unique_id=PROJECT_TESTING[k],
+				description='abcde', project_type=random.choice(string.ascii_lowercase),
+				funding_goal=random.randint(1,100), current_funding=random.randint(1,100),
+				project_image=project_picture, project_duration=random.randint(1,12),
+				organization=Organization.objects.get(unique_id=ORGANIZATION_NAMES[i]), 			 
+				project_start_date=datetime(year, month, day),
+				project_location=City.objects.get(id=random.randint(1,23292)))
+			project.followers.add(User.objects.get(username=NAMES[random.randint(0,len(NAMES)-1)].lower()))
+			project.save()
 		print "Generate Project Successfully"
 	except:
 		print "Generate Project Failed"
