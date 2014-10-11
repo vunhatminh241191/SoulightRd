@@ -17,6 +17,6 @@ build
 # Celerybeat scheduler file:
 celerybeat-schedule
 
-
+.c9
 *.pyc
 venv-soulightrd
