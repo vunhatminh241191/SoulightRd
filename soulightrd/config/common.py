@@ -45,7 +45,7 @@ SERVER_EMAIL=environ.get('SERVER_EMAIL')
 
 EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 EMAIL_HOST = 'smtp.mandrillapp.com'
-EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_USER = SERVER_EMAIL
 EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD')
 
 EMAIL_PORT = 587

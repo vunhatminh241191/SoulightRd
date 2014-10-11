@@ -18,15 +18,17 @@ from django import db
 def main():
 	print "...ADD FACEBOOK SOCIAL APP..."
 	try:
-		socialApps = SocialApp.objects.all()
-		if len(socialApps) == 0:
+		social_apps = SocialApp.objects.all()
+		if len(social_apps) == 0:
 			site = Site.objects.get(pk=1)
-			social_app = SocialApp.objects.create(provider=FACEBOOK_PROVIDER,name=FACEBOOK_APP_NAME,client_id=FACEBOOK_APP_ID,secret=FACEBOOK_APP_SECRET)
-			social_app.sites.add(site)
-			social_app.save()
+			facebook_app = SocialApp.objects.create(provider=FACEBOOK_PROVIDER,name=FACEBOOK_APP_NAME,client_id=FACEBOOK_APP_ID,secret=FACEBOOK_APP_SECRET)
+			facebook_app.sites.add(site)
+			facebook_app.save()
 		print "Add facebook social app successfully"
 	except Exception as exception:
+		print "Add facebook social app failed"
 		raise
+	
 	db.close_connection()
 	
 if __name__ == "__main__":

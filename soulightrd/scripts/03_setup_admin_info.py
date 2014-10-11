@@ -26,7 +26,7 @@ def main():
 	print "...SETUP ADMIN INFO..."
 	try:
 		try:
-			admin = User.objects.get(email=ADMIN_EMAIL)
+			admin = User.objects.get(username=ADMIN_USERNAME)
 		except:
 			admin = User.objects.create(username=ADMIN_USERNAME)
 			admin.set_password(ADMIN_PASSWORD)
@@ -47,6 +47,8 @@ def main():
 		user_profile.avatar = Photo.objects.get(unique_id=DEFAULT_IMAGE_UNIQUE_ID['default_male_icon'])
 		user_profile.save()
 
+		db.close_connection()
+
 		print "Setup Admin Info Successfully"
 	except:
 		stage = sys.argv[1]
@@ -57,7 +59,7 @@ def main():
 					"Please double check and try again"
 		else:
 			raise
-	db.close_connection()
+	
 		
 if __name__ == "__main__":
     main() 

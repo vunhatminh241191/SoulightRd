@@ -8,6 +8,7 @@ sys.path.append(PROJECT_PATH)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 from django.contrib.auth.models import User
+from django import db
 
 from soulightrd.apps.main.models import Photo
 from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
@@ -30,9 +31,8 @@ def main():
 			cover_picture = Photo.objects.get(unique_id=DEFAULT_IMAGE_UNIQUE_ID['default_cover_picture'])
 		except Photo.DoesNotExist:
 			cover_picture = Photo.objects.create(caption="default_male_icon",user_post=admin,image=DEFAULT_IMAGE_PATH_MAPPING['default_cover_picture'],unique_id=generate_unique_id("photo"))
-		i = 0
+		i = 1
 		for name in NAMES:
-			i = i + 1 
 			test_email = "test"+str(i)+"@soulightrd.com"
 			check_user = User.objects.filter(email=test_email)
 			if len(check_user) == 0:
@@ -42,10 +42,13 @@ def main():
 				user.get_profile().avatar = avatar
 				user.get_profile().cover_picture = cover_picture
 				user.get_profile().save()
-		print "Generate users successfully"
+			i += 1
+		print "Generate Users Successfully"
 	except:
 		print "Generate User Failed"
 		raise
+
+	db.close_connection()
 
 if __name__ == "__main__":
 	stage = sys.argv[1]

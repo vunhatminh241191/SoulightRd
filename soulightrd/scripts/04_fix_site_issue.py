@@ -24,6 +24,7 @@ def main():
 		except Site.DoesNotExist:
 			Site.objects.create(domain=PROJECT_DOMAIN, name=PROJECT_NAME)
 
+		db.close_connection()
 		print "Fix Site Issue Successfully"
 	except:
 		stage = sys.argv[1]
@@ -34,7 +35,7 @@ def main():
 					"Please double check and try again"
 		else:
 			raise
-	db.close_connection()
+	
 
 if __name__ == "__main__":
     main() 

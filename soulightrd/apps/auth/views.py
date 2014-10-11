@@ -358,7 +358,15 @@ password_reset = PasswordResetView.as_view()
 
 
 class PasswordResetDoneView(TemplateView):
-    template_name = "account/password_reset_done.html"
+
+    def get_context_data(self, **kwargs):
+        ret = super(PasswordResetDoneView, self).get_context_data(**kwargs)
+        ret['app_name'] = APP_NAME
+        return ret
+
+    def get_template_names(self):
+        template_path = get_template_path(APP_NAME,"password_reset_done",RequestContext(self.request)['flavour'],'/account/')
+        return [template_path]
 
 password_reset_done = PasswordResetDoneView.as_view()
 
@@ -367,6 +375,11 @@ class PasswordResetFromKeyView(FormView):
     form_class = ResetPasswordKeyForm
     token_generator = default_token_generator
     success_url = reverse_lazy("account_reset_password_from_key_done")
+
+    def get_context_data(self, **kwargs):
+        ret = super(PasswordResetFromKeyView, self).get_context_data(**kwargs)
+        ret['app_name'] = APP_NAME
+        return ret
 
     def get_template_names(self):
         template_path = get_template_path(APP_NAME,"password_reset_from_key",RequestContext(self.request)['flavour'],'/account/')
@@ -501,7 +514,8 @@ class SocialSignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
     def get_context_data(self, **kwargs):
         ret = super(SocialSignupView, self).get_context_data(**kwargs)
         ret.update(dict(site=Site.objects.get_current(),
-                        account=self.sociallogin.account))
+                        account=self.sociallogin.account),
+                        app_name=APP_NAME)
         return ret
 
     def get_authenticated_redirect_url(self):

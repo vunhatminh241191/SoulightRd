@@ -1,8 +1,9 @@
+00_clean_dummy_data.py
 01_setup_config.py
 02_generate_default_image.py
 03_setup_admin_info.py
 04_fix_site_issue.py
-05_add_facebook_app.py
+05_add_social_app.py
 06_setup_assets.py
 07_generate_users.py
 08_generate_organizations.py
