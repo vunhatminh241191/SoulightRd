@@ -170,7 +170,6 @@ class Notification(models.Model):
 	def get_elapse_time(self):
 		return get_elapse_time_text(self.date)
 
-
 class Message(models.Model):
 	unique_id = models.CharField(max_length=100)
 	user_send = models.ForeignKey(User,related_name="user_send")
@@ -211,14 +210,13 @@ class Comment(models.Model):
 			return get_elapse_time_text(self.edit_date)
 		return None 
 
-
 class Report(models.Model):
 	unique_id = models.CharField(max_length=100)
 	report_type = models.CharField(max_length=20,choices=REPORT_TYPE)
 	user_report = models.ForeignKey(User,related_name='user_report',blank=True)
 	date = models.DateTimeField(auto_now_add=True)
 	report_content = models.TextField()
-
+	
 class Project(models.Model):
 	unique_id = models.CharField(max_length=100)
 	title = models.CharField(max_length=300)

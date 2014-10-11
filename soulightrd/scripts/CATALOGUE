@@ -4,5 +4,11 @@
 4_fix_site_issue.py
 5_auto_generate_users.py
 <!-- 6_save_dajaxice_js.py
-7_setup_assets.py
+<!-- 7_setup_assets.py
 8_add_facebook_app.py
+9_generate_organizations.py
+10_generate_project.py
+11_generate_organization_board_member.py
+12_generate_donation.py
+13_generate_project_activity.py
+14_generate_volunteer.py

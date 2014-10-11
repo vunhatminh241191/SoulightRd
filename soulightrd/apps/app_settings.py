@@ -33,6 +33,8 @@ MODEL_KEY_LIST = [
   "LO", "AC", "IV", "PT", "VD", "CM", "CN", "RP", "NF", "MG", "FD", "DI", "UN"
 ]
 
+
+
 MODEL_KEY_MAP = {
   "location": "LO",
   "activity": "AC",
@@ -57,7 +59,8 @@ DEFAULT_IMAGE_PATH_MAPPING = {
   "default_male_icon": "default/img/user/male_icon.png",
   "default_female_icon": "default/img/user/female_icon.png",
   "default_cover_picture": 'default/img/user/cover_picture.png',
-
+  "default_project_picture": 'default/img/user/project_picture.png',
+  "default_project_activity_picture": 'default/img/user/project_activity_picture.png',
 }
 
 
@@ -66,7 +69,8 @@ DEFAULT_IMAGE_UNIQUE_ID = {
   "default_male_icon": "DIBHgn2pXkaWLAYgpRsQGTo3088",
   "default_female_icon": "DIJE4S63KnuKozEq4BsC2PH4019",
   "default_cover_picture": 'DInXsK7dXR9BGXpmKR9Mhd6D124',
-
+  "default_project_picture": 'DInXsK7dXR9BGXpmKR9Mhd7B89',
+  "default_project_activity_picture": 'DInXsK7dXR9BGXpmKR9Mhd2M33',
 }
 
 MESSAGE_SNIPPET_TEMPLATE =  { 
