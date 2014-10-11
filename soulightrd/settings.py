@@ -41,12 +41,12 @@ MANAGERS = ADMINS
 ########## END MANAGER CONFIGURATION
 
 MANDRILL_API_KEY = environ.get("MANDRILL_API_KEY") 
-SERVER_EMAIL=environ.get('SERVER_EMAIL','soulightrd@gmail.com')
+SERVER_EMAIL=environ.get('SERVER_EMAIL')
 
 EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 EMAIL_HOST = 'smtp.mandrillapp.com'
-EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER','soulightrd@gmail.com')
-EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD','soulightrd4success')
+EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD')
 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -411,9 +411,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
-WEBSITE_HOMEPAGE = "http://localhost:8000"
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+WEBSITE_HOMEPAGE = "http://localhost:8000/"
 
 DATABASES = {
     'default': {

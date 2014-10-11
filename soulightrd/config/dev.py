@@ -4,9 +4,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
-WEBSITE_HOMEPAGE = "http://localhost:8000"
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+WEBSITE_HOMEPAGE = "http://localhost:8000/"
 
 DATABASES = {
     'default': {

@@ -30,17 +30,15 @@ KEYWORDS_URL = [
 ]
 
 MODEL_KEY_LIST = [
-  "LO", "AC", "IV", "PT", "VD", "CM", "CN", "RP", "NF", "MG", "FD", "DI", "UN"
+  "OR", "PJ", "PA", "IV", "PT", "CM", "CN", "RP", "NF", "MG", "FD", "DI", "UN"
 ]
 
-
-
 MODEL_KEY_MAP = {
-  "location": "LO",
-  "activity": "AC",
+  "organization": "OR",
+  "project": "PJ",
+  "project_activity": "PA",
   "invitation": "IV",
   "photo": "PT",
-  "video": "VD",
   "comment": "CM",
   "conversation": "CN",
   "report": "RP",

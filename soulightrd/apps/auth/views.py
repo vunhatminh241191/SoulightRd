@@ -111,9 +111,7 @@ class LoginView(RedirectAuthenticatedUserMixin,
         return ret
 
     def get_template_names(self):
-        context_instance = RequestContext(self.request)
-        template_name = "login"
-        template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'],'/account/')
+        template_path = get_template_path(APP_NAME,"login",RequestContext(self.request)['flavour'],'/account/')
         return [template_path]
 
 login = LoginView.as_view()
@@ -155,9 +153,7 @@ class SignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
         return ret
 
     def get_template_names(self):
-        context_instance = RequestContext(self.request)
-        template_name = "signup"
-        template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'],'/account/')
+        template_path = get_template_path(APP_NAME,"signup",RequestContext(self.request)['flavour'],'/account/')
         return [template_path]
 
 signup = SignupView.as_view()
@@ -288,13 +284,12 @@ class PasswordChangeView(FormView):
         ret = super(PasswordChangeView, self).get_context_data(**kwargs)
         # NOTE: For backwards compatibility
         ret['password_change_form'] = ret.get('form')
+        ret['app_name'] = APP_NAME
         # (end NOTE)
         return ret
 
     def get_template_names(self):
-        context_instance = RequestContext(self.request)
-        template_name = "password_change"
-        template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'],'/account/')
+        template_path = get_template_path(APP_NAME,"password_change",RequestContext(self.request)['flavour'],'/account/')
         return [template_path]
 
 password_change = login_required(PasswordChangeView.as_view())
@@ -328,13 +323,12 @@ class PasswordSetView(FormView):
         ret = super(PasswordSetView, self).get_context_data(**kwargs)
         # NOTE: For backwards compatibility
         ret['password_set_form'] = ret.get('form')
+        ret['app_name'] = APP_NAME
         # (end NOTE)
         return ret
 
     def get_template_names(self):
-        context_instance = RequestContext(self.request)
-        template_name = "password_set"
-        template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'],'/account/')
+        template_path = get_template_path(APP_NAME,"password_set",RequestContext(self.request)['flavour'],'/account/')
         return [template_path]
 
 password_set = login_required(PasswordSetView.as_view())
@@ -352,13 +346,12 @@ class PasswordResetView(FormView):
         ret = super(PasswordResetView, self).get_context_data(**kwargs)
         # NOTE: For backwards compatibility
         ret['password_reset_form'] = ret.get('form')
+        ret['app_name'] = APP_NAME
         # (end NOTE)
         return ret
 
     def get_template_names(self):
-        context_instance = RequestContext(self.request)
-        template_name = "password_reset"
-        template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'],'/account/')
+        template_path = get_template_path(APP_NAME,"password_reset",RequestContext(self.request)['flavour'],'/account/')
         return [template_path]
 
 password_reset = PasswordResetView.as_view()
@@ -376,9 +369,7 @@ class PasswordResetFromKeyView(FormView):
     success_url = reverse_lazy("account_reset_password_from_key_done")
 
     def get_template_names(self):
-        context_instance = RequestContext(self.request)
-        template_name = "password_reset_from_key"
-        template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'],'/account/')
+        template_path = get_template_path(APP_NAME,"password_reset_from_key",RequestContext(self.request)['flavour'],'/account/')
         return [template_path]
 
     def _get_user(self, uidb36):
@@ -476,9 +467,7 @@ logout = LogoutView.as_view()
 class AccountInactiveView(TemplateView):
 
     def get_template_names(self):
-        context_instance = RequestContext(self.request)
-        template_name = "account_inactive"
-        template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'],'/account/')
+        template_path = get_template_path(APP_NAME,"account_inactive",RequestContext(self.request)['flavour'],'/account/')
         return [template_path]
 
 account_inactive = AccountInactiveView.as_view()
@@ -519,9 +508,7 @@ class SocialSignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
         return "/"
 
     def get_template_names(self):
-        context_instance = RequestContext(self.request)
-        template_name = "signup"
-        template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'],'/socialaccount/')
+        template_path = get_template_path(APP_NAME,"signup",RequestContext(self.request)['flavour'],'/socialaccount/')
         return [template_path]
 
 social_signup = SocialSignupView.as_view()

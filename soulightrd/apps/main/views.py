@@ -16,8 +16,7 @@ APP_NAME = "main"
 
 def main_page(request):
 	context_instance = RequestContext(request)
-	template_name = "index"
-	template_path = get_template_path(APP_NAME,template_name,context_instance['flavour'])
+	template_path = get_template_path(APP_NAME,"index",context_instance['flavour'])
 	data = {"app_name": APP_NAME}
 	return render_to_response(template_path,data,context_instance=context_instance)
 
