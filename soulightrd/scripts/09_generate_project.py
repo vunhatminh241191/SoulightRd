@@ -37,20 +37,21 @@ def main():
 		try:
 			organizations = Organization.objects.all()
 			for organization in organizations:
+				for i in range(1,3):
+					year = random.choice(range(2005, 2014))
+					month = random.choice(range(1, 12))
+					day = random.choice(range(1, 28))
 
-				year = random.choice(range(2005, 2014))
-				month = random.choice(range(1, 12))
-				day = random.choice(range(1, 28))
-
-				project = Project.objects.create(unique_id=generate_unique_id("project"),
-					description='abcde', project_type=random.choice(string.ascii_lowercase),
-					funding_goal=random.randint(1,100), current_funding=random.randint(1,100),
-					project_image=project_picture, project_duration=random.randint(1,12),
-					organization=organization, 			 
-					project_start_date=datetime(year, month, day),
-					project_location=City.objects.order_by('?')[0])
-				project.followers.add(User.objects.get(username=NAMES[random.randint(0,len(NAMES)-1)].lower()))
-				project.save()
+					project = Project.objects.create(unique_id=generate_unique_id("project"),
+						title=organization.name + " Project " + str(i),
+						description='abcde', project_type=random.choice(string.ascii_lowercase),
+						funding_goal=random.randint(1,100), current_funding=random.randint(1,100),
+						project_image=project_picture, project_duration=random.randint(1,12),
+						organization=organization, 			 
+						project_start_date=datetime(year, month, day),
+						project_location=City.objects.order_by('?')[0])
+					project.followers.add(User.objects.get(username=NAMES[random.randint(0,len(NAMES)-1)].lower()))
+					project.save()
 			print "Generate Project Successfully"
 		except:
 			print "Generate Project Failed"

@@ -23,8 +23,13 @@ def main():
 	if len(organizations) == 0:
 		try:
 			for i in xrange(len(ORGANIZATION_NAMES)):
-				organization = Organization.objects.create(unique_id=generate_unique_id("organization")
-					, phone='+' + PHONE_TESTING[i], email= ORGANIZATION_NAMES[i] + '@gmail.com')
+				organization = Organization.objects.create(
+					unique_id=generate_unique_id("organization"), 
+					name="Organization " + str(i),
+					description="abcde",
+					phone='+' + PHONE_TESTING[i], 
+					email= ORGANIZATION_NAMES[i] + '@gmail.com',
+					address='whatever')
 				organization.normal_member.add(User.objects.get(username=NAMES[i].lower()))
 
 				organization.save()
