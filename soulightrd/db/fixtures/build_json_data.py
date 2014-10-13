@@ -4,8 +4,8 @@ data = json.loads(open('cities.json').read())
 
 f = open("built_city_data.json","w")
 
-LIST_COUNTRIES_ID = [242, 234, 200]
-LIST_COUNTRIES_CODE = ["US", "SG", "VN"]
+LIST_COUNTRIES_ID = [242]
+LIST_COUNTRIES_CODE = ["US"]
 
 s = "["
 for item in data:
