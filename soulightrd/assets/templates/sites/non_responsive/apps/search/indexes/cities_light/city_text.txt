@@ -1,0 +1,6 @@
+{{object.name}}
+{{object.display_name}}
+{{object.search_names}}
+{{object.country.name}}
+{{object.region}}
+{{object.feature_code}}

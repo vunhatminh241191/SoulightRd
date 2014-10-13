@@ -5,10 +5,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def build_project_autocomplete_data(activities,container):
+def build_project_autocomplete_data(projects,container):
 	return container
 
-def build_organization_autocomplete_data(locations,container):
+def build_organization_autocomplete_data(organizations,container):
 	return container
 
 def build_user_autocomplete_data(users,container):

@@ -72,7 +72,15 @@ DEFAULT_IMAGE_UNIQUE_ID = {
 }
 
 MESSAGE_SNIPPET_TEMPLATE =  { 
-  "confirm_email_asking": "messages/apps/auth/confirm_email_asking.html",
+  # Auth app
+  "signup_success": "texts/message/apps/auth/signup_success.html",
+  "confirm_email_success": "texts/message/apps/auth/confirm_email_success.html",
+  "confirm_email_asking": "texts/message/apps/auth/confirm_email_asking.html",
+  "resend_confirm_email_success": "texts/message/apps/auth/resend_confirm_email_success.html",
+  "resend_confirm_email_error": "texts/message/apps/auth/resend_confirm_email_error.html",
+  "change_password_success": "texts/message/apps/auth/change_password_success.html",
+  "social_login_error": "texts/message/apps/auth/social_login_error.html",
+  "reset_password_success": "texts/message/apps/auth/reset_password_success.html",
 }
 
 HTML_SNIPPET_TEMPLATE = {

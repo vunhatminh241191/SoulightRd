@@ -215,6 +215,7 @@ class Comment(models.Model):
 class Report(models.Model):
 	unique_id = models.CharField(max_length=100)
 	report_type = models.CharField(max_length=20,choices=REPORT_TYPE)
+	object_id = models.CharField(max_length=100)
 	user_report = models.ForeignKey(User,related_name='user_report',blank=True)
 	date = models.DateTimeField(auto_now_add=True)
 	report_content = models.TextField()
