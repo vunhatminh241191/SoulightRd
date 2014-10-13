@@ -5,7 +5,7 @@ data = json.loads(open('cities.json').read())
 f = open("built_city_data.json","w")
 
 LIST_COUNTRIES_ID = [242]
-LIST_COUNTRIES_CODE = ["US"]
+LIST_COUNTRIES_CODE = ["VN"]
 
 s = "["
 for item in data:

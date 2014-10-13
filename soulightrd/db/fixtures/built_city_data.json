@@ -1,17 +1,17 @@
 [{
-  "pk": 234, 
+  "pk": 242, 
   "model": "cities_light.country", 
   "fields": {
-    "code2": "US", 
-    "code3": "USA", 
-    "name": "United States", 
-    "name_ascii": "United States", 
-    "alternate_names": "Vereinigte Staaten,America,United States of America,Estados Unidos,Stany Zjednoczone,U.S.,USA,U.S.A.", 
-    "slug": "united-states", 
-    "geoname_id": 6252001, 
-    "phone": "1", 
-    "tld": "us", 
-    "continent": "NA"
+    "code2": "VN", 
+    "code3": "VNM", 
+    "name": "Vietnam", 
+    "name_ascii": "Vietnam", 
+    "alternate_names": "Socialist Republic of Vietnam,Vietn\u00e3,Vietname,Wietnam", 
+    "slug": "vietnam", 
+    "geoname_id": 1562822, 
+    "phone": "84", 
+    "tld": "vn", 
+    "continent": "AS"
   }
 },{
   "pk": 3711, 
