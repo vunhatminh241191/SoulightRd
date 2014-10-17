@@ -3,7 +3,7 @@ from django.contrib import admin
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from django.conf import settings
 
-from soulightrd.apps.main.views import error_page
+from soulightrd.apps.main.views import Error404View, Error500View
 
 from djrill import DjrillAdminSite
 
@@ -33,9 +33,6 @@ urlpatterns = patterns('',
     url(r'^organization/',include('soulightrd.apps.organization.urls')),
     url(r'^project/',include('soulightrd.apps.project.urls')),
     url(r'^people/(?P<username>\w+)/',include('soulightrd.apps.member.urls')),
-
-    # Error page
-    url(r'^error/$',error_page),
                     
     # Dajaxice URL
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
@@ -47,6 +44,5 @@ urlpatterns = patterns('',
 
 )
 
-handler403 = error_page
-handler404 = error_page
-handler500 = error_page
+handler404 = Error404View.as_view()
+handler500 = Error500View.as_view()

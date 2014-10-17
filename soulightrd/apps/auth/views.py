@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect, re
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.sites.models import Site
 from django.utils.http import base36_to_int
+from django.views.generic import RedirectView
 from django.views.generic.base import TemplateResponseMixin, View, TemplateView
 from django.views.generic.edit import FormView
 from django.contrib import messages
@@ -58,24 +59,27 @@ logger = logging.getLogger(__name__)
 APP_NAME = "auth"
 
 
-def resend_confirm_email(request):
-    user_login = get_user_login_object(request)
-    email = user_login.email
-    request.session['is_show_request_message'] = True
-    try:
-        email_address = EmailAddress.objects.get(
-                user=request.user,
-                email=email,
-            )
-        get_account_adapter().add_message(request,
-                                    messages.INFO,
-                                    'account/messages/'
-                                    'email_confirmation_sent.txt',
-                                    {'email': email})
-        email_address.send_confirmation(request)
-        return HttpResponseRedirect("/?action=resend_confirm_email&result=success")
-    except EmailAddress.DoesNotExist:
-        return HttpResponseRedirect("/?action=resend_confirm_email&result=error")
+class ResendConfirmEmailView(RedirectView):
+    def get(self, request, *args, **kwargs):
+        user_login = get_user_login_object(request)
+        email = user_login.email
+        request.session['is_show_request_message'] = True
+        try:
+            email_address = EmailAddress.objects.get(
+                    user=request.user,
+                    email=email,
+                )
+            get_account_adapter().add_message(request,
+                                        messages.INFO,
+                                        'account/messages/'
+                                        'email_confirmation_sent.txt',
+                                        {'email': email})
+            email_address.send_confirmation(request)
+            return HttpResponseRedirect("/?action=resend_confirm_email&result=success")
+        except EmailAddress.DoesNotExist:
+            return HttpResponseRedirect("/?action=resend_confirm_email&result=error")
+
+resend_confirm_email = ResendConfirmEmailView.as_view()
 
 
 class LoginView(RedirectAuthenticatedUserMixin,
@@ -428,8 +432,8 @@ class PasswordResetFromKeyView(FormView):
 password_reset_from_key = PasswordResetFromKeyView.as_view()
 
 
-class PasswordResetFromKeyDoneView(TemplateView):
-    def get(self, request):
+class PasswordResetFromKeyDoneView(RedirectView):
+    def get(self, request, *args, **kwargs):
         request.session['is_show_request_message'] = True
         return HttpResponseRedirect(reverse('account_login') + "?action=reset_password&result=success")
 
@@ -528,14 +532,14 @@ class SocialSignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
 social_signup = SocialSignupView.as_view()
 
 
-class LoginCancelledView(TemplateView):
-    def get(self, request):
+class LoginCancelledView(RedirectView):
+    def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(reverse('account_login'))
 
 login_cancelled = LoginCancelledView.as_view()
 
-class LoginErrorView(View):
-    def get(self, request):
+class LoginErrorView(RedirectView):
+    def get(self, request, *args, **kwargs):
         request.session['is_show_request_message'] = True
         return HttpResponseRedirect(reverse('account_login') + "?action=social_login&result=error")
 
