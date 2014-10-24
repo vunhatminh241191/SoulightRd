@@ -29,6 +29,7 @@ django-dajaxice==0.6
 django-easy-timezones==0.2.0
 django-haystack==2.0.0
 django-htmlmin==0.6.2
+django-merchant==0.2
 django-mobile==0.3.0
 django-money-rates==0.3.1
 django-money==0.4.2

@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.sites.models import Site
 from django.utils.http import base36_to_int
 from django.views.generic import RedirectView
+from django.views.generic.base import ContextMixin
 from django.views.generic.base import TemplateResponseMixin, View, TemplateView
 from django.views.generic.edit import FormView
 from django.contrib import messages
@@ -57,7 +58,6 @@ User = get_user_model()
 logger = logging.getLogger(__name__)
 
 APP_NAME = "auth"
-
 
 class ResendConfirmEmailView(RedirectView):
     def get(self, request, *args, **kwargs):

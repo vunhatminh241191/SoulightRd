@@ -20,6 +20,8 @@ from soulightrd.apps.main.constants import PHOTO_TYPE, NOTIFICATION_STATUS, NOTI
 from soulightrd.apps.main.constants import MESSAGE_STATUS, COMMENT_TYPE, REPORT_TYPE
 from soulightrd.apps.main.constants import PRIVACY_STATUS, PUBLIC
 
+from soulightrd.apps.app_settings import DEFAULT_SITE_NAME, DEFAULT_SERVER_EMAIL
+
 from soulightrd.apps.friend.provider.facebook_provider import FacebookFriendsProvider
 
 from allauth.socialaccount.models import SocialAccount
