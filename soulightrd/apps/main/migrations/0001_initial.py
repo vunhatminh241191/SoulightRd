@@ -120,6 +120,7 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('unique_id', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('report_type', self.gf('django.db.models.fields.CharField')(max_length=20)),
+            ('object_id', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('user_report', self.gf('django.db.models.fields.related.ForeignKey')(related_name='user_report', blank=True, to=orm['auth.User'])),
             ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('report_content', self.gf('django.db.models.fields.TextField')()),
@@ -188,13 +189,15 @@ class Migration(SchemaMigration):
         db.create_table(u'main_organization', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('unique_id', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='organization_created_by_user', to=orm['auth.User'])),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=300)),
             ('description', self.gf('django.db.models.fields.TextField')()),
             ('website', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
             ('phone', self.gf('phonenumber_field.modelfields.PhoneNumberField')(max_length=128)),
-            ('address', self.gf('django.db.models.fields.CharField')(max_length=300)),
+            ('address', self.gf('django.db.models.fields.related.ForeignKey')(related_name='organization_location', to=orm['cities_light.City'])),
             ('is_verified', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('organization_date', self.gf('django.db.models.fields.DateTimeField')()),
         ))
         db.send_create_signal(u'main', ['Organization'])
 
@@ -530,13 +533,15 @@ class Migration(SchemaMigration):
         },
         u'main.organization': {
             'Meta': {'object_name': 'Organization'},
-            'address': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
+            'address': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'organization_location'", 'to': u"orm['cities_light.City']"}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'organization_created_by_user'", 'to': u"orm['auth.User']"}),
             'description': ('django.db.models.fields.TextField', [], {}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_verified': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
             'normal_member': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'organization_normal_member'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"}),
+            'organization_date': ('django.db.models.fields.DateTimeField', [], {}),
             'phone': ('phonenumber_field.modelfields.PhoneNumberField', [], {'max_length': '128'}),
             'unique_id': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
@@ -612,6 +617,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Report'},
             'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'object_id': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'report_content': ('django.db.models.fields.TextField', [], {}),
             'report_type': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'unique_id': ('django.db.models.fields.CharField', [], {'max_length': '100'}),

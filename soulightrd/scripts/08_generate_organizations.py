@@ -1,4 +1,5 @@
-import os, sys, string, datetime
+import os, sys, string, random
+from datetime import datetime
 
 SETTING_PATH = os.path.abspath(__file__ + "/../../")
 PROJECT_PATH = os.path.abspath(__file__ + "/../../../")
@@ -13,6 +14,7 @@ from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 from dummy_database import NAMES, ORGANIZATION_NAMES, PHONE_TESTING
 
 from django.contrib.auth.models import User
+from cities_light.models import City
 from django import db
 
 string_integer = '1234567890'
@@ -23,14 +25,21 @@ def main():
 	if len(organizations) == 0:
 		try:
 			for i in xrange(len(ORGANIZATION_NAMES)):
+				# random date
+				year = random.choice(range(2005, 2014))
+				month = random.choice(range(1, 12))
+				day = random.choice(range(1, 28))
+
 				organization = Organization.objects.create(
 					unique_id=generate_unique_id("organization"), 
+					created_by=User.objects.get(username=NAMES[i].lower()),
 					name="Organization " + str(i),
 					description="abcde",
 					phone='+' + PHONE_TESTING[i], 
 					email= ORGANIZATION_NAMES[i] + '@gmail.com',
-					address='whatever')
-				organization.normal_member.add(User.objects.get(username=NAMES[i].lower()))
+					address=City.objects.order_by('?')[0],
+					organization_date=datetime(year,month,day))
+				organization.normal_member.add(User.objects.get(username=NAMES[i+1].lower()))
 
 				organization.save()
 				i += 1

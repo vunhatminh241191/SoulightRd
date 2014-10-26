@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, random
 
 SETTING_PATH = os.path.abspath(__file__ + "/../../")
 PROJECT_PATH = os.path.abspath(__file__ + "/../../../")
@@ -21,8 +21,8 @@ def main():
 		try:
 			organizations = Organization.objects.all()
 			for organization in organizations:
-				for name in NAMES:
-					user = User.objects.get(username=name.lower())
+				for i in xrange(2):
+					user = User.objects.get(username=NAMES[random.randint(54,len(NAMES)-1)].lower())
 					organization_board_member = OrganizationBoardMember.objects.create(user=user,organization=organization)
 					projects = Project.objects.filter(organization=organization)
 					for project in projects:
