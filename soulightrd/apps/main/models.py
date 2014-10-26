@@ -248,14 +248,16 @@ class OrganizationBoardMember(models.Model):
 
 class Organization(models.Model):
 	unique_id = models.CharField(max_length=100)
+	created_by = models.ForeignKey(User, related_name='organization_created_by_user')
 	name = models.CharField(max_length=300)
 	description = models.TextField()
 	website = models.URLField(blank=True,null=True)
 	email = models.EmailField()
 	phone = PhoneNumberField()
-	address = models.CharField(max_length=300)
+	address = models.ForeignKey(City,related_name='organization_location')
 	normal_member = models.ManyToManyField(User,related_name='organization_normal_member',blank=True,null=True)
 	is_verified = models.BooleanField(default=False)
+	organization_date = models.DateTimeField()
 
 	def get_board_members(self):
 		return OrganizationBoardMember.objects.filter(organization=self)
