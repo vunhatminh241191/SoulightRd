@@ -1,0 +1,27 @@
+{% extends "sites/non_responsive/base.html" %}
+
+{% load socialaccount %}
+{% load i18n %}
+
+{% block header_scripts %}
+    {% providers_media_js %}
+{% endblock %}
+
+{% block main_section %}
+	<div class="register-section">
+		<form role='form' class="signup" id="signup_form" method="post" action="{% url 'create_organization' %}">{% csrf_token %}
+		<li></li>
+		<li></li>
+		<li></li>
+			<div class='non-field-error row'>
+                {{ form.non_field_errors }}
+            </div>
+            <div class="data-section row">
+            	{{form.as_p}}
+            </div>
+            <div id="submit">
+            	<button type="submit"> Submit</button>
+            </div>
+        </form>
+	</div>
+{% endblock %}
