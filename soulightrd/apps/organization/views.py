@@ -39,10 +39,15 @@ class CreateOrganizationView(FormView):
 			organization_date=datetime.datetime.now())
 		return super(CreateOrganizationView, self).form_valid(form)
 
+	def form_invalid(self, form):
+		print "hehehehe"
+		return super(CreateOrganizationView, self).form_invalid(form)
+
 	def get_success_url(self):
 		return HttpResponse("home")
 
 	def get_context_data(self, **kwargs):
+		print kwargs["form"]
 		ret = super(CreateOrganizationView, self).get_context_data(**kwargs)
 		ret["app_name"] = APP_NAME
 		return ret

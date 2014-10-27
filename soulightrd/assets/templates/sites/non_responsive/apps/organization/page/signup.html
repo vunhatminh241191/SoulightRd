@@ -13,10 +13,12 @@
 		<li></li>
 		<li></li>
 		<li></li>
+		<li></li>
 			<div class='non-field-error row'>
                 {{ form.non_field_errors }}
             </div>
             <div class="data-section row">
+            	{{form.as_p.error}}
             	{{form.as_p}}
             </div>
             <div id="submit">
