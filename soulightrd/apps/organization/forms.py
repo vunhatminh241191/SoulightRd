@@ -51,7 +51,7 @@ class OrganizationSignUpForm(forms.Form):
 				, 'class': "form-control"})
 		)
 	email = forms.EmailField(
-			label = _("Organization Website"), max_length= 100,
+			label = _("Organization Email"), max_length= 100,
 			widget = forms.TextInput(attrs={'placeholder': 'Your organization email'
 				, 'class': "form-control"})
 		)

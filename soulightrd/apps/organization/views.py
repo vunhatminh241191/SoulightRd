@@ -6,12 +6,13 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.utils import simplejson, timezone
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
 
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path
 
 from soulightrd.apps.main.models import Organization
-from . import forms
+from soulightrd.apps.organization.forms import OrganizationSignUpForm
 
 import json, logging, datetime
 
@@ -24,30 +25,30 @@ def main_page(request):
 
 
 class CreateOrganizationView(FormView):
-	form_class = forms.OrganizationSignUpForm
+	form_class = OrganizationSignUpForm
 
 	def form_valid(self, form):
 		beta_form = form.cleaned_data
 		organization = Organization.objects.create(
-			unique_id=generate_unique_id("organization"),
+			unique_id=generate_unique_id('organization'),
 			created_by=self.request.user,
-			name=beta_form["name"],
-			description=beta_form["description"],
-			phone=beta_form["phone"],
-			email=beta_form["email"],
-			address=beta_form["address"],
+			name=beta_form['name'],
+			description=beta_form['description'],
+			website=beta_form['website'],
+			phone=beta_form['phone'],
+			email=beta_form['email'],
+			address=beta_form['address'],
 			organization_date=datetime.datetime.now())
-		return super(CreateOrganizationView, self).form_valid(form)
 
-	def form_invalid(self, form):
-		print "hehehehe"
-		return super(CreateOrganizationView, self).form_invalid(form)
+		for user in beta_form['normal_member']:
+			organization.normal_member.add(user)
+		organization.save()
+		return HttpResponseRedirect(self.get_success_url())
 
 	def get_success_url(self):
 		return HttpResponse("home")
 
 	def get_context_data(self, **kwargs):
-		print kwargs["form"]
 		ret = super(CreateOrganizationView, self).get_context_data(**kwargs)
 		ret["app_name"] = APP_NAME
 		return ret
@@ -55,6 +56,10 @@ class CreateOrganizationView(FormView):
 	def get_template_names(self):		
 		template_path = get_template_path(APP_NAME,"signup",RequestContext(self.request)['flavour'],'/page/')
 		return [template_path]
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(CreateOrganizationView, self).dispatch(*args, **kwargs)
 
 create_organization = CreateOrganizationView.as_view()
 
