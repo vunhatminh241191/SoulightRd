@@ -8,6 +8,7 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
+from allauth.account.utils import get_next_redirect_url
 
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path
 
@@ -26,6 +27,8 @@ def main_page(request):
 
 class CreateOrganizationView(FormView):
 	form_class = OrganizationSignUpForm
+	success_url = "/?action=signup&result=success"
+	redirect_field_name = "next"
 
 	def form_valid(self, form):
 		beta_form = form.cleaned_data
@@ -43,10 +46,14 @@ class CreateOrganizationView(FormView):
 		for user in beta_form['normal_member']:
 			organization.normal_member.add(user)
 		organization.save()
-		return HttpResponseRedirect(self.get_success_url())
+		return super(CreateOrganizationView, self).form_valid(form)
 
 	def get_success_url(self):
-		return HttpResponse("home")
+		ret = (get_next_redirect_url(self.request,
+									 self.redirect_field_name)
+			   or self.success_url)
+		return ret
+
 
 	def get_context_data(self, **kwargs):
 		ret = super(CreateOrganizationView, self).get_context_data(**kwargs)
