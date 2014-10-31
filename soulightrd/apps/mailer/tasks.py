@@ -18,7 +18,6 @@ def send_email(email_tracking_id):
 		logger.debug("Send email successfully")
 	except Exception as e:
 		logger.exception(e)
-		raise
 
 
 @shared_task
@@ -28,4 +27,3 @@ def send_mass_email(list_email_tracking_ids):
 		logger.debug("Send email successfully")
 	except Exception as e:
 		logger.exception(e)
-		raise

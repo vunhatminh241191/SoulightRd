@@ -199,10 +199,12 @@ THIRD_PARTY_APPS = (
     "djmoney",
     'profiler',
     "djrill",
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    'crispy_forms',
 )
 
 LOCAL_APPS = (
+    "soulightrd.apps.alarm",
     "soulightrd.apps.about",
     "soulightrd.apps.auth",
     "soulightrd.apps.discover",
@@ -402,6 +404,8 @@ OW_LY_API_KEY = "6sv891CJpDcuiz8eyRHfy"
 
 FACEBOOK_PROVIDER = "facebook"
 FACEBOOK_APP_NAME = "SoulightRd Facebook App"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
 

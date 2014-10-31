@@ -37,8 +37,10 @@ def main():
 					description="abcde",
 					phone='+' + PHONE_TESTING[i], 
 					email= ORGANIZATION_NAMES[i] + '@gmail.com',
-					address=City.objects.order_by('?')[0],
-					organization_date=datetime(year,month,day))
+					address="111 Le Thanh Ton, District 1",
+					city=City.objects.order_by('?')[0],
+					country="VN",
+					submit_date=datetime(year,month,day))
 				organization.normal_member.add(User.objects.get(username=NAMES[i+1].lower()))
 
 				organization.save()

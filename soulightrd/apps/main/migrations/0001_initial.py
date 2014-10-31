@@ -195,9 +195,12 @@ class Migration(SchemaMigration):
             ('website', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
             ('phone', self.gf('phonenumber_field.modelfields.PhoneNumberField')(max_length=128)),
-            ('address', self.gf('django.db.models.fields.related.ForeignKey')(related_name='organization_location', to=orm['cities_light.City'])),
+            ('address', self.gf('django.db.models.fields.TextField')()),
+            ('city', self.gf('django.db.models.fields.related.ForeignKey')(related_name='organization_city', to=orm['cities_light.City'])),
+            ('country', self.gf('django_countries.fields.CountryField')(max_length=2)),
             ('is_verified', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('organization_date', self.gf('django.db.models.fields.DateTimeField')()),
+            ('submit_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('verify_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
         ))
         db.send_create_signal(u'main', ['Organization'])
 
@@ -533,7 +536,9 @@ class Migration(SchemaMigration):
         },
         u'main.organization': {
             'Meta': {'object_name': 'Organization'},
-            'address': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'organization_location'", 'to': u"orm['cities_light.City']"}),
+            'address': ('django.db.models.fields.TextField', [], {}),
+            'city': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'organization_city'", 'to': u"orm['cities_light.City']"}),
+            'country': ('django_countries.fields.CountryField', [], {'max_length': '2'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'organization_created_by_user'", 'to': u"orm['auth.User']"}),
             'description': ('django.db.models.fields.TextField', [], {}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
@@ -541,9 +546,10 @@ class Migration(SchemaMigration):
             'is_verified': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
             'normal_member': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'organization_normal_member'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"}),
-            'organization_date': ('django.db.models.fields.DateTimeField', [], {}),
             'phone': ('phonenumber_field.modelfields.PhoneNumberField', [], {'max_length': '128'}),
+            'submit_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'unique_id': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'verify_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'website': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         u'main.organizationboardmember': {

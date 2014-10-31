@@ -19,16 +19,15 @@ from soulightrd.apps.main.constants import PROJECT_TYPE, GENDER, NEW, OLD
 from soulightrd.apps.main.constants import PHOTO_TYPE, NOTIFICATION_STATUS, NOTIFICATION_TYPE
 from soulightrd.apps.main.constants import MESSAGE_STATUS, COMMENT_TYPE, REPORT_TYPE
 from soulightrd.apps.main.constants import PRIVACY_STATUS, PUBLIC
-
 from soulightrd.apps.app_settings import DEFAULT_SITE_NAME, DEFAULT_SERVER_EMAIL
-
 from soulightrd.apps.friend.provider.facebook_provider import FacebookFriendsProvider
 
 from allauth.socialaccount.models import SocialAccount
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-import moneyed
+from django_countries.fields import CountryField
+
 from djmoney.models.fields import MoneyField
 
 from cities_light.models import City
@@ -254,10 +253,13 @@ class Organization(models.Model):
 	website = models.URLField(blank=True,null=True)
 	email = models.EmailField()
 	phone = PhoneNumberField()
-	address = models.ForeignKey(City,related_name='organization_location')
+	address = models.TextField()
+	city = models.ForeignKey(City,related_name='organization_city')
+	country = CountryField()
 	normal_member = models.ManyToManyField(User,related_name='organization_normal_member',blank=True,null=True)
 	is_verified = models.BooleanField(default=False)
-	organization_date = models.DateTimeField()
+	submit_date = models.DateTimeField(auto_now_add=True)
+	verify_date = models.DateTimeField(blank=True,null=True)
 
 	def get_board_members(self):
 		return OrganizationBoardMember.objects.filter(organization=self)
