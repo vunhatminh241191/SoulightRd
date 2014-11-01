@@ -194,7 +194,7 @@ class Migration(SchemaMigration):
             ('description', self.gf('django.db.models.fields.TextField')()),
             ('website', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
-            ('phone', self.gf('phonenumber_field.modelfields.PhoneNumberField')(max_length=128)),
+            ('phone', self.gf('django.db.models.fields.CharField')(max_length=20)),
             ('address', self.gf('django.db.models.fields.TextField')()),
             ('city', self.gf('django.db.models.fields.related.ForeignKey')(related_name='organization_city', to=orm['cities_light.City'])),
             ('country', self.gf('django_countries.fields.CountryField')(max_length=2)),
@@ -287,7 +287,7 @@ class Migration(SchemaMigration):
             ('facebook_id', self.gf('django.db.models.fields.CharField')(max_length=40, null=True, blank=True)),
             ('is_organization_board_member', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('address', self.gf('django.db.models.fields.CharField')(max_length=300, blank=True)),
-            ('phone', self.gf('phonenumber_field.modelfields.PhoneNumberField')(max_length=128, blank=True)),
+            ('phone', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
         ))
         db.send_create_signal(u'main', ['UserProfile'])
 
@@ -546,7 +546,7 @@ class Migration(SchemaMigration):
             'is_verified': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
             'normal_member': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'organization_normal_member'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"}),
-            'phone': ('phonenumber_field.modelfields.PhoneNumberField', [], {'max_length': '128'}),
+            'phone': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'submit_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'unique_id': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'verify_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
@@ -556,7 +556,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'OrganizationBoardMember'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'organization': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_organization'", 'to': u"orm['main.Organization']"}),
-            'projects': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'board_member_projects'", 'symmetrical': 'False', 'to': u"orm['main.Project']"}),
+            'projects': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'board_member_projects'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['main.Project']"}),
             'role': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_user'", 'to': u"orm['auth.User']"})
         },
@@ -647,7 +647,7 @@ class Migration(SchemaMigration):
             'gender': ('django.db.models.fields.CharField', [], {'default': "'m'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_organization_board_member': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'phone': ('phonenumber_field.modelfields.PhoneNumberField', [], {'max_length': '128', 'blank': 'True'}),
+            'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'privacy_status': ('django.db.models.fields.CharField', [], {'default': "'1'", 'max_length': '1'}),
             'reports': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'user_reports'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['main.Report']"}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['auth.User']"})

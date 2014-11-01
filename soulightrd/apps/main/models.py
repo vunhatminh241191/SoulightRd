@@ -24,8 +24,6 @@ from soulightrd.apps.friend.provider.facebook_provider import FacebookFriendsPro
 
 from allauth.socialaccount.models import SocialAccount
 
-from phonenumber_field.modelfields import PhoneNumberField
-
 from django_countries.fields import CountryField
 
 from djmoney.models.fields import MoneyField
@@ -252,7 +250,7 @@ class Organization(models.Model):
 	description = models.TextField()
 	website = models.URLField(blank=True,null=True)
 	email = models.EmailField()
-	phone = PhoneNumberField()
+	phone = models.CharField(max_length=20)
 	address = models.TextField()
 	city = models.ForeignKey(City,related_name='organization_city')
 	country = CountryField()
@@ -311,8 +309,7 @@ class UserProfile(models.Model):
 	following_projects = models.ManyToManyField(Project,related_name='user_following_projects',blank=True,null=True)
 	is_organization_board_member = models.BooleanField(default=False)
 	address = models.CharField(max_length=300,blank=True)
-	phone = PhoneNumberField(blank=True)
-
+	phone = models.CharField(max_length=20,blank=True)
 
 	def __unicode__(self):
 		return unicode(self.user)
