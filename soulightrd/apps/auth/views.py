@@ -27,29 +27,24 @@ from allauth.account.forms import ResetPasswordKeyForm
 from allauth.account.forms import ResetPasswordForm, SetPasswordForm, SignupForm
 from allauth.account.models import EmailAddress, EmailConfirmation
 from allauth.account.views import RedirectAuthenticatedUserMixin, AjaxCapableProcessFormViewMixin, CloseableSignupMixin
-
 from allauth.account import signals
 from allauth.account import app_settings
-
-from soulightrd.apps.app_helper import get_user_login_object, get_template_path
-from soulightrd.apps.auth.forms import CustomSignupForm, CustomSocialSignupForm, CustomResetPasswordForm, CustomLoginForm
-
 from allauth.account.adapter import get_adapter as get_account_adapter
 
 from allauth.socialaccount import helpers
 from allauth.socialaccount import providers
 from allauth.socialaccount.adapter import get_adapter as get_social_adapter
-from allauth.socialaccount.models import (SocialLogin,
-                                          SocialToken)
+from allauth.socialaccount.models import SocialLogin, SocialToken
 from allauth.socialaccount.helpers import complete_social_login
 from allauth.socialaccount.helpers import render_authentication_error
-
-from allauth.socialaccount.providers.oauth2.views import (OAuth2Adapter,
-                                                          OAuth2LoginView,
-                                                          OAuth2CallbackView)
+from allauth.socialaccount.providers.oauth2.views import OAuth2Adapter, OAuth2LoginView, OAuth2CallbackView
 
 from allauth.socialaccount.providers.facebook.forms import FacebookConnectForm
 from allauth.socialaccount.providers.facebook.provider import FacebookProvider
+
+from soulightrd.apps.app_helper import get_user_login_object, get_template_path
+from soulightrd.apps.auth.forms import CustomSignupForm, CustomSocialSignupForm, CustomResetPasswordForm, CustomLoginForm
+from soulightrd.apps import AppBaseView
 
 import logging, requests
 
@@ -84,7 +79,10 @@ resend_confirm_email = ResendConfirmEmailView.as_view()
 
 class LoginView(RedirectAuthenticatedUserMixin,
                 AjaxCapableProcessFormViewMixin,
-                FormView):
+                FormView,AppBaseView):
+    app_name = APP_NAME
+    template_name = "login"
+    sub_path = "/account/"
     form_class = CustomLoginForm
     success_url = None
     redirect_field_name = "next"
@@ -107,22 +105,20 @@ class LoginView(RedirectAuthenticatedUserMixin,
                                                    self.redirect_field_name)
         redirect_field_value = self.request.REQUEST \
             .get(self.redirect_field_name)
-        ret.update({"app_name": APP_NAME,
-                    "signup_url": signup_url,
+        ret.update({"signup_url": signup_url,
                     "site": Site.objects.get_current(),
                     "redirect_field_name": self.redirect_field_name,
                     "redirect_field_value": redirect_field_value})
         return ret
 
-    def get_template_names(self):
-        template_path = get_template_path(APP_NAME,"login",RequestContext(self.request)['flavour'],'/account/')
-        return [template_path]
-
 login = LoginView.as_view()
 
 
 class SignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
-                 FormView):
+                  AppBaseView, FormView):
+    app_name = APP_NAME
+    template_name = "signup"
+    sub_path = "/account/"
     form_class = CustomSignupForm
     redirect_field_name = "next"
     success_url = "/?action=signup&result=success"
@@ -150,26 +146,16 @@ class SignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
                                                   self.redirect_field_name)
         redirect_field_name = self.redirect_field_name
         redirect_field_value = self.request.REQUEST.get(redirect_field_name)
-        ret.update({"app_name": APP_NAME,
-                    "login_url": login_url,
+        ret.update({"login_url": login_url,
                     "redirect_field_name": redirect_field_name,
                     "redirect_field_value": redirect_field_value})
         return ret
 
-    def get_template_names(self):
-        template_path = get_template_path(APP_NAME,"signup",RequestContext(self.request)['flavour'],'/account/')
-        return [template_path]
 
 signup = SignupView.as_view()
 
 
 class ConfirmEmailView(TemplateResponseMixin, View):
-
-    def get_template_names(self):
-        if self.request.method == 'POST':
-            return ["account/email_confirmed.html"]
-        else:
-            return ["account/email_confirm.html"]
 
     def get(self, *args, **kwargs):
         try:
@@ -258,7 +244,10 @@ class ConfirmEmailView(TemplateResponseMixin, View):
 confirm_email = ConfirmEmailView.as_view()
 
 
-class PasswordChangeView(FormView):
+class PasswordChangeView(FormView,AppBaseView):
+    app_name = APP_NAME
+    template_name = "password_change"
+    sub_path = "/account/"
     form_class = ChangePasswordForm
     success_url = "/?action=change_password&result=success"
 
@@ -288,18 +277,16 @@ class PasswordChangeView(FormView):
         ret = super(PasswordChangeView, self).get_context_data(**kwargs)
         # NOTE: For backwards compatibility
         ret['password_change_form'] = ret.get('form')
-        ret['app_name'] = APP_NAME
         # (end NOTE)
         return ret
-
-    def get_template_names(self):
-        template_path = get_template_path(APP_NAME,"password_change",RequestContext(self.request)['flavour'],'/account/')
-        return [template_path]
 
 password_change = login_required(PasswordChangeView.as_view())
 
 
-class PasswordSetView(FormView):
+class PasswordSetView(FormView,AppBaseView):
+    app_name = APP_NAME
+    template_name = "password_set"
+    sub_path = "/account/"
     form_class = SetPasswordForm
     success_url = "/?action=change_password&result=success"
 
@@ -327,18 +314,16 @@ class PasswordSetView(FormView):
         ret = super(PasswordSetView, self).get_context_data(**kwargs)
         # NOTE: For backwards compatibility
         ret['password_set_form'] = ret.get('form')
-        ret['app_name'] = APP_NAME
         # (end NOTE)
         return ret
-
-    def get_template_names(self):
-        template_path = get_template_path(APP_NAME,"password_set",RequestContext(self.request)['flavour'],'/account/')
-        return [template_path]
 
 password_set = login_required(PasswordSetView.as_view())
 
 
-class PasswordResetView(FormView):
+class PasswordResetView(FormView,AppBaseView):
+    app_name = APP_NAME
+    template_name = "password_reset"
+    sub_path = "/account/"
     form_class = CustomResetPasswordForm
     success_url = reverse_lazy("account_reset_password_done")
 
@@ -350,44 +335,27 @@ class PasswordResetView(FormView):
         ret = super(PasswordResetView, self).get_context_data(**kwargs)
         # NOTE: For backwards compatibility
         ret['password_reset_form'] = ret.get('form')
-        ret['app_name'] = APP_NAME
         # (end NOTE)
         return ret
-
-    def get_template_names(self):
-        template_path = get_template_path(APP_NAME,"password_reset",RequestContext(self.request)['flavour'],'/account/')
-        return [template_path]
 
 password_reset = PasswordResetView.as_view()
 
 
-class PasswordResetDoneView(TemplateView):
-
-    def get_context_data(self, **kwargs):
-        ret = super(PasswordResetDoneView, self).get_context_data(**kwargs)
-        ret['app_name'] = APP_NAME
-        return ret
-
-    def get_template_names(self):
-        template_path = get_template_path(APP_NAME,"password_reset_done",RequestContext(self.request)['flavour'],'/account/')
-        return [template_path]
+class PasswordResetDoneView(TemplateView,AppBaseView):
+    app_name = APP_NAME
+    template_name = "password_reset_done"
+    sub_path = "/account/"
 
 password_reset_done = PasswordResetDoneView.as_view()
 
 
-class PasswordResetFromKeyView(FormView):
+class PasswordResetFromKeyView(FormView,AppBaseView):
+    app_name = APP_NAME
+    template_name = "password_reset_from_key"
+    sub_path = "/account/"
     form_class = ResetPasswordKeyForm
     token_generator = default_token_generator
     success_url = reverse_lazy("account_reset_password_from_key_done")
-
-    def get_context_data(self, **kwargs):
-        ret = super(PasswordResetFromKeyView, self).get_context_data(**kwargs)
-        ret['app_name'] = APP_NAME
-        return ret
-
-    def get_template_names(self):
-        template_path = get_template_path(APP_NAME,"password_reset_from_key",RequestContext(self.request)['flavour'],'/account/')
-        return [template_path]
 
     def _get_user(self, uidb36):
         # pull out user
@@ -490,8 +458,11 @@ class AccountInactiveView(TemplateView):
 account_inactive = AccountInactiveView.as_view()
 
 
-class SocialSignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
-                 FormView):
+class SocialSignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin, 
+                 AppBaseView, FormView):
+    app_name = APP_NAME
+    template_name = "signup"
+    sub_path = "/socialaccount/"
     form_class = CustomSocialSignupForm
 
     def dispatch(self, request, *args, **kwargs):
@@ -518,16 +489,11 @@ class SocialSignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
     def get_context_data(self, **kwargs):
         ret = super(SocialSignupView, self).get_context_data(**kwargs)
         ret.update(dict(site=Site.objects.get_current(),
-                        account=self.sociallogin.account),
-                        app_name=APP_NAME)
+                        account=self.sociallogin.account))
         return ret
 
     def get_authenticated_redirect_url(self):
         return "/"
-
-    def get_template_names(self):
-        template_path = get_template_path(APP_NAME,"signup",RequestContext(self.request)['flavour'],'/socialaccount/')
-        return [template_path]
 
 social_signup = SocialSignupView.as_view()
 

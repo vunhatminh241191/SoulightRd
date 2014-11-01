@@ -28,10 +28,10 @@ class OrganizationSignUpForm(forms.Form):
 			widget = forms.TextInput(attrs={'placeholder': 'Your organization email'})
 		)
 	phone = PhoneNumberField()
-	address = forms.CharField(label = _("Address"), max_length = 50,
+	address = forms.CharField(label = _("Address"), max_length = 200,
 			widget = forms.TextInput(attrs={'placeholder': 'Organization Name'})
 		)
-	city = forms.CharField(label = _("City"), max_length = 300,
+	city = forms.CharField(label = _("City"), max_length = 10,
 			widget=forms.TextInput(attrs={'placeholder': "City"})
 		)
 	country = forms.CharField(label= _("Country"), max_length = 100,
