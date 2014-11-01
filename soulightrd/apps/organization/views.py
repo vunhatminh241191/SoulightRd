@@ -34,7 +34,6 @@ class CreateOrganizationView(AppBaseView,FormView):
 	template_name = "create"
 	form_class = OrganizationSignUpForm
 	success_url = "/?action=create_organization&result=wait_for_verify"
-	fail_url = "/?ation=create_organization&result=fail"
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
@@ -63,8 +62,8 @@ class CreateOrganizationView(AppBaseView,FormView):
 			)
 			return super(CreateOrganizationView, self).form_valid(form)
 		except Exception as e:
-			alarm.execute("Fail to create organization",self.request,e)
-			return HttpResponseRedirect(self.fail_url)
+			alarm.run("Fail to create organization",self.request,e)
+			self.handle_fail_request()
 
 create_organization = CreateOrganizationView.as_view()
 

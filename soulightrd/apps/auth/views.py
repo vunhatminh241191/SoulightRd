@@ -341,7 +341,7 @@ class PasswordResetView(FormView,AppBaseView):
 password_reset = PasswordResetView.as_view()
 
 
-class PasswordResetDoneView(TemplateView,AppBaseView):
+class PasswordResetDoneView(AppBaseView):
     app_name = APP_NAME
     template_name = "password_reset_done"
     sub_path = "/account/"
@@ -447,15 +447,6 @@ class LogoutView(TemplateResponseMixin, View):
                 or get_account_adapter().get_logout_redirect_url(self.request))
 
 logout = LogoutView.as_view()
-
-
-class AccountInactiveView(TemplateView):
-
-    def get_template_names(self):
-        template_path = get_template_path(APP_NAME,"account_inactive",RequestContext(self.request)['flavour'],'/account/')
-        return [template_path]
-
-account_inactive = AccountInactiveView.as_view()
 
 
 class SocialSignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin, 
