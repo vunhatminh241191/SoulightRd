@@ -8,16 +8,20 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
-from allauth.account.utils import get_next_redirect_url
 
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path
+from soulightrd.apps import AppBaseView
 
-from soulightrd.apps.main.models import Organization
+from soulightrd.apps.main.models import Organization, OrganizationBoardMember
+from soulightrd.apps.main.constants import ORGANIZATION_FOUNDER
 from soulightrd.apps.organization.forms import OrganizationSignUpForm
+from soulightrd.apps.alarm import Alarm
 
 import json, logging, datetime
 
 logger = logging.getLogger(__name__)
+
+alarm = Alarm(logger)
 
 APP_NAME = "organization"
 
@@ -25,54 +29,49 @@ def main_page(request):
 	return HttpResponse("Projet Main Page")
 
 
-class CreateOrganizationView(FormView):
+class CreateOrganizationView(AppBaseView,FormView):
+	app_name = APP_NAME
+	template_name = "create"
 	form_class = OrganizationSignUpForm
-	success_url = "/?action=signup&result=success"
-	redirect_field_name = "next"
-
-	def form_valid(self, form):
-		beta_form = form.cleaned_data
-		organization = Organization.objects.create(
-			unique_id=generate_unique_id('organization'),
-			created_by=self.request.user,
-			name=beta_form['name'],
-			description=beta_form['description'],
-			website=beta_form['website'],
-			phone=beta_form['phone'],
-			email=beta_form['email'],
-			address=beta_form['address'],
-			organization_date=datetime.datetime.now())
-
-		for user in beta_form['normal_member']:
-			organization.normal_member.add(user)
-		organization.save()
-		return super(CreateOrganizationView, self).form_valid(form)
-
-	def get_success_url(self):
-		ret = (get_next_redirect_url(self.request,
-									 self.redirect_field_name)
-			   or self.success_url)
-		return ret
-
-
-	def get_context_data(self, **kwargs):
-		ret = super(CreateOrganizationView, self).get_context_data(**kwargs)
-		ret["app_name"] = APP_NAME
-		return ret
-
-	def get_template_names(self):		
-		template_path = get_template_path(APP_NAME,"signup",RequestContext(self.request)['flavour'],'/page/')
-		return [template_path]
+	success_url = "/?action=create_organization&result=wait_for_verify"
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(CreateOrganizationView, self).dispatch(*args, **kwargs)
 
+	def form_valid(self, form):
+		user_login = get_user_login_object(self.request)
+		try:
+			signup_form = form.cleaned_data
+			organization = Organization.objects.create(
+				unique_id=generate_unique_id('organization'),
+				created_by=user_login,
+				name=signup_form['name'],
+				description=signup_form['description'],
+				website=signup_form['website'],
+				phone=signup_form['phone'],
+				email=signup_form['email'],
+				address=signup_form['address'],
+				city = City.objects.get(id=signup_form['city']),
+				country = signup_form['country']
+			)
+			organization_founder = OrganizationBoardMember.objects.create(
+				user=user_login,
+				organization=organization,
+				role=ORGANIZATION_FOUNDER
+			)
+			return super(CreateOrganizationView, self).form_valid(form)
+		except Exception as e:
+			alarm.run("Fail to create organization",self.request,e)
+			self.handle_fail_request()
+
 create_organization = CreateOrganizationView.as_view()
+
 
 @login_required
 def edit_organization(request):
 	return HttpResponse("Edit organization Page")
+
 
 
 @login_required

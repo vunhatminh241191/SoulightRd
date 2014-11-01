@@ -26,20 +26,20 @@ class OrganizationSignUpForm(forms.Form):
 		)
 	website = forms.URLField(
 			label = _("Website"), required=False,
-			widget = forms.TextInput(attrs={'placeholder': 'Your organization website'})
+			widget = forms.TextInput(attrs={'placeholder': 'Website'})
 		)
 	email = forms.EmailField(
 			label = _("Email"),
-			widget = forms.TextInput(attrs={'placeholder': 'Your organization email'})
+			widget = forms.TextInput(attrs={'placeholder': 'Email'})
 		)
-	phone = forms.CharField(
-			label= _("Phone"),
-			widget = forms.TextInput(attrs={'placeholder': 'Your organization email'})
-		)
-	address = forms.CharField(label = _("Address"),
+	phone = forms.RegexField(label=_("Phone"),max_length=15,
+			regex=r'^\+?1?\d{9,15}$', 
+			error_message = ("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."),
+			widget = forms.TextInput(attrs={'placeholder': 'Phone Number'}))
+	address = forms.CharField(label = _("Address"), max_length = 200,
 			widget = forms.TextInput(attrs={'placeholder': 'Organization Name'})
 		)
-	city = forms.CharField(label = _("City"),
+	city = forms.CharField(label = _("City"), max_length = 10,
 			widget=forms.TextInput(attrs={'placeholder': "City"})
 		)
 	country = forms.CharField(label= _("Country"),

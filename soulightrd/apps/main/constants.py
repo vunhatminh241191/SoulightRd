@@ -1,5 +1,7 @@
 from soulightrd.apps.app_helper import setup_constant_countries_alpha2, setup_constant_countries_alpha3
 
+ORGANIZATION_FOUNDER = "Founder"
+
 VALID_FILE_SIZE = 5242880
 
 PUBLIC = "1"

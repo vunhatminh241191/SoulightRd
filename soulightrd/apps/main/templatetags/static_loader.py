@@ -15,7 +15,6 @@ register = template.Library()
 @register.simple_tag(takes_context=True)
 def load_plugin_css(context):
 	stage = context['stage']
-	print stage
 	if stage == "dev":
 		css_plugins = ROOT_PATH + "/assets/static/css/plugins/global/stylesheets/"
 		list_file = []
@@ -65,13 +64,14 @@ def load_global_js(context):
 def load_final_level_js(context):
 	stage = context['stage']
 	app_name = context['app_name']
+	responsive_type = "non_responsive" if context['flavour'] == 'full' else "responsive"
 	result = ""
 	if stage == "dev":
-		result = '<script type="text/javascript" src="' + STATIC_URL + 'js/apps/' + app_name + '/ajax.js"></script>\n' + \
-				 '<script type="text/javascript" src="' + STATIC_URL + 'js/apps/' + app_name + '/function.js"></script>\n' + \
-				 '<script type="text/javascript" src="' + STATIC_URL + 'js/apps/' + app_name + '/main.js"></script>\n'
+		result = '<script type="text/javascript" src="' + STATIC_URL + 'js/apps/' + responsive_type + "/" + app_name + '/ajax.js"></script>\n' + \
+				 '<script type="text/javascript" src="' + STATIC_URL + 'js/apps/' + responsive_type + "/" + app_name + '/function.js"></script>\n' + \
+				 '<script type="text/javascript" src="' + STATIC_URL + 'js/apps/' + responsive_type + "/" + app_name + '/main.js"></script>\n'
 	else:
-		result = '<script type="text/javascript" src="' + STATIC_URL + 'js/apps/' + app_name + '/prod/frittie.script.app.min.js"></script>' 
+		result = '<script type="text/javascript" src="' + STATIC_URL + 'js/apps/' + app_name + '/prod/frittie.script.' + responsive_type + '.min.js"></script>' 
 	return result
 
 
