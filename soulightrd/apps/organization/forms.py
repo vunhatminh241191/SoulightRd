@@ -45,6 +45,8 @@ class OrganizationSignUpForm(forms.Form):
 	country = forms.CharField(label= _("Country"),
 			widget=CountrySelectWidget
 		)
+	normal_member = forms.ModelMultipleChoiceField(label = _("Invite Member"),
+		queryset=User.objects.all())
 
 
 	def __init__(self, *args, **kwargs):
