@@ -1,38 +1,11 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from localflavor.us.forms import USPhoneNumberField
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 from soulightrd.apps.main.models import Organization
 from cities_light.models import City
 from django.contrib.auth.models import User
-
-class USPhoneNumberMultiWidget(forms.MultiWidget):
-    """
-    A Widget that splits US Phone number input into three <input type='text'> boxes.
-    """
-    def __init__(self,attrs=None):
-        widgets = (
-            forms.TextInput(attrs={'size':'3','maxlength':'3', 'class':'phone'}),
-            forms.TextInput(attrs={'size':'3','maxlength':'3', 'class':'phone'}),
-            forms.TextInput(attrs={'size':'4','maxlength':'4', 'class':'phone'}),
-        )
-        super(USPhoneNumberMultiWidget, self).__init__(widgets, attrs)
-
-    def decompress(self, value):
-        if value:
-            return value.split('-')
-        return (None,None,None)
-
-    def value_from_datadict(self, data, files, name):
-        value = [u'',u'',u'']
-        # look for keys like name_1, get the index from the end
-        # and make a new list for the string replacement values
-        for d in filter(lambda x: x.startswith(name), data):
-            index = int(d[len(name)+1:]) 
-            value[index] = data[d]
-        if value[0] == value[1] == value[2] == u'':
-            return None
-        return u'%s-%s-%s' % tuple(value)
 
 class OrganizationSignUpForm(forms.Form):
 	name = forms.CharField(
@@ -55,8 +28,9 @@ class OrganizationSignUpForm(forms.Form):
 			widget = forms.TextInput(attrs={'placeholder': 'Your organization email'
 				, 'class': "form-control"})
 		)
-	phone = USPhoneNumberField(label = _("Organization Phone"),
-			widget=USPhoneNumberMultiWidget()
+	phone = forms.CharField(label = _("Organization Phone"),
+			widget = forms.TextInput(attrs={'placeholder': 'Your organization phone number'
+				, 'class': "form-control"})
 		)
 	address = forms.ModelChoiceField(queryset=City.objects.all(),
 			label = _("Organization Address")
@@ -64,3 +38,12 @@ class OrganizationSignUpForm(forms.Form):
 	normal_member = forms.ModelMultipleChoiceField(queryset=User.objects.all(),
 			label = _("Invite Member")
 		)
+
+	def __init__(self, *args, **kwargs):
+		super(OrganizationSignUpForm, self).__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_id = 'signup_form'
+		self.helper.form_class = 'signup'
+		self.helper.form_method = 'post'
+		self.helper.form_action = 'create_organization'
+		self.helper.add_input(Submit('submit', 'Submit'))

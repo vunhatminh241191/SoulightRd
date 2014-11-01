@@ -7,6 +7,9 @@
     {% providers_media_js %}
 {% endblock %}
 
+{% load crispy_forms_tags %}
+<link rel="stylesheet" href="http://jqueryvalidation.org/files/demo/site-demos.css">
+
 {% block main_section %}
 	<div class="register-section">
 		<form role='form' class="signup" id="signup_form" method="post" action="{% url 'create_organization' %}">{% csrf_token %}
@@ -14,16 +17,53 @@
 		<li></li>
 		<li></li>
 		<li></li>
-			<div class='non-field-error row'>
-                {{ form.non_field_errors }}
-            </div>
-            <div class="data-section row">
-            	{{form.as_p.error}}
-            	{{form.as_p}}
-            </div>
-            <div id="submit">
-            	<button type="submit"> Submit</button>
-            </div>
+            {% crispy form form.helper %}
         </form>
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+        <script>
+            jQuery(document).ready(function($){
+                $('#signup_form').validate({
+                    rules:{
+                        'name':{
+                            required: true,
+                            minlength: 2,
+                            pattern: /^[A-Z]{2}[0-9]{5}$/
+                        },
+                        'description': {
+                            required: true,
+                            minlength: 20,
+                            maxlength: 500
+                        },
+                        'phone': {
+                            minlength: 10,
+                            maxlength: 12,
+                            pattern: /^[0-9]$/
+                        }
+                    },
+                    messages:{
+                        'name':{
+                            minlength: "Please make your organization name longer than 2 characters",
+                            pattern: "The organization name can only consist of alphabetical and number"
+                        },
+                        'description': {
+                            minlength: "Can you tell us more about your organization",
+                            maxlength: "Please descripting briefly"
+                        },
+                        'phone': {
+                            minlength: "Please give us a right phone number",
+                            maxlength: "Please give us a right phone number",
+                            pattern: "Phone field only accepts integer number from 1 to 9"
+                        }
+                    },
+                    submitHandler: function (form) { // for demo
+                        alert('valid form submitted'); // for demo
+                        return false; // for demo
+                    }
+
+                });
+            });
+        </script>
 	</div>
 {% endblock %}

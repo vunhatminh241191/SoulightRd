@@ -128,6 +128,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "soulightrd.apps.main.context_processors.global_data",
 )
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
 TEMPLATE_LOADERS = (
     "django_mobile.loader.Loader",
@@ -199,7 +201,8 @@ THIRD_PARTY_APPS = (
     "djmoney",
     'profiler',
     "djrill",
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    'crispy_forms'
 )
 
 LOCAL_APPS = (
