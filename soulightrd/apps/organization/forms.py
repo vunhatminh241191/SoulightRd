@@ -41,10 +41,6 @@ class OrganizationSignUpForm(forms.Form):
 		)
 	city = forms.ModelChoiceField(label = _("City"), queryset=City.objects.all())
 
-	country = forms.CharField(label= _("Country"),
-			widget=CountrySelectWidget
-		)
-
 	def __init__(self, *args, **kwargs):
 		super(OrganizationSignUpForm, self).__init__(*args, **kwargs)
 		self.helper = FormHelper()
