@@ -8,6 +8,7 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
+from django.views.generic.detail import DetailView
 
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path
 from soulightrd.apps import AppBaseView
@@ -25,8 +26,16 @@ alarm = Alarm(logger)
 
 APP_NAME = "organization"
 
-def main_page(request):
-	return HttpResponse("Projet Main Page")
+class MainOrganizationView(AppBaseView, DetailView):
+	app = APP_NAME
+	template_name = "detail"
+	success_url = "/?action=detail_organization&result=organization_name"
+	model = Organization
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(MainOrganizationView, self).dispatch(*args, **kwargs)
+
 
 
 class CreateOrganizationView(AppBaseView,FormView):
