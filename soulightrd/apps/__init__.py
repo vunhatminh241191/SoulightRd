@@ -14,7 +14,7 @@ class AppBaseView(TemplateView):
 		return context
 
 	def get_template_names(self):		
-		return [get_template_path(self.app_name,self.template_name,RequestContext(self.request)['flavour']),self.sub_path]
+		return [get_template_path(self.app_name,self.template_name,RequestContext(self.request)['flavour'],self.sub_path)]
 
 	def handle_fail_request(self):
 		if self.fail_url == None:
