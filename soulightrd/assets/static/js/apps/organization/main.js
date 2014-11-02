@@ -12,6 +12,7 @@ jQuery(document).ready(function($){
                 maxlength: 500
             },
             'phone': {
+                required: true,
                 pattern: /^[0-9]$/,
                 minlength: 10,
                 maxlength: 12,
@@ -47,10 +48,10 @@ jQuery(document).ready(function($){
             'email': {
                 required: "Please give us your organization email",
                 pattern: "Please give us a right email"
-            }
+            },
             'address': {
                 required: "Please give us your organization address"
-            }
+            },
             'website': {
                 required: "Please give us your organization website"
             }
