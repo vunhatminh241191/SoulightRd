@@ -1,0 +1,240 @@
+nav#header {
+	margin:0px;
+	border-radius: 0px;
+}
+
+nav#header #top_navbar .navbar-collapse.in li #search_form,
+nav#header #top_navbar .navbar-collapse.collapsing li #search_form{
+  margin: 0;
+}
+
+nav#header #top_navbar ul.navbar-nav > li > a{
+  color:#FFFFFF;
+}
+
+nav#header #top_navbar ul.navbar-nav > li > a:hover{
+  color:#C2C2C2;
+}
+
+
+nav#header #search_query {
+	background-color: white;
+	border-radius: 15px;
+	border:0px;
+	width: 360px;
+	min-width: 130px;
+	color: #333;
+	padding-left: 12px;
+	font-size:12px;
+	margin-top:-2px;
+}
+
+nav#header #search_query:focus {
+	border: 0px;
+}
+
+nav#header #search_query::-webkit-input-placeholder {
+	color: #cacaca;
+	font-size: 12px;
+}
+
+nav#header #search_query:-moz-placeholder {
+	color: #cacaca;
+	font-size: 12px;
+}
+
+nav#header .glyphicon-search {
+	position:absolute;
+	right:10px;
+	top:8px;
+	z-index: 10;
+}
+
+nav#header #search_form {
+	margin:0px;
+	padding: 10px 0px 0px 10px;
+	height: 48px;
+}
+
+
+nav#header #search_form .twitter-typeahead{
+  outline:none;
+}
+
+nav#header #search_form .typeahead,
+nav#header #search_form .tt-query,
+nav#header #search_form .tt-hint {
+  font-size: 12px;
+  border: 2px solid #ccc;
+  -webkit-border-radius: 18px;
+     -moz-border-radius: 18px;
+          border-radius: 18px;
+  outline: none;
+}
+
+nav#header #search_form .typeahead {
+  background-color: #fff;
+}
+
+nav#header #search_form .typeahead:focus {
+  border: 2px solid #0097cf;
+}
+
+nav#header #search_form .tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+nav#header #search_form .tt-hint {
+  color: #999;
+  width:358px;
+}
+
+nav#header #search_form .tt-input,
+nav#header #search_form .tt-input:focus {
+  border:transparent;
+  box-shadow: none
+}
+
+nav#header #search_form .tt-hint:focus {
+  border:0px;
+}
+
+nav#header #search_form .tt-dropdown-menu {
+  width: 362px;
+  margin-top:5px;
+  margin-left:-2px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  max-height:400px;
+  overflow-y:auto;
+}
+
+nav#header #search_form .tt-suggestion {
+    width:361px;
+    padding: 3px 20px;
+    font-size: 14px;
+    line-height: 24px;
+    display: table;
+    content: "";
+    cursor:pointer;
+}
+
+nav#header #search_form .tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+nav#header #search_form .tt-suggestion div {
+  margin: 0;
+}
+
+nav#header #search_form .tt-suggestion .details .name {
+  font-size:12px;
+  width:285px;
+}
+
+nav#header #search_form .tt-suggestion .details {
+    margin-left:10px;
+    line-height: 20px;
+}
+
+nav#header #search_form .tt-suggestion .details .type {
+    color: #999;
+    font-size: 12px;
+}
+
+nav#header #search_form .tt-suggestion .picture img {
+    width:25px;
+    height:25px;
+    background-color:#d3d6db;
+    margin-top:4px;
+}
+
+nav#header #search_form_submit{
+  border-top-right-radius:18px;
+  border-bottom-right-radius:18px;
+  background-color: transparent;
+}
+
+nav#header #create_links{
+  padding-top: 8px;
+}
+
+nav#header #user_link{
+  padding-top: 8px;
+  padding-bottom: 0;
+  color:#FFFFFF;
+  font-weight: bold;
+}
+
+nav#header .user-avatar{
+  vertical-align: middle;
+  display: inline-block;
+  border-radius:18px;
+  background-color: #fff;
+  height: 36px;
+  width: 36px;
+  line-height: 20px;
+}
+
+nav#header .user-display-name {
+  margin-left:10px;
+}
+
+nav#header #user_actions{
+  padding-top: 8px;
+}
+
+nav#header #user_actions button.btn{
+  background-color: transparent;
+  color: #FFFFFF;
+  padding-left:0px;
+}
+
+nav#header #user_actions button.btn:hover{
+  color:#C2C2C2;
+}
+
+nav#header #user_actions .dropdown-menu li a{
+  display: block;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+nav#header #user_actions .dropdown-menu li a:hover{
+  background-color: #428BCA;
+  color:#FFFFFF;
+}
+
+nav#header #new_notification {
+  position: absolute;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 11px;
+  padding-right: 6px;
+  padding-left: 6px;
+  line-height: 15px;
+  border-radius: 3px;
+  background-color: #fa3f5e;
+  padding-top: 0px;
+  padding-bottom: 3px;
+  top: 16px;
+  right: -15px;
+  z-index: 100;
+}
+
+nav#header ul.dropdown-menu {
+  top:42px;
+}
+

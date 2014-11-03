@@ -341,7 +341,7 @@ class PasswordResetView(FormView,AppBaseView):
 password_reset = PasswordResetView.as_view()
 
 
-class PasswordResetDoneView(AppBaseView):
+class PasswordResetDoneView(TemplateView,AppBaseView):
     app_name = APP_NAME
     template_name = "password_reset_done"
     sub_path = "/account/"
