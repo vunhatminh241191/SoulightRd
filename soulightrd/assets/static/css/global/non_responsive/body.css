@@ -1,9 +1,15 @@
 /*
  * Wrapper
  */
-#page_wrapper {
+#page_wrapper{
 	min-height:100%;
-	position:relative;
+	margin-bottom: -160px;
+}
+
+#page_wrap:after {
+  content: "";
+  display: block;
+  height:160px;
 }
 
 /*

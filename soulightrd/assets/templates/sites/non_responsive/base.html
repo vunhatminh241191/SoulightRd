@@ -38,44 +38,47 @@
         {% include "sites/non_responsive/common/header.html" %}
     {% endblock %}  
 
-    <!-- Content block -->
-    {% block content %} 
-    <div id='body' class='row'>
-        {% if request_message %}
-            <div class="flash-messages">
-                <div class="container">
-                    <div class="alert text-info">
-                        <button class="close" data-dismiss="alert" type="button">
-                            <span aria-hidden="true"><i class="fa fa-times"></i></span>
-                        </button>
-                        {{ request_message }}
-                        <input type="hidden" id="is_activate_message" value="{{is_activate_message}}"/>
+    <div id="page_wrapper">
+        <!-- Content block -->
+        {% block content %} 
+        <div id='body' class='row'>
+            {% if request_message %}
+                <div class="flash-messages">
+                    <div class="container">
+                        <div class="alert text-info">
+                            <button class="close" data-dismiss="alert" type="button">
+                                <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                            </button>
+                            {{ request_message }}
+                            <input type="hidden" id="is_activate_message" value="{{is_activate_message}}"/>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endif %}
-        
-        <div id='alert_message' class="bold medium-text small-padding-top small-padding-bottom"></div>
+            {% endif %}
+            
+            <div id='alert_message' class="bold medium-text small-padding-top small-padding-bottom"></div>
 
-        <div id='main_section'>
-            {% block main_section %}
-            {% endblock %}
-        </div>
-
-        <div id="scroll_top_btn" class="hide">
-            <div class="wrapper">
-                <div class='sprite-go-top-icon pointer-cursor'></div>
+            <div id='main_section'>
+                {% block main_section %}
+                {% endblock %}
             </div>
-        </div>
 
-        <div id="ajax_loading_icon" class='hide'>
-            <div class='wrapper'>
-                <img src="{{STATIC_URL}}img/apps/body/ajax-loader.gif"/>
+            <div id="scroll_top_btn" class="hide">
+                <div class="wrapper">
+                    <div class='sprite-go-top-icon pointer-cursor'></div>
+                </div>
             </div>
+
+            <div id="ajax_loading_icon" class='hide'>
+                <div class='wrapper'>
+                    <img src="{{STATIC_URL}}img/apps/body/ajax-loader.gif"/>
+                </div>
+            </div>
+
         </div>
+        {% endblock %}
 
     </div>
-    {% endblock %}
 
     {% block footer %}
         {% include "sites/non_responsive/common/footer.html" %}

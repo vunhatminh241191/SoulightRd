@@ -3,19 +3,22 @@ nav#header {
 	border-radius: 0px;
 }
 
-nav#header #top_navbar .navbar-collapse.in li #search_form,
-nav#header #top_navbar .navbar-collapse.collapsing li #search_form{
+nav#header .navbar-collapse.in li #search_form,
+nav#header .navbar-collapse.collapsing li #search_form{
   margin: 0;
 }
 
-nav#header #top_navbar ul.navbar-nav > li > a{
+nav#header ul.navbar-nav > li > a{
   color:#FFFFFF;
 }
 
-nav#header #top_navbar ul.navbar-nav > li > a:hover{
+nav#header ul.navbar-nav > li > a:hover{
   color:#C2C2C2;
 }
 
+nav#header .navbar-brand {
+  padding-top:5px;
+}
 
 nav#header #search_query {
 	background-color: white;
