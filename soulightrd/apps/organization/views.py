@@ -29,21 +29,23 @@ APP_NAME = "organization"
 class MainOrganizationView(DetailView, AppBaseView):
 	app_name = APP_NAME
 	template_name = "detail"
-	success_url = "/?action=detail_organization&result=organization_name"
 	model = Organization
 
 	def get(self, request, *args, **kwargs):
-		self.object = self.get_object()
-		context = self.get_context_data(object=self.object)
+		print kwargs
+		try:
+			self.object = self.get_object()
+		except Http404:
+			self.object = None
+		print kwargs
+		context = self.get_context_data()
+		print context
 		return self.render_to_response(context)
 
 	def get_object(self, queryset=None):
-		print self.kwargs
-		print queryset
 		if queryset is None:
 			queryset = self.get_queryset()
 		try:
-			print queryset.get(unique_id=self.kwargs['organization_unique_id'])
 			return queryset.get(unique_id=self.kwargs['organization_unique_id'])
 		except:
 			raise Http404()
@@ -53,9 +55,7 @@ class MainOrganizationView(DetailView, AppBaseView):
 		return qs
 
 	def get_context_data(self, **kwargs):
-		ctx = kwargs
-		ctx["object"] = self.object
-		ctx["app_name"] = self.app_name
+		ctx = super(MainOrganizationView, self).get_context_data(**kwargs)
 		return ctx
 
 organization_main = MainOrganizationView.as_view()
