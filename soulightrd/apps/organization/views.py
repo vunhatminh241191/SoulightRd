@@ -32,7 +32,7 @@ def main_page(request):
 class CreateOrganizationView(AppBaseView,FormView):
 	app_name = APP_NAME
 	template_name = "create"
-	form_class = OrganizationSignUpForm
+	form = OrganizationSignUpForm
 	success_url = "/?action=create_organization&result=wait_for_verify"
 
 	@method_decorator(login_required)
