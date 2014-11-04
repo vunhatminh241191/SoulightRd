@@ -1,0 +1,22 @@
+{% extends "sites/non_responsive/base.html" %}
+
+{% load socialaccount %}
+{% load i18n %}
+
+{% block header_scripts %}
+    {% providers_media_js %}
+{% endblock %}
+
+{% block main_section %}
+	<div class="register-section">
+		<a href = "{% url 'organization_main'%}">{% trans "Home"%} </a> |
+			{{object.name}}
+			{{object.description}}
+			{{object.website}}
+			{{object.email}}
+			{{object.phone}}
+			{{object.address}}
+			{{object.city}}
+		</form>
+	</div>
+{% endblock%}

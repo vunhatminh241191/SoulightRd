@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError, Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -26,16 +26,39 @@ alarm = Alarm(logger)
 
 APP_NAME = "organization"
 
-class MainOrganizationView(AppBaseView, DetailView):
-	app = APP_NAME
+class MainOrganizationView(DetailView, AppBaseView):
+	app_name = APP_NAME
 	template_name = "detail"
 	success_url = "/?action=detail_organization&result=organization_name"
 	model = Organization
 
-	@method_decorator(login_required)
-	def dispatch(self, *args, **kwargs):
-		return super(MainOrganizationView, self).dispatch(*args, **kwargs)
+	def get(self, request, *args, **kwargs):
+		self.object = self.get_object()
+		context = self.get_context_data(object=self.object)
+		return self.render_to_response(context)
 
+	def get_object(self, queryset=None):
+		print self.kwargs
+		print queryset
+		if queryset is None:
+			queryset = self.get_queryset()
+		try:
+			print queryset.get(unique_id=self.kwargs['organization_unique_id'])
+			return queryset.get(unique_id=self.kwargs['organization_unique_id'])
+		except:
+			raise Http404()
+
+	def get_queryset(self):
+		qs = Organization.objects.all()
+		return qs
+
+	def get_context_data(self, **kwargs):
+		ctx = kwargs
+		ctx["object"] = self.object
+		ctx["app_name"] = self.app_name
+		return ctx
+
+organization_main = MainOrganizationView.as_view()
 
 
 class CreateOrganizationView(AppBaseView,FormView):
