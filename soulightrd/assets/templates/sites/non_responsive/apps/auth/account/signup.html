@@ -10,12 +10,12 @@
 {% block main_section %}
 <div class="register-section">
     <div class="register-header row">
-       <div class="header-text extra-large-text large-margin-left pull-left">
+       <div class="header-text">
             {% trans "Signup" %}
         </div>
         <div class="join-fb pull-right large-margin-right small-margin-bottom">
            <a href="{% provider_login_url "facebook" method="js_sdk" %}">
-                Facebook Login
+                <input src="{{STATIC_URL}}img/apps/account/signin-fb-btn.png" class="small-margin-top" type="image" alt="Signin with Facebook">
             </a>
         </div>
     </div>

@@ -39,9 +39,8 @@
     {% endblock %}  
 
     <div id="page_wrapper">
-        <!-- Content block -->
         {% block content %} 
-        <div id='body' class='row'>
+        <div id='body'>
             {% if request_message %}
                 <div class="flash-messages">
                     <div class="container">
@@ -73,10 +72,10 @@
                 <div class='wrapper'>
                     <img src="{{STATIC_URL}}img/apps/body/ajax-loader.gif"/>
                 </div>
-            </div>
+            </div>    
 
         </div>
-        {% endblock %}
+        {% endblock %} 
 
     </div>
 
@@ -84,16 +83,11 @@
         {% include "sites/non_responsive/common/footer.html" %}
     {% endblock %}
 
-
-    <!--  Modal field-->
     <div id='modal_section'> 
-        
         {% block modal %}        
         {% endblock %}
-
     </div>
 
-    <!--  Hidden field-->
     <div id="hidden_section">
         {% if user_login %}
             <input type='hidden' id='is_user_login' value="True">
@@ -105,7 +99,8 @@
         {% block hidden %}
         {% endblock %}     
 
-    </div>        
+    </div>
+       
     
     {% block footer_script %} 
 

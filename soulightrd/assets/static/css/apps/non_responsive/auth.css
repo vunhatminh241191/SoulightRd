@@ -11,9 +11,8 @@
 .register-section {
     border-radius: 3px;
     border: 6px solid #b0b0b0;
-    height: auto;
     width: 360px;
-    margin: 100px auto 70px auto;
+    margin: 50px auto 50px auto;
     background-color: #fcfcfc;
 }
 
@@ -34,12 +33,18 @@
     -webkit-appearance: none;
 }
 
+.signin-section .signin-header,
 .register-section .register-header {
-    padding-top:7px;
-    padding-bottom:7px;
-    width: 100%;
     border-bottom: 1px solid #bababa;
     background: url('//db0dp9rjtl3zs.cloudfront.net/zaahah.com/v3/img/app/body/create-community-header-background.png');
+}
+
+.signin-section .signin-header .header-text,
+.register-section .register-header .header-text{
+    margin-top:12px;
+    font-size:20px;
+    float:left;
+    margin-left:30px;
 }
 
 .register-section .register-content {
@@ -77,16 +82,8 @@
     border: 6px solid #b0b0b0;
     height: auto;
     width: 360px;
-    margin: 90px auto 70px auto;
+    margin: 80px auto 0px auto;
     background-color: #fcfcfc;
-}
-
-.signin-section .signin-header {
-    width: 100%;
-    border-bottom: 1px solid #bababa;
-    background: url('//db0dp9rjtl3zs.cloudfront.net/zaahah.com/v3/img/app/body/create-community-header-background.png');
-    padding-top:5px;
-    padding-bottom:5px;
 }
 
 .signin-section .signin-content {
@@ -149,10 +146,10 @@
 
 .change-password-section .change-password-header .header-text,
 .reset-password-section .reset-password-header .header-text {
-    font-size: 24px;
+    font-size: 20px;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
-    margin-top: 10px;
-    margin-left: 20px;
+    margin-top: 12px;
+    margin-left: 30px;
 }
 
 .change-password-section .change-password-content,

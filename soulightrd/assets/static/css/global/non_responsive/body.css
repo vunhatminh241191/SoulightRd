@@ -1,15 +1,16 @@
 /*
  * Wrapper
  */
-#page_wrapper{
-	min-height:100%;
-	margin-bottom: -160px;
+#page_wrapper {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -200px; 
 }
 
-#page_wrap:after {
+#page_wrapper:after {
   content: "";
   display: block;
-  height:160px;
+  height:200px;
 }
 
 /*
