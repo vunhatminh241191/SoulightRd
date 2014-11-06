@@ -10,10 +10,6 @@
 {% block main_section %}
 	<div class="register-section">
 		<a href = "{% url 'organization_main' organization.unique_id %}"> Home </a> 
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
 		<li> {{object.created_by.username}} </li>
 		<li> {{object.name}} </li>
 		<li> {{object.description}} </li>

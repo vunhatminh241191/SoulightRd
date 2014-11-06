@@ -29,18 +29,15 @@ APP_NAME = "organization"
 class MainOrganizationView(DetailView, AppBaseView):
 	app_name = APP_NAME
 	template_name = "detail"
-	model = Organization
 
 	def get(self, request, *args, **kwargs):
-		print kwargs
 		try:
 			self.object = self.get_object()
-		except Http404:
-			self.object = None
-		print kwargs
-		context = self.get_context_data()
-		print context
-		return self.render_to_response(context)
+			context = self.get_context_data()
+			return self.render_to_response(context)
+		except Exception as e:
+			alarm.run("Fail to create organization",self.request,e)
+			self.handle_fail_request()
 
 	def get_object(self, queryset=None):
 		if queryset is None:
