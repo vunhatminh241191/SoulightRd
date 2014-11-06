@@ -39,15 +39,7 @@ class OrganizationSignUpForm(forms.Form):
 	address = forms.CharField(label = _("Address"), max_length = 200,
 			widget = forms.TextInput(attrs={'placeholder': 'Organization Name'})
 		)
-	city = forms.CharField(label = _("City"), max_length = 10,
-			widget=forms.TextInput(attrs={'placeholder': "City"})
-		)
-	country = forms.CharField(label= _("Country"),
-			widget=CountrySelectWidget
-		)
-	normal_member = forms.ModelMultipleChoiceField(label = _("Invite Member"),
-		queryset=User.objects.all())
-
+	city = forms.ModelChoiceField(label = _("City"), queryset=City.objects.all())
 
 	def __init__(self, *args, **kwargs):
 		super(OrganizationSignUpForm, self).__init__(*args, **kwargs)
