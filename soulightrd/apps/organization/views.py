@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
 from django.views.generic.detail import DetailView
+from django.views.generic import ListView
 
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path
 from soulightrd.apps import AppBaseView
@@ -95,6 +96,27 @@ class CreateOrganizationView(AppBaseView,FormView):
 			self.handle_fail_request()
 
 create_organization = CreateOrganizationView.as_view()
+
+class ListProjectView(ListView, AppBaseView):
+	app_name = APP_NAME
+	template_name = "list_project"
+	model = OrganizationBoardMember
+	paginate_by = 20
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(ListProjectView, self).dispatch(*args, **kwargs)
+
+	def get_queryset(self):
+		self.tc = get_object_or_404(Organization, unique_id=self.kwargs['organization_unique_id'])
+		return OrganizationBoardMember(organization=self.tc)
+
+	def get_context_data(self, **kwargs):
+		ctx = super(ListProjectView, self).get_context_data(**kwargs)
+		ctx['tc'] = self.tc
+		return ctx
+
+list_projects = ListProjectView.as_view()
 
 
 @login_required

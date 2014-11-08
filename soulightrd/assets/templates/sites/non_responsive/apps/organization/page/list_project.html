@@ -1,0 +1,20 @@
+{% extends "sites/non_responsive/base.html" %}
+
+{% load socialaccount %}
+{% load i18n %}
+
+{% block header_scripts %}
+    {% providers_media_js %}
+{% endblock %}
+
+{% block main_section %}
+	<div class="register-section">
+		<a href = "{% url 'organization_list_projects' %}"> Home </a>
+		<h2> Projects </h2>
+		<ul>
+			{% for project in object_list %}
+				<li> project.title </li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock%}
