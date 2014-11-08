@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError, Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -8,6 +8,7 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
+from django.views.generic.detail import DetailView
 
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path
 from soulightrd.apps import AppBaseView
@@ -25,14 +26,42 @@ alarm = Alarm(logger)
 
 APP_NAME = "organization"
 
-def main_page(request):
-	return HttpResponse("Projet Main Page")
+class MainOrganizationView(DetailView, AppBaseView):
+	app_name = APP_NAME
+	template_name = "detail"
+
+	def get(self, request, *args, **kwargs):
+		try:
+			self.object = self.get_object()
+			context = self.get_context_data()
+			return self.render_to_response(context)
+		except Exception as e:
+			alarm.run("Fail to create organization",self.request,e)
+			self.handle_fail_request()
+
+	def get_object(self, queryset=None):
+		if queryset is None:
+			queryset = self.get_queryset()
+		try:
+			return queryset.get(unique_id=self.kwargs['organization_unique_id'])
+		except:
+			raise Http404()
+
+	def get_queryset(self):
+		qs = Organization.objects.all()
+		return qs
+
+	def get_context_data(self, **kwargs):
+		ctx = super(MainOrganizationView, self).get_context_data(**kwargs)
+		return ctx
+
+organization_main = MainOrganizationView.as_view()
 
 
 class CreateOrganizationView(AppBaseView,FormView):
 	app_name = APP_NAME
 	template_name = "create"
-	form = OrganizationSignUpForm
+	form_class = OrganizationSignUpForm
 	success_url = "/?action=create_organization&result=wait_for_verify"
 
 	@method_decorator(login_required)
