@@ -51,12 +51,13 @@ def load_plugin_js(context):
 def load_global_js(context):
 	stage = context['stage']
 	if stage == "dev":
-		js_global = ROOT_PATH + "/assets/static/js/global/"
+		responsive_type = "non_responsive" if context['flavour'] == 'full' else "responsive" 
+		js_global = ROOT_PATH + "/assets/static/js/global/" + responsive_type
 		list_file = []
 		read_catalogue(list_file,js_global)
 		result = ""
 		for filename in list_file:
-			result = result + '<script type="text/javascript" src="' + STATIC_URL + 'js/global/' + filename +'"></script>\n'
+			result = result + '<script type="text/javascript" src="' + STATIC_URL + 'js/global/' + responsive_type + "/" + filename +'"></script>\n'
 		return result
 
 
