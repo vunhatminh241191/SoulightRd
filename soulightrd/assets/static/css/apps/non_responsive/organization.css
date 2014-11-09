@@ -1,0 +1,19 @@
+.error {
+	display:block;
+}
+
+#create_organization_section #header_section {
+	width:900px;
+}
+
+#create_organization_section #form_section .wrapper {
+	width: 900px;
+	margin: 15px auto 40px;
+	padding-top: 40px;
+	padding-bottom:30px;
+	border: 1px solid #dedede;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #fff;
+}

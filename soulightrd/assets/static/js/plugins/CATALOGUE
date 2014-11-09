@@ -1,4 +1,7 @@
 jquery-1.11.1.min.js
+jquery.validate.min.js
+jquery.validate.additional-methods.min.js
+jquery.validate.additional-methods.custom.min.js
 bootstrap.min.js
 bootstrap-formhelpers.js
 jquery.dajax.core.js

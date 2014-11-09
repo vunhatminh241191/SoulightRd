@@ -7,6 +7,8 @@ from django.template import RequestContext
 from haystack.views import SearchView
 from haystack.query import SearchQuerySet
 
+from soulightrd.apps.search.receivers import city_autocomplete_data 
+
 import json, logging, datetime
 
 logger = logging.getLogger(__name__)
@@ -45,3 +47,6 @@ class MainSearchView(SearchView):
 		template = get_template_path(APP_NAME,"main_search",context_instance['flavour'])
 		return render_to_response(template, context, context_instance=self.context_class(self.request))
 
+
+def get_city_autocomplete_data(request):
+	return HttpResponse(json.dumps(city_autocomplete_data,indent=2), content_type='application/json')

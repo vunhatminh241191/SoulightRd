@@ -3,7 +3,7 @@ from django.template import RequestContext
 
 from soulightrd.apps.app_settings import SITE_DATA, DEFAULT_LATITUDE
 from soulightrd.apps.app_settings import DEFAULT_LONGITUDE, DEFAULT_CITY
-from soulightrd.apps.app_settings import DEFAULT_COUNTRY
+from soulightrd.apps.app_settings import DEFAULT_COUNTRY, DEFAULT_COUNTRY_CODE
 
 from soulightrd.settings import SITE_NAME, STAGE
 
@@ -26,6 +26,7 @@ def global_data(request):
 	results['current_lng'] = DEFAULT_LONGITUDE
 	results['current_city'] = DEFAULT_CITY
 	results['current_country'] = DEFAULT_COUNTRY
+	results['current_country_code'] = DEFAULT_COUNTRY_CODE
 	results['geo_data'] = None
 	if g.city(client_ip) != None:
 		geo_data = g.city(client_ip)
@@ -33,6 +34,7 @@ def global_data(request):
 		results['current_lng'] = geo_data['longitude']
 		results['current_city'] = geo_data['city']
 		results['current_country'] = geo_data['country_name']
+		results['current_country_code'] = geo_data['country_code']
 		results['geo_data'] = geo_data
 	results['user_login'] = get_user_login_object(request)
 	activate_message = activate_email_reminder_message(request,results['user_login']) 

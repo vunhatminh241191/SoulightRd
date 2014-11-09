@@ -8,15 +8,17 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
-from django.views.generic.detail import DetailView
+from django.views.generic import DetailView, ListView
 
-from soulightrd.apps.app_helper import generate_unique_id, get_template_path
+from soulightrd.apps.app_helper import generate_unique_id, get_template_path, get_user_login_object
 from soulightrd.apps import AppBaseView
 
 from soulightrd.apps.main.models import Organization, OrganizationBoardMember
 from soulightrd.apps.main.constants import ORGANIZATION_FOUNDER
 from soulightrd.apps.organization.forms import OrganizationSignUpForm
 from soulightrd.apps.alarm import Alarm
+
+from cities_light.models import City, Country
 
 import json, logging, datetime
 
@@ -30,32 +32,19 @@ class MainOrganizationView(DetailView, AppBaseView):
 	app_name = APP_NAME
 	template_name = "detail"
 
-	def get(self, request, *args, **kwargs):
-		try:
-			self.object = self.get_object()
-			context = self.get_context_data()
-			return self.render_to_response(context)
-		except Exception as e:
-			alarm.run("Fail to create organization",self.request,e)
-			self.handle_fail_request()
-
 	def get_object(self, queryset=None):
-		if queryset is None:
-			queryset = self.get_queryset()
-		try:
-			return queryset.get(unique_id=self.kwargs['organization_unique_id'])
-		except:
+		''' Return Verified Organization '''
+		organization = get_object_or_404(Organization, unique_id=self.kwargs.get("organization_unique_id"))
+		if organization.is_verified == False:
 			raise Http404()
-
-	def get_queryset(self):
-		qs = Organization.objects.all()
-		return qs
-
-	def get_context_data(self, **kwargs):
-		ctx = super(MainOrganizationView, self).get_context_data(**kwargs)
-		return ctx
+		else:
+			return organization
 
 organization_main = MainOrganizationView.as_view()
+
+class ListOrganizationView(ListView,AppBaseView):
+	app_name = APP_NAME
+	template_name = "list"
 
 
 class CreateOrganizationView(AppBaseView,FormView):
@@ -68,21 +57,29 @@ class CreateOrganizationView(AppBaseView,FormView):
 	def dispatch(self, *args, **kwargs):
 		return super(CreateOrganizationView, self).dispatch(*args, **kwargs)
 
+	def get_initial(self):
+	    initial = {}
+	    try:
+	    	initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+	    except Exception as e:
+	    	alarm.run("Cannot get user country",self.request,e)
+	    return initial
+
 	def form_valid(self, form):
 		user_login = get_user_login_object(self.request)
 		try:
-			signup_form = form.cleaned_data
+			create_organization_form = form.cleaned_data
 			organization = Organization.objects.create(
 				unique_id=generate_unique_id('organization'),
 				created_by=user_login,
-				name=signup_form['name'],
-				description=signup_form['description'],
-				website=signup_form['website'],
-				phone=signup_form['phone'],
-				email=signup_form['email'],
-				address=signup_form['address'],
-				city = City.objects.get(id=signup_form['city']),
-				country = signup_form['country']
+				name=create_organization_form['name'],
+				description=create_organization_form['description'],
+				website=create_organization_form['website'],
+				phone=create_organization_form['phone'],
+				email=create_organization_form['email'],
+				address=create_organization_form['address'],
+				city = City.objects.get(id=create_organization_form['city_pk_value']),
+				country = Country.objects.get(id=create_organization_form['country'])
 			)
 			organization_founder = OrganizationBoardMember.objects.create(
 				user=user_login,
@@ -95,6 +92,7 @@ class CreateOrganizationView(AppBaseView,FormView):
 			self.handle_fail_request()
 
 create_organization = CreateOrganizationView.as_view()
+
 
 
 @login_required

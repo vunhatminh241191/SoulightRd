@@ -74,12 +74,12 @@ img.media-object {
 	margin-right:0px;
 }
 
-
 .error-field {
 	color: #a94442;
     margin-bottom:5px;
 }
 
+.error,
 .error-notice {
 	color: #a94442;
 }

@@ -1,10 +1,23 @@
-jQuery(document).ready(function($){
-    $('#signup_form').validate({
+/* CLICK CANCEL BUTTON */
+$(function() {
+    $("#button-id-cancel").click(function() {
+        window.location.href = "/";
+    })
+})
+/*****************/
+
+
+
+/* FORM VALIDATION */
+$(document).ready(function($){
+    $('#create_organization_form').validate({
+        errorPlacement: function(error, element) {
+            $( element ).closest('.controls').prepend(error);
+        },
         rules:{
             'name':{
                 required: true,
                 minlength: 2,
-                pattern: /^[A-Z]{2}[0-9]{5}$/
             },
             'description': {
                 required: true,
@@ -13,9 +26,7 @@ jQuery(document).ready(function($){
             },
             'phone': {
                 required: true,
-                pattern: /^[0-9]$/,
-                minlength: 10,
-                maxlength: 12,
+                intlphone: true,
             },
             'email':{
                 required: true,
@@ -25,6 +36,9 @@ jQuery(document).ready(function($){
                 required: true
             },
             'website': {
+                required: false
+            },
+            'city': {
                 required: true
             }
         },
@@ -40,10 +54,7 @@ jQuery(document).ready(function($){
                 maxlength: "Please descripting briefly"
             },
             'phone': {
-                required: "Please give us your organization phone number to contact",
-                pattern: "Phone field only accepts integer number from 1 to 9",
-                minlength: "Please give us a right phone number",
-                maxlength: "Please give us a right phone number",                     
+                required: "Please give us your organization phone number to contact",              
             },
             'email': {
                 required: "Please give us your organization email",
@@ -56,10 +67,6 @@ jQuery(document).ready(function($){
                 required: "Please give us your organization website"
             }
         },
-        submitHandler: function (form) { // for demo
-            alert('valid form submitted'); // for demo
-            return false; // for demo
-        }
-
     });
 });
+/********************/

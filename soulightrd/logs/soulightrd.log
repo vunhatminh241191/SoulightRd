@@ -1,0 +1,5 @@
+'city_pk_value'
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 81, in form_valid
+    city = City.objects.get(id=create_organization_form['city_pk_value']),
+KeyError: 'city_pk_value'

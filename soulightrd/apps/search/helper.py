@@ -28,3 +28,18 @@ def build_user_autocomplete_data(users,container):
 		except Exception as e:
 			logger.exception(e)
 	return container
+
+
+def build_city_autocomplete_data(cities,container):
+	for city in cities:
+		try:
+			data = {
+				"value": city.name,
+				"label": city.display_name,
+				"picture": STATIC_URL + "img/apps/body/city_icon.jpg",
+				"type": "City",
+			}
+			container.append(data)
+		except Exception as e:
+			logger.exception(e)
+	return container

@@ -18,6 +18,6 @@ class AppBaseView(TemplateResponseMixin,ContextMixin):
 
 	def handle_fail_request(self):
 		if self.fail_url == None:
-			raise Exception()
+			raise Exception("Fail to handle request. Redirect to 500 error page")
 		else:
 			return HttpResponseRedirect(self.fail_url)
