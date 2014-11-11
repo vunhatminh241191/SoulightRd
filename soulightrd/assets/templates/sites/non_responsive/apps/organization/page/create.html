@@ -1,23 +1,47 @@
 {% extends "sites/non_responsive/base.html" %}
 
-{% load socialaccount %}
 {% load i18n %}
-
-{% block header_scripts %}
-    {% providers_media_js %}
-{% endblock %}
 
 {% load crispy_forms_tags %}
 <link rel="stylesheet" href="http://jqueryvalidation.org/files/demo/site-demos.css">
 
+{% block header_scripts %}
+    <script src="{{STATIC_URL}}js/plugins/tiny_mce/tiny_mce_src.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+    <script src="{{STATIC_URL}}js/apps/non_responsive/organization/main.js "></script>
+    <script type="text/javascript">
+        tinyMCE.init({
+            // General options
+            mode : "specific_textareas",
+            editor_selector : "mce-editor",
+            elements : "elm2",
+            theme : "advanced",
+            skin : "o2k7",
+            skin_variant : "silver",
+            plugins: 'advimage,advlink,preview,searchreplace,inlinepopups,media,autoresize,table,paste',
+            theme_advanced_buttons1: 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,fontselect,fontsizeselect,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,media',
+            theme_advanced_buttons2: 'tablecontrols,pasteword,outdent,indent,blockquote,hr,preview,code',
+            language: 'en',
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_toolbar_align : "left",
+            theme_advanced_resizing : true,
+        });
+
+    </script>
+{% endblock %}
+
 {% block main_section %}
-	<div class="register-section">
-		<form role='form' class="signup" id="signup_form" method="post" action="{% url 'create_organization' %}">{% csrf_token %}
-            {% crispy form form.helper %}
-        </form>
-        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
-        <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
-        <script src="{{STATIC_URL}}js/apps/non_responsive/organization/main.js "></script>
-	</div>
+    <div id="create_organization_section">
+        <div id="header_section" class="row div-center">
+             <h3>Submit your organization</h3>
+        </div>
+
+        <div id="form_section" class='row'>
+            <div class='wrapper'>
+                {% crispy form form.helper %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
