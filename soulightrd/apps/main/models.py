@@ -235,8 +235,13 @@ class Project(models.Model):
 	comments = models.ManyToManyField(Comment, related_name='project_comments',blank=True,null=True)
 	followers = models.ManyToManyField(User, related_name='project_followers',blank=True,null=True)
 
+class ProjectBoardMember(models.Model):
+	user = models.ForeignKey(User, related_name='board_member_user_project')
+	project = models.ForeignKey(Project, related_name='board_member_project')
+	role = models.CharField(max_length=100)
+
 class OrganizationBoardMember(models.Model):
-	user = models.ForeignKey(User,related_name='board_member_user')
+	user = models.ForeignKey(User,related_name='board_member_user_organization')
 	organization = models.ForeignKey("Organization",related_name='board_member_organization')
 	projects = models.ManyToManyField(Project, related_name='board_member_projects',blank=True,null=True)
 	role = models.CharField(max_length=100)
