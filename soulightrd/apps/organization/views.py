@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
 from django.views.generic import DetailView, ListView
+from django import db
 
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path, get_user_login_object
 from soulightrd.apps import AppBaseView
@@ -18,7 +19,7 @@ from soulightrd.apps.main.constants import ORGANIZATION_FOUNDER
 from soulightrd.apps.organization.forms import OrganizationSignUpForm
 from soulightrd.apps.alarm import Alarm
 
-from cities_light.models import City, Country
+from cities_light.models import City
 
 import json, logging, datetime
 
@@ -61,7 +62,6 @@ class CreateOrganizationView(AppBaseView,FormView):
 	def form_valid(self, form):
 		user_login = get_user_login_object(self.request)
 		try:
-			print form.cleaned_data
 			create_organization_form = form.cleaned_data
 			organization = Organization.objects.create(
 				unique_id=generate_unique_id('organization'),
@@ -72,15 +72,13 @@ class CreateOrganizationView(AppBaseView,FormView):
 				phone=create_organization_form['phone'],
 				email=create_organization_form['email'],
 				address=create_organization_form['address'],
-				city = City.objects.get(id=create_organization_form['city_pk_value'])
+				city = City.objects.get(display_name=create_organization_form['city'])
 			)
-			organization.save()
 			organization_founder = OrganizationBoardMember.objects.create(
 				user=user_login,
 				organization=organization,
 				role=ORGANIZATION_FOUNDER
 			)
-			organization_founder.save()
 			return super(CreateOrganizationView, self).form_valid(form)
 		except Exception as e:
 			alarm.run("Fail to create organization",self.request,e)

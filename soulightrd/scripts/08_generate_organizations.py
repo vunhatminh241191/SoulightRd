@@ -17,8 +17,6 @@ from django.contrib.auth.models import User
 from cities_light.models import City, Country
 from django import db
 
-string_integer = '1234567890'
-
 def main():
 	print "... RUNNING GENERATE ORGANIZATION SCRIPT ..."
 	organizations = Organization.objects.all()
@@ -39,7 +37,6 @@ def main():
 					email= ORGANIZATION_NAMES[i] + '@gmail.com',
 					address="111 Le Thanh Ton, District 1",
 					city=City.objects.order_by('?')[0],
-					country=Country.objects.order_by('?')[0],
 					submit_date=datetime(year,month,day))
 				organization.normal_member.add(User.objects.get(username=NAMES[i+1].lower()))
 
