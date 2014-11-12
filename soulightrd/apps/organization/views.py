@@ -34,13 +34,14 @@ class MainOrganizationView(DetailView, AppBaseView):
 	template_name = "detail"
 
 	def get_object(self, queryset=None):
+		print self.kwargs.get("organization_unique_id")
 		''' Return Verified Organization '''
 		organization = get_object_or_404(Organization
 			, unique_id=self.kwargs.get("organization_unique_id"))
-		if organization.is_verified == False:
+		'''if organization.is_verified == False:
 			raise Http404()
-		else:
-			return organization
+		else:'''
+		return organization
 
 organization_main = MainOrganizationView.as_view()
 
