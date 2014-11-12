@@ -34,7 +34,8 @@ class MainOrganizationView(DetailView, AppBaseView):
 
 	def get_object(self, queryset=None):
 		''' Return Verified Organization '''
-		organization = get_object_or_404(Organization, unique_id=self.kwargs.get("organization_unique_id"))
+		organization = get_object_or_404(Organization
+			, unique_id=self.kwargs.get("organization_unique_id"))
 		if organization.is_verified == False:
 			raise Http404()
 		else:
@@ -57,17 +58,10 @@ class CreateOrganizationView(AppBaseView,FormView):
 	def dispatch(self, *args, **kwargs):
 		return super(CreateOrganizationView, self).dispatch(*args, **kwargs)
 
-	def get_initial(self):
-	    initial = {}
-	    try:
-	    	initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
-	    except Exception as e:
-	    	alarm.run("Cannot get user country",self.request,e)
-	    return initial
-
 	def form_valid(self, form):
 		user_login = get_user_login_object(self.request)
 		try:
+			print form.cleaned_data
 			create_organization_form = form.cleaned_data
 			organization = Organization.objects.create(
 				unique_id=generate_unique_id('organization'),
@@ -78,14 +72,15 @@ class CreateOrganizationView(AppBaseView,FormView):
 				phone=create_organization_form['phone'],
 				email=create_organization_form['email'],
 				address=create_organization_form['address'],
-				city = City.objects.get(id=create_organization_form['city_pk_value']),
-				country = Country.objects.get(id=create_organization_form['country'])
+				city = City.objects.get(id=create_organization_form['city_pk_value'])
 			)
+			organization.save()
 			organization_founder = OrganizationBoardMember.objects.create(
 				user=user_login,
 				organization=organization,
 				role=ORGANIZATION_FOUNDER
 			)
+			organization_founder.save()
 			return super(CreateOrganizationView, self).form_valid(form)
 		except Exception as e:
 			alarm.run("Fail to create organization",self.request,e)
