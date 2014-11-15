@@ -29,12 +29,11 @@ alarm = Alarm(logger)
 
 APP_NAME = "organization"
 
-class MainOrganizationView(DetailView, AppBaseView):
+class DetailOrganizationView(DetailView, AppBaseView):
 	app_name = APP_NAME
 	template_name = "detail"
 
 	def get_object(self, queryset=None):
-		print self.kwargs.get("organization_unique_id")
 		''' Return Verified Organization '''
 		organization = get_object_or_404(Organization
 			, unique_id=self.kwargs.get("organization_unique_id"))
@@ -43,7 +42,12 @@ class MainOrganizationView(DetailView, AppBaseView):
 		else:'''
 		return organization
 
-organization_main = MainOrganizationView.as_view()
+	def get_context_data(self, **kwargs):
+		ctx = super(DetailOrganizationView, self).get_context_data(**kwargs)
+		ctx['projects'] = get_list_or_404(Project, organization=ctx['object'])
+		return ctx
+
+organization_detail = DetailOrganizationView.as_view()
 
 class CreateOrganizationView(AppBaseView,FormView):
 	app_name = APP_NAME
@@ -82,23 +86,13 @@ class CreateOrganizationView(AppBaseView,FormView):
 
 create_organization = CreateOrganizationView.as_view()
 
-class ListProjectView(ListView, AppBaseView):
+class ListOrganizationView(ListView, AppBaseView):
 	app_name = APP_NAME
-	template_name = "list_project"
+	template_name = "list_organization"
+	model = Organization
+	paginate_by = 10
 
-	def get_queryset(self):
-		print self.kwargs
-		self.tc = get_object_or_404(Organization
-			, unique_id=self.kwargs['organization_unique_id'])
-		return get_list_or_404(Project, organization=self.tc)
-
-	def get_context_data(self, **kwargs):
-		ctx = super(ListProjectView, self).get_context_data(**kwargs)
-		print ctx['object_list'][0].title
-		return ctx
-
-list_projects = ListProjectView.as_view()
-
+list_organization = ListOrganizationView.as_view()
 
 @login_required
 def edit_organization(request):

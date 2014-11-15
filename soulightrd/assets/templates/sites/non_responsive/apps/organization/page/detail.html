@@ -9,7 +9,6 @@
 
 {% block main_section %}
 	<div class="register-section">
-		<a href = "{% url 'organization_main' organization.unique_id %}"> Home </a> 
 		<li> {{object.created_by.username}} </li>
 		<li> {{object.name}} </li>
 		<li> {{object.description}} </li>
@@ -19,6 +18,12 @@
 		<li> {{object.address}} </li>
 		<li> {{object.city}} </li>
 		<li> {{object.normal_member.username}} </li>
-		<script src="{{STATIC_URL}}js/apps/organization/main.js"></script>
-	</div>
+		<!--	
+		<ul>
+			{% for project in projects %}
+				<a href= "{% url '/project/project_detail' project.unique_id %}"> {{ project.title }} </a>
+			{% endfor %}
+		</ul>
+		-->
+	</div> 
 {% endblock%}
