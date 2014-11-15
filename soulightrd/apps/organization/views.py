@@ -14,7 +14,7 @@ from django import db
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path, get_user_login_object
 from soulightrd.apps import AppBaseView
 
-from soulightrd.apps.main.models import Organization, OrganizationBoardMember
+from soulightrd.apps.main.models import Organization, Project
 from soulightrd.apps.main.constants import ORGANIZATION_FOUNDER
 from soulightrd.apps.organization.forms import OrganizationSignUpForm
 from soulightrd.apps.alarm import Alarm
@@ -44,11 +44,6 @@ class MainOrganizationView(DetailView, AppBaseView):
 		return organization
 
 organization_main = MainOrganizationView.as_view()
-
-class ListOrganizationView(ListView,AppBaseView):
-	app_name = APP_NAME
-	template_name = "list"
-
 
 class CreateOrganizationView(AppBaseView,FormView):
 	app_name = APP_NAME
@@ -90,20 +85,16 @@ create_organization = CreateOrganizationView.as_view()
 class ListProjectView(ListView, AppBaseView):
 	app_name = APP_NAME
 	template_name = "list_project"
-	model = OrganizationBoardMember
-	paginate_by = 20
-
-	@method_decorator(login_required)
-	def dispatch(self, *args, **kwargs):
-		return super(ListProjectView, self).dispatch(*args, **kwargs)
 
 	def get_queryset(self):
-		self.tc = get_object_or_404(Organization, unique_id=self.kwargs['organization_unique_id'])
-		return OrganizationBoardMember(organization=self.tc)
+		print self.kwargs
+		self.tc = get_object_or_404(Organization
+			, unique_id=self.kwargs['organization_unique_id'])
+		return get_list_or_404(Project, organization=self.tc)
 
 	def get_context_data(self, **kwargs):
 		ctx = super(ListProjectView, self).get_context_data(**kwargs)
-		ctx['tc'] = self.tc
+		print ctx['object_list'][0].title
 		return ctx
 
 list_projects = ListProjectView.as_view()
