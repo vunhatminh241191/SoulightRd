@@ -94,7 +94,7 @@ EMAIL_SUBJECT_SNIPPET_TEMPLATE = {
 }
 
 EMAIL_CONTENT_HTML_SNIPPET_TEMPLATE = {
-
+ "organization_register": "organization-register"
   
 }
 
