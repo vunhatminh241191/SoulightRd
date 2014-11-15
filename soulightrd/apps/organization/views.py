@@ -45,6 +45,7 @@ class DetailOrganizationView(DetailView, AppBaseView):
 	def get_context_data(self, **kwargs):
 		ctx = super(DetailOrganizationView, self).get_context_data(**kwargs)
 		ctx['projects'] = get_list_or_404(Project, organization=ctx['object'])
+		ctx['users'] = OrganizationBoardMember.objects.filter(organization=ctx['object'])
 		return ctx
 
 organization_detail = DetailOrganizationView.as_view()
