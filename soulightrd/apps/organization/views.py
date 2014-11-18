@@ -14,7 +14,7 @@ from django import db
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path, get_user_login_object
 from soulightrd.apps import AppBaseView
 
-from soulightrd.apps.main.models import Organization, Project
+from soulightrd.apps.main.models import Organization, Project, OrganizationBoardMember
 from soulightrd.apps.main.constants import ORGANIZATION_FOUNDER
 from soulightrd.apps.organization.forms import OrganizationSignUpForm
 from soulightrd.apps.alarm import Alarm
@@ -92,6 +92,7 @@ class ListOrganizationView(ListView, AppBaseView):
 	template_name = "list_organization"
 	model = Organization
 	paginate_by = 10
+	print "hehehehe"
 
 list_organization = ListOrganizationView.as_view()
 
