@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User, AnonymousUser
 from django.utils import simplejson, timezone
 from django.core import serializers
+from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
@@ -62,6 +63,7 @@ class CreateOrganizationView(AppBaseView,FormView):
 
 	def form_valid(self, form):
 		user_login = get_user_login_object(self.request)
+		print user_login.email
 		try:
 			create_organization_form = form.cleaned_data
 			organization = Organization.objects.create(
@@ -80,6 +82,8 @@ class CreateOrganizationView(AppBaseView,FormView):
 				organization=organization,
 				role=ORGANIZATION_FOUNDER
 			)
+			send_mail("Register new organization", "I would like to apply a new organization"
+				, user_login.email, ["soulightrd@gmail.com"])
 			return super(CreateOrganizationView, self).form_valid(form)
 		except Exception as e:
 			alarm.run("Fail to create organization",self.request,e)
