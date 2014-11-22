@@ -96,7 +96,6 @@ class ListOrganizationView(ListView, AppBaseView):
 	template_name = "list_organization"
 	model = Organization
 	paginate_by = 10
-	print "hehehehe"
 
 list_organization = ListOrganizationView.as_view()
 
