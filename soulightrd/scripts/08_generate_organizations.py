@@ -22,6 +22,7 @@ edit_organization_permission = Permission.objects.get(codename='change_organizat
 def main():
 	print "... RUNNING GENERATE ORGANIZATION SCRIPT ..."
 	organizations = Organization.objects.all()
+	
 	k=0
 	if len(organizations) == 0:
 		try:

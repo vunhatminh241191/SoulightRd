@@ -11,20 +11,24 @@ from django.contrib.auth.models import User
 from django import db
 
 from soulightrd.apps.main.models import ProjectBoardMember, Project
+from soulightrd.apps.main.models import OrganizationBoardMember
 
 from dummy_database import NAMES
 
 def main():
 	print "... RUNNING GENERATE PROJECT BOARD MEMBER ..."
+
+	k = 132
 	project_board_member = ProjectBoardMember.objects.all()
 	if len(project_board_member) == 0:
 		try:
 			projects = Project.objects.all()
 			for project in projects:
-				user = User.objects.get(username=NAMES[random.randint(81, 133)].lower())
+				user = User.objects.get(username=NAMES[k].lower())
 				project_board_member = ProjectBoardMember.objects.create(user=user,
 					project=project)
 				project_board_member.save()
+				k += 1
 			print "Generate Project Board Member Successfully"
 		except:
 			print "Generate Project Board Member Failed"

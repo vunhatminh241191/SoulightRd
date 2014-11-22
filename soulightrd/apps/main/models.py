@@ -243,7 +243,6 @@ class ProjectBoardMember(models.Model):
 class OrganizationBoardMember(models.Model):
 	user = models.ForeignKey(User,related_name='board_member_user_organization')
 	organization = models.ForeignKey("Organization",related_name='board_member_organization')
-	projects = models.ManyToManyField(Project, related_name='board_member_projects',blank=True,null=True)
 	role = models.CharField(max_length=100)
 
 class Organization(models.Model):
@@ -260,6 +259,7 @@ class Organization(models.Model):
 	is_verified = models.BooleanField(default=False)
 	submit_date = models.DateTimeField(auto_now_add=True)
 	verify_date = models.DateTimeField(blank=True,null=True)
+	projects = models.ManyToManyField(Project, related_name='organization_projects', blank=True, null=True)
 
 	def get_board_members(self):
 		return OrganizationBoardMember.objects.filter(organization=self)
