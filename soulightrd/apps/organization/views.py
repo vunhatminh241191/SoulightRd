@@ -118,11 +118,14 @@ class UpdateOrganizationView(UpdateView, AppBaseView):
 	def dispatch(self, *args, **kwargs):
 		initial_objects = self.get_initial()
 		for obm in initial_objects['obms']:
-			if obm.user.username == initial_objects['user']:
+			if obm.user.username == initial_objects['user'].username:
 				return super(UpdateOrganizationView, self).dispatch(*args, **kwargs)
-			else:
-				return Http404()
+		return Http404()
 
+	def get_object(self, queryset=None):
+		initial_objects = self.get_initial()
+		return initial_objects['organization']
+		
 	def form_valid(self, form):
 		try:
 			update_organization_form = form.cleaned_data
