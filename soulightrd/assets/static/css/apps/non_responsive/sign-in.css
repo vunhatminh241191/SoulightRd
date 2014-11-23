@@ -1,0 +1,28 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*login page*/
+.facebook {
+	margin-left:200px;	
+	
+}
+.sign-in{
+	border:#7B7676;
+	background-color:#F1EEEE;
+	padding-top:20px;
+	padding-right:10px;	
+	padding-bottom:10px;
+}
+.white, .white2  {
+	background-color:#FFFFFF;
+	width:25%;
+	border-radius:10px;
+	text-align:center;
+}
+.white {
+	margin-left:60px;
+}
+.white2 {
+	margin-left:20px;
+	
+}

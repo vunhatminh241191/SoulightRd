@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Organization</title>
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/stylesheet.css" rel="stylesheet" type="text/css">
+<link href="css/listOrganization.css" rel="stylesheet" type="text/css">
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="scripts/jquery.ba-bbq.min.js"></script>
+<script src="js/listOrganization.js"></script>
+</head>
+
+<body>
+<div class="container">
+  <div class="col-md-2" id="main">
+    <ul>
+      <li><a href="architecture.html"> Architecture</a></li>
+      <li><a href="business.html">Business</a> </li>
+      <li><a href="art.html">Art</a> </li>
+      <li><a href="education.html">Education</a></li>
+      <li><a href="volunteer.html">Volunteer</a></li>
+      <li><a href="other.html">Other</a></li>
+    </ul>
+    <script language="javascript">setPage()</script> 
+  </div>
+  <h3> Organization</h3>
+  <select >
+    <option value="name">Name</option>
+    <option value="member">Member</option>
+    <option value="loan">Loan</option>
+  </select>
+  
+  <input type="search" class="form-group pull-right" placeholder="Search" />
+<!--   <select id="member">
+    <option value="0-500 ">0-500 </option>
+    <option value="500-1000">500-1000 </option>
+    <option value=" 1000 - 1500">  1000 - 1500 </option>
+     <option value="1500 - 2000">  1500 - 2000 </option>
+  </select>
+   <select id="loan">
+    <option value="$0 - $500"> $0 - $500</option>
+    <option value="$500 - $2,000">$500 - $2,000</option>
+    <option value="$2,000 - $5,000">$2,000 - $5,000</option>
+    <option value="$5,000 -$ 10,000">$5,000 -$ 10,000</option>
+      </select>
+  -->
+  <div class="col-md-10" id="page">
+    <div class="col-sm-3 ">
+      <div class="thumbnail height"> <img src="images/face.jpg" alt="American">
+        <div class="caption">
+          <h5>Native American</h5>
+          <p> <span class="topic">Total Loan: </span> $12,880 </p>
+          <p><span class="topic">Members:</span> 1204+</p>
+          <p><span class="topic"> Activity:</span> Provide free food , help homeless people find house kajdkjasndf asdkjfasd asdkfjaksjdf asdfjasdfu asdfkaf <a href="#" role="button">+</a> <a href="#" class="btn btn-warning join" role="button">Join</a> </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3 ">
+      <div class="thumbnail height"> <img src="images/house.jpg" alt="house">
+        <div class="caption">
+          <h5>Building</h5>
+          <p> <span class="topic">Total Loan: </span> $20,000 </p>
+          <p><span class="topic">Members:</span> 500+</p>
+          <p><span class="topic"> Activity:</span> Provide free food , help homeless people find house ..<a href="#" role="button">+</a> <a href="#" class="btn btn-warning join" role="button">Join</a> </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
