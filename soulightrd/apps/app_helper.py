@@ -182,13 +182,11 @@ def generate_unique_id(model_type=None):
 
 
 def get_any_admin_object():
-	for username in ADMINS_USERNAME:
-		try:
-			admin = User.objects.get(username=username)
-			return admin
-		except User.DoesNotExist:
-			pass
-	return None
+	admins = User.objects.filter(is_superuser=True)
+	if len(admins) == 0:
+		return None
+	else:
+		return admins[0]
 
 
 def generate_token(custom_data,options):

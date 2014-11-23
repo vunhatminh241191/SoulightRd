@@ -41,7 +41,7 @@ class OrganizationSignUpForm(forms.Form):
 	city = forms.CharField(label = _("City"), max_length = 10,
 			widget=forms.TextInput()
 		)
-	country = forms.ModelChoiceField(label = _("Country"), queryset=Country.objects.all())
+	#country = forms.ModelChoiceField(label = _("Country"), queryset=Country.objects.all())
 
 	def __init__(self, *args, **kwargs):
 		super(OrganizationSignUpForm, self).__init__(*args, **kwargs)
@@ -59,7 +59,7 @@ class OrganizationSignUpForm(forms.Form):
 		    'phone',
 		    'address',
 		    'city',
-		    'country',
+		    #'country',
 		    'website',
 		    Div(
 		    	Div(css_class='col-lg-2'),

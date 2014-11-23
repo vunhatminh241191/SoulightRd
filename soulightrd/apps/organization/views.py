@@ -78,8 +78,9 @@ class CreateOrganizationView(AppBaseView,FormView):
 				phone=create_organization_form['phone'],
 				email=create_organization_form['email'],
 				address=create_organization_form['address'],
-				city = City.objects.get(id=create_organization_form['city_pk_value']),
-				country = Country.objects.get(id=create_organization_form['country'])
+				#city = City.objects.get(id=create_organization_form['city_pk_value']),
+				city = City.objects.order_by('?')[0],		# temporary until plug autocomplete
+				#country = Country.objects.get(id=create_organization_form['country'])
 			)
 			organization_founder = OrganizationBoardMember.objects.create(
 				user=user_login,

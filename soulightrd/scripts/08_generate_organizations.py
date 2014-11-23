@@ -14,7 +14,7 @@ from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 from dummy_database import NAMES, ORGANIZATION_NAMES, PHONE_TESTING
 
 from django.contrib.auth.models import User
-from cities_light.models import City
+from cities_light.models import City, Country
 from django import db
 
 string_integer = '1234567890'
@@ -39,7 +39,7 @@ def main():
 					email= ORGANIZATION_NAMES[i] + '@gmail.com',
 					address="111 Le Thanh Ton, District 1",
 					city=City.objects.order_by('?')[0],
-					country="VN",
+					country=Country.objects.get(code2='VN'),
 					submit_date=datetime(year,month,day))
 				organization.normal_member.add(User.objects.get(username=NAMES[i+1].lower()))
 

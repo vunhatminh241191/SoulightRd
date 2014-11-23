@@ -24,11 +24,9 @@ from soulightrd.apps.friend.provider.facebook_provider import FacebookFriendsPro
 
 from allauth.socialaccount.models import SocialAccount
 
-from django_countries.fields import CountryField
-
 from djmoney.models.fields import MoneyField
 
-from cities_light.models import City
+from cities_light.models import City, Country
 
 try:
 	storage = settings.MULTI_IMAGES_FOLDER + '/'
@@ -253,7 +251,7 @@ class Organization(models.Model):
 	phone = models.CharField(max_length=20)
 	address = models.TextField()
 	city = models.ForeignKey(City,related_name='organization_city')
-	country = CountryField()
+	#country = models.ForeignKey(Country,related_name='organization_country')
 	normal_member = models.ManyToManyField(User,related_name='organization_normal_member',blank=True,null=True)
 	is_verified = models.BooleanField(default=False)
 	submit_date = models.DateTimeField(auto_now_add=True)
