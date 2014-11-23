@@ -1,32 +1,18 @@
-{% extends "sites/non_responsive/base.html" %}
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Welcome</title>
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/stylesheet.css" rel="stylesheet" type="text/css">
+<link href="css/sign-in.css" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,600italic,700italic,800italic,400,600,300,700,800' rel='stylesheet' type='text/css'>
 
-{% load i18n %}
-{% load socialaccount %}
+</head>
+<body>
+<!--/*///*/**/*/*/-->
 
-{% block header_scripts %}
-	{% providers_media_js %}
-{% endblock %}
-
-{% block main_section %}
 <div class="container">
-  <header> <img src="images/logo1.png" width="200" height="100" alt=""/> </header>
-  <nav>
-    <ul>
-      <li><a href="homepage.html">Explore</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="start.html">Start Your Campain</a></li>
-    </ul>
-  </nav>
-  <ul class="sign">
-    <li class="not"><a href="login.html">Sign in</a></li>
-    <li><a href="#">Sign up </a></li>
-  </ul>
-  <div class="search">
-    <form class="search search2" name="search">
-      <input name="search" type="text" placeholder="Search..." class="box">
-      <button type="button"><span class="glyphicon glyphicon-search"></span></button>
-    </form>
-  </div>
   <div class="row sign-in">
     <div class="col-sm-6 col-md-3 facebook">
       <h3>Started Quickly</h3>
@@ -76,4 +62,5 @@
     </div>
   </div>
 </div>
-{% endblock %}
+</body>
+</html>

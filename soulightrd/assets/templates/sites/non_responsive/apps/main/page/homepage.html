@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Welcome </title>
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/stylesheet.css" rel="stylesheet" type="text/css">
+<link href="css/homepage.css" rel="stylesheet" type="text/css">
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,600italic,700italic,800italic,400,600,300,700,800' rel='stylesheet' type='text/css'>
+
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
+</script>
+
+<script>
+function initialize()
+{
+var mapProp = {
+  center:new google.maps.LatLng(51.508742,-0.120850),
+  zoom:5,
+  mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+var map=new google.maps.Map(document.getElementById("googleMap")
+  ,mapProp);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+<body>
+<!--/*///*/**/*/*/-->
+<div class="container">
+  <header> <img src="images/logo1.png" width="200" height="100" alt=""/> </header>
+  <div class="nav_home">
+    <ul>
+      <li><a href="homepage.html">Project</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="listOrganization.html">Organization</a></li>
+      <li><a href="start.html">Statics</a></li>
+    </ul>
+  </div>
+  
+      <ul class="sign">
+        <li class="not"><a href="login.html">Sign in</a></li>
+        <li><a href="#">Sign up  </a></li>
+      </ul> 
+       <div class="search">
+      <form class="search search2" name="search">
+        <input name="search" type="text" placeholder="Search..." class="box">
+        <button type="button"><span class="glyphicon glyphicon-search"></span></button>
+      </form> 
+    </div>
+    
+  
+     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active" style="height:400px;">
+      <img src="images/project8.jpg"   alt="Road"/>
+      <div class="carousel-caption">
+        <h3 >Follow your way</h3>
+        <p> asmnf,amsndf,asjhdfkjasdkfmnas
+        kjdfnkasjhdfkjahsdkjfhkajsdhf </p>
+      </div>
+    </div>
+    <div class="item" style="height:400px;">
+      <img src="images/house.jpg" alt="project7" />
+      <div class="carousel-caption">
+        <h3 >House project</h3>
+        <p> We are building a helping house which can provide cheapest food for low-income people. Beside it, we try to help people have a space to sleep for a few day if they don't have anywhere to go.  </p>
+      </div> 
+    </div>
+    <div class="item" style="height:400px;">
+      <img src="images/edu2.jpg"  alt="project8" />
+      <div class="carousel-caption"
+        <h3>Science project</h3>
+        <p> We are trying to get funding for our science program. The money can help student get more equipment for our Chemistry lab. asfaskdjfnkajsdnfuwheijfnasmdnfkasdf </p>
+      </div>
+    </div>
+    <div class="item" style="height:400px;">
+      <img src="images/edu3.jpg"   alt="project10"/>
+      <div class="carousel-caption"
+        <h3 >Open a school</h3>
+        <p> asasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf
+        asdfasdfasdfasdddddddd </p>
+      </div>
+    </div>
+   
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
+ 
+  
+  <div class="row content">
+  <h3>Trending now</h3>
+  
+    <div class="col-sm-6 col-md-3">
+       <h4>Education</h4> 
+      <div class="thumbnail"> <img src="images/project1.jpg" alt="...">
+        <div class="caption">
+          <h4>Education Loan</h4>
+          <p>adfan laksdnflkandflnasdf,mn kandfkandfk,andfkahsdfkmna,</p>
+          <p><a href="#" class="btn btn-primary" role="button">Explore</a> </p>
+        </div>
+       
+      </div>
+    </div>
+    
+    <div class="col-sm-6 col-md-3">
+    <h4>Bussiness</h4> 
+      <div class="thumbnail"> <img src="images/shoes.jpg"   alt="...">
+        <div class="caption">
+          <h4>Shoe Entrepreneur</h4>
+          <p>dfan laksdnflkandflnasdf,mn kandfkandfk,andfkahsdfkmn</p>
+          <p><a href="#" class="btn btn-primary" role="button">Explore</a> </p>
+        </div>
+      </div>
+    </div>
+     
+    <div class="col-sm-6 col-md-3">
+        <h4>Techonology</h4>
+      <div class="thumbnail"> <img data-src="file:///Macintosh HD/Users/anhton/Desktop/soulightrd/soulightrd/assets/media/upload_storage/photo/2014/holder.js/300x300" alt="...">
+        <div class="caption">
+          <h4>Project 3</h4>
+          <p>...</p>
+          <p><a href="#" class="btn btn-primary" role="button">Explore</a></p>
+        </div>
+      </div>
+    </div>
+    
+     <div class="col-sm-6 col-md-3">
+      <h4>Education</h4> 
+      <div class="thumbnail"> <img data-src="file:///Macintosh HD/Users/anhton/Desktop/soulightrd/soulightrd/assets/media/upload_storage/photo/2014/holder.js/300x300" alt="...">
+        <div class="caption">
+          <h4>Project 4</h4>
+          <p>...</p>
+          <p><a href="#" class="btn btn-primary" role="button">Explore</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div id="start">
+   <button type="button" class="btn btn-warning btn-lg">Start your campain</button>
+  </div>
+  
+  <h3> Our Distribution</h3>
+  <div id="googleMap" style="width:90%; height:500px">
+  </div>
+
+  <!-- end .container --></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+</body>
+</html>
