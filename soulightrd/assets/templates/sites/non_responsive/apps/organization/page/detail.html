@@ -18,18 +18,16 @@
 		<li> {{object.address}} </li>
 		<li> {{object.city}} </li>
 		<li> {{object.normal_member.username}} </li>
-		<!--	
 		<ul>
 			{% for project in projects %}
-				<a href= "{% url '/project/project_detail' project.unique_id %}"> {{ project.title }} </a>
+				<a> {{ project.title }} </a>
 			{% endfor %}
 		</ul>
 
 		<ul>
 			{% for user in users %}
-				<a href= "{% url 'auth/auth_detail' user.unique_id %}"> {{ user.username }} </a>
+				<a> {{ user.user.username}} </a>
 			{% endfor %}
 		</ul>
-		-->
 	</div> 
 {% endblock%}

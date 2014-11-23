@@ -8,7 +8,7 @@ from django.core import serializers
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import DetailView, ListView
 from django import db
 
@@ -17,7 +17,7 @@ from soulightrd.apps import AppBaseView
 
 from soulightrd.apps.main.models import Organization, Project, OrganizationBoardMember
 from soulightrd.apps.main.constants import ORGANIZATION_FOUNDER
-from soulightrd.apps.organization.forms import OrganizationSignUpForm
+from soulightrd.apps.organization.forms import OrganizationSignUpForm, OrganizationUpdateForm
 from soulightrd.apps.alarm import Alarm
 
 from cities_light.models import City
@@ -46,7 +46,8 @@ class DetailOrganizationView(DetailView, AppBaseView):
 	def get_context_data(self, **kwargs):
 		ctx = super(DetailOrganizationView, self).get_context_data(**kwargs)
 		ctx['projects'] = get_list_or_404(Project, organization=ctx['object'])
-		ctx['users'] = OrganizationBoardMember.objects.filter(organization=ctx['object'])
+		ctx['users'] = OrganizationBoardMember.objects.filter(
+			organization=ctx['object'])
 		return ctx
 
 organization_detail = DetailOrganizationView.as_view()
@@ -63,7 +64,6 @@ class CreateOrganizationView(AppBaseView,FormView):
 
 	def form_valid(self, form):
 		user_login = get_user_login_object(self.request)
-		print user_login.email
 		try:
 			create_organization_form = form.cleaned_data
 			organization = Organization.objects.create(
@@ -99,11 +99,47 @@ class ListOrganizationView(ListView, AppBaseView):
 
 list_organization = ListOrganizationView.as_view()
 
-@login_required
-def edit_organization(request):
-	return HttpResponse("Edit organization Page")
+class UpdateOrganizationView(UpdateView, AppBaseView):
+	app_name = APP_NAME
+	template = "create"
+	form_class = OrganizationUpdateForm
 
+	def get_initial(self):
+		initial = super(UpdateOrganizationView, self).get_initial()
+		initial = initial.copy()
+		initial['user'] = get_user_login_object(self.request)
+		initial['organization'] = Organization.objects.get(
+			unique_id=self.kwargs['organization_unique_id'])
+		initial['obms'] = OrganizationBoardMember.objects.filter(
+			organization=initial['organization'])
+		return initial
 
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		initial_objects = self.get_initial()
+		for obm in initial_objects['obms']:
+			if obm.user.username == initial_objects['user']:
+				return super(UpdateOrganizationView, self).dispatch(*args, **kwargs)
+			else:
+				return Http404()
+
+	def form_valid(self, form):
+		try:
+			update_organization_form = form.cleaned_data
+			self.organization.name = update_organization_form['name']
+			self.organization.description = update_organization_form['description']
+			self.organization.website = update_organization_form['website']
+			self.organization.email = update_organization_form['email']
+			self.organization.phone = update_organization_form['phone']
+			self.organization.address = update_organization_form['address']
+			self.organization.city = update_organization_form['city']
+			self.organization.save()
+			return super(UpdateOrganizationView, self).form_valid(form)
+		except Exception as e:
+			alarm.run("Fail to update organization", self.request, e)
+			self.handle_fail_request()
+
+edit_organization = UpdateOrganizationView.as_view()
 
 @login_required
 def delete_organization(request):

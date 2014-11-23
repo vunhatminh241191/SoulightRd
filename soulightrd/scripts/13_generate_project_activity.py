@@ -9,7 +9,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 from django.contrib.auth.models import User
 
-from soulightrd.apps.main.models import ProjectActivity, Project, Photo, OrganizationBoardMember
+from soulightrd.apps.main.models import ProjectActivity, Project, Photo
+from soulightrd.apps.main.models import OrganizationBoardMember
 from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 from soulightrd.apps.app_settings import DEFAULT_IMAGE_PATH_MAPPING, DEFAULT_IMAGE_UNIQUE_ID
 
@@ -40,12 +41,8 @@ def main():
 				month = random.choice(range(1, 12))
 				day = random.choice(range(1, 28))
 
-				responsible_member = None
-				organization_board_members = OrganizationBoardMember.objects.all()
-				for organization_board_member in organization_board_members:
-					if project in organization_board_member.projects.all():
-						responsible_member = organization_board_member.user
-						break
+				responsible_member = OrganizationBoardMember.objects.filter(
+					organization=project.organization)[0].user
 						
 				project_activity = ProjectActivity.objects.create(
 					title='abcdef',
