@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import DetailView, ListView
 from django import db
+from django.core.urlresolvers import reverse_lazy
 
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path, get_user_login_object
 from soulightrd.apps import AppBaseView
@@ -56,7 +57,7 @@ class CreateOrganizationView(AppBaseView,FormView):
 	app_name = APP_NAME
 	template_name = "create"
 	form_class = OrganizationSignUpForm
-	success_url = "/?action=create_organization&result=wait_for_verify"
+	success_url = reverse_lazy("/?action=create_organization&result=wait_for_verify")
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
@@ -101,8 +102,9 @@ list_organization = ListOrganizationView.as_view()
 
 class UpdateOrganizationView(UpdateView, AppBaseView):
 	app_name = APP_NAME
-	template = "create"
+	template_name = "update"
 	form_class = OrganizationUpdateForm
+	success_url = '/?action=edit_organization&result=changing_success'
 
 	def get_initial(self):
 		initial = super(UpdateOrganizationView, self).get_initial()
@@ -127,16 +129,17 @@ class UpdateOrganizationView(UpdateView, AppBaseView):
 		return initial_objects['organization']
 		
 	def form_valid(self, form):
+		organization = get_initial()['organization']
 		try:
 			update_organization_form = form.cleaned_data
-			self.organization.name = update_organization_form['name']
-			self.organization.description = update_organization_form['description']
-			self.organization.website = update_organization_form['website']
-			self.organization.email = update_organization_form['email']
-			self.organization.phone = update_organization_form['phone']
-			self.organization.address = update_organization_form['address']
-			self.organization.city = update_organization_form['city']
-			self.organization.save()
+			organization.name = update_organization_form['name']
+			organization.description = update_organization_form['description']
+			organization.website = update_organization_form['website']
+			organization.email = update_organization_form['email']
+			organization.phone = update_organization_form['phone']
+			organization.address = update_organization_form['address']
+			organization.city = update_organization_form['city']
+			organization.save()
 			return super(UpdateOrganizationView, self).form_valid(form)
 		except Exception as e:
 			alarm.run("Fail to update organization", self.request, e)

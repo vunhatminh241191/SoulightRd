@@ -14,7 +14,10 @@ from soulightrd.apps.main.models import Organization
 
 from cities_light.models import City, Country
 
-class OrganizationForm(forms.Form):
+class OrganizationForm(forms.ModelForm):
+	class Meta:
+		model = Organization
+
 	name = forms.CharField(
 			label = _("Name"),
 			widget = forms.TextInput()
@@ -34,7 +37,8 @@ class OrganizationForm(forms.Form):
 	phone = forms.RegexField(label=_("Phone"),max_length=15,
 			regex=r'^\+?1?\d{9,15}$', 
 			error_message = ("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."),
-			widget = forms.TextInput())
+			widget = forms.TextInput()
+		)
 	address = forms.CharField(label = _("Address"), max_length = 200,
 			widget = forms.TextInput(attrs={'placeholder': 'Street address, district, etc'})
 		)
@@ -74,24 +78,23 @@ class OrganizationSignUpForm(OrganizationForm):
 
 class OrganizationUpdateForm(OrganizationForm):
 	def __init__(self, *args, **kwargs):
-		super(OrganizationViewForm, self).__init__(*args, **kwargs)
+		super(OrganizationUpdateForm, self).__init__(*args, **kwargs)
 		self.helper = FormHelper()
-		self.helper.form_id = 'organization_update_form'
+		self.helper.form_id = 'edit_organization_form'
 		self.helper.form_class = 'form-horizontal'
 		self.helper.label_class = 'col-lg-2'
 		self.helper.field_class = 'col-lg-9'
 		self.helper.form_method = 'post'
-		self.helper.form_action = 'organization_update'
+		self.helper.form_action = 'edit_organization'
 		self.helper.layout = Layout(
-		    Fieldset('name {{ object.name }}',
+		    'name',
 		    'description',
 		    'email',
 		    'phone',
 		    'address',
 		    'city',
 		    'country',
-		    'website'
-		    ),
+		    'website',
 		    Div(
 		    	Div(css_class='col-lg-2'),
 		    	ButtonHolder(
