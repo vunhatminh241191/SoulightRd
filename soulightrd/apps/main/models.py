@@ -235,10 +235,14 @@ class Project(models.Model):
 	comments = models.ManyToManyField(Comment, related_name='project_comments',blank=True,null=True)
 	followers = models.ManyToManyField(User, related_name='project_followers',blank=True,null=True)
 
+class ProjectBoardMember(models.Model):
+	user = models.ForeignKey(User, related_name='board_member_user_project')
+	project = models.ForeignKey(Project, related_name='board_member_project')
+	role = models.CharField(max_length=100)
+
 class OrganizationBoardMember(models.Model):
-	user = models.ForeignKey(User,related_name='board_member_user')
+	user = models.ForeignKey(User,related_name='board_member_user_organization')
 	organization = models.ForeignKey("Organization",related_name='board_member_organization')
-	projects = models.ManyToManyField(Project, related_name='board_member_projects',blank=True,null=True)
 	role = models.CharField(max_length=100)
 
 class Organization(models.Model):
@@ -251,11 +255,11 @@ class Organization(models.Model):
 	phone = models.CharField(max_length=20)
 	address = models.TextField()
 	city = models.ForeignKey(City,related_name='organization_city')
-	#country = models.ForeignKey(Country,related_name='organization_country')
 	normal_member = models.ManyToManyField(User,related_name='organization_normal_member',blank=True,null=True)
 	is_verified = models.BooleanField(default=False)
 	submit_date = models.DateTimeField(auto_now_add=True)
 	verify_date = models.DateTimeField(blank=True,null=True)
+	projects = models.ManyToManyField(Project, related_name='organization_projects', blank=True, null=True)
 
 	def get_board_members(self):
 		return OrganizationBoardMember.objects.filter(organization=self)

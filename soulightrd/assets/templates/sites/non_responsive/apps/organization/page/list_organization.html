@@ -9,11 +9,10 @@
 
 {% block main_section %}
 	<div class="register-section">
-		<a href = "{% url 'organization_list_projects' %}"> Home </a>
-		<h2> Projects </h2>
+		<h2> organization </h2>
 		<ul>
-			{% for project in object_list %}
-				<li> project.title </li>
+			{% for organization in object_list %}
+				<a href = "{% url 'organization_detail' organization.unique_id %}"> {{ organization.name }} </a>
 			{% endfor %}
 		</ul>
 	</div>

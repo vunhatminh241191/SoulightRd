@@ -14,7 +14,8 @@ from soulightrd.apps.main.models import Organization
 
 from cities_light.models import City, Country
 
-class OrganizationSignUpForm(forms.Form):
+class OrganizationForm(forms.ModelForm):
+
 	name = forms.CharField(
 			label = _("Name"),
 			widget = forms.TextInput()
@@ -41,8 +42,9 @@ class OrganizationSignUpForm(forms.Form):
 	city = forms.CharField(label = _("City"), max_length = 10,
 			widget=forms.TextInput()
 		)
-	#country = forms.ModelChoiceField(label = _("Country"), queryset=Country.objects.all())
 
+
+class OrganizationSignUpForm(OrganizationForm):
 	def __init__(self, *args, **kwargs):
 		super(OrganizationSignUpForm, self).__init__(*args, **kwargs)
 		self.helper = FormHelper()
@@ -59,7 +61,7 @@ class OrganizationSignUpForm(forms.Form):
 		    'phone',
 		    'address',
 		    'city',
-		    #'country',
+		    'country',
 		    'website',
 		    Div(
 		    	Div(css_class='col-lg-2'),
@@ -73,8 +75,33 @@ class OrganizationSignUpForm(forms.Form):
 		    Hidden("city_pk_value","",id="city_pk_value")
 		)
 
-
-
-
-
-		
+class OrganizationUpdateForm(OrganizationForm):
+	def __init__(self, *args, **kwargs):
+		super(OrganizationUpdateForm, self).__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_id = 'edit_organization_form'
+		self.helper.form_class = 'form-horizontal'
+		self.helper.label_class = 'col-lg-2'
+		self.helper.field_class = 'col-lg-9'
+		self.helper.form_method = 'post'
+		self.helper.form_action = 'edit_organization'
+		self.helper.layout = Layout(
+		    'name',
+		    'description',
+		    'email',
+		    'phone',
+		    'address',
+		    'city',
+		    'country',
+		    'website',
+		    Div(
+		    	Div(css_class='col-lg-2'),
+		    	ButtonHolder(
+		    		Button('cancel', 'Cancel',css_class='btn btn-default btn-sm pull-right mini-margin-left'),
+		    		Submit("submit","Submit",css_class="btn btn-primary btn-sm pull-right"),
+		    		css_class = 'col-lg-9'
+		    	),
+		    	css_class = "form-group"
+		    ),
+		    Hidden("city_pk_value","",id="city_pk_value")
+		)

@@ -16,18 +16,21 @@ from dummy_database import NAMES
 
 def main():
 	print "... RUNNING GENERATE ORGANIZATION BOARD MEMBER SCRIPT ..."
+
+	k = 105
 	organization_board_members = OrganizationBoardMember.objects.all()
 	if len(organization_board_members) == 0:
 		try:
 			organizations = Organization.objects.all()
 			for organization in organizations:
-				for i in xrange(2):
-					user = User.objects.get(username=NAMES[random.randint(54,len(NAMES)-1)].lower())
-					organization_board_member = OrganizationBoardMember.objects.create(user=user,organization=organization)
-					projects = Project.objects.filter(organization=organization)
-					for project in projects:
-						organization_board_member.projects.add(project)
-					organization_board_member.save()
+				user = User.objects.get(username=NAMES[k].lower())
+				organization_board_member = OrganizationBoardMember.objects.create(
+					user=user,organization=organization)
+				organization_board_member_1 = OrganizationBoardMember.objects.create(
+					user=organization.created_by, organization=organization)
+				organization_board_member.save()
+				organization_board_member_1.save()
+				k += 1
 			print "Generate Organization Board Member Successfully"
 		except:
 			print "Generate Organization Board Member Failed"

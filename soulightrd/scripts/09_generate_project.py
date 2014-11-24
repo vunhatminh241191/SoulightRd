@@ -22,6 +22,7 @@ from cities_light.models import City
 def main():
 	print "... RUNNING GENERATE PROJECT SCRIPT ..."
 	
+	k = 52
 	projects = Project.objects.all()
 	if len(projects) == 0:
 		admin = get_any_admin_object()
@@ -50,8 +51,14 @@ def main():
 						organization=organization, 			 
 						project_start_date=datetime(year, month, day),
 						project_location=City.objects.order_by('?')[0])
-					project.followers.add(User.objects.get(username=NAMES[random.randint(0,len(NAMES)-1)].lower()))
+					project.followers.add(User.objects.get(
+						username=NAMES[k].lower()))
 					project.save()
+
+					organization.projects.add(project)
+					organization.save()
+
+					k += 1
 			print "Generate Project Successfully"
 		except:
 			print "Generate Project Failed"

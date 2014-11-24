@@ -28,7 +28,7 @@ def main():
 				day = random.choice(range(1, 28))
 
 				volunteer = Volunteer.objects.create(
-					user=User.objects.get(username=NAMES[random.randint(54,len(NAMES)-1)].lower()),
+					user=User.objects.get(username=NAMES[random.randint(185,len(NAMES)-1)].lower()),
 					project=project,
 					is_signed_confirmation=True, register_date = datetime(year,month,day))
 				volunteer.save()

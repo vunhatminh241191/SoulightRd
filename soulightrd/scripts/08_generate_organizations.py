@@ -13,15 +13,18 @@ from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 
 from dummy_database import NAMES, ORGANIZATION_NAMES, PHONE_TESTING
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
+
 from cities_light.models import City, Country
 from django import db
 
-string_integer = '1234567890'
+edit_organization_permission = Permission.objects.get(codename='change_organization')
 
 def main():
 	print "... RUNNING GENERATE ORGANIZATION SCRIPT ..."
 	organizations = Organization.objects.all()
+	
+	k = 0
 	if len(organizations) == 0:
 		try:
 			for i in xrange(len(ORGANIZATION_NAMES)):
@@ -32,19 +35,19 @@ def main():
 
 				organization = Organization.objects.create(
 					unique_id=generate_unique_id("organization"), 
-					created_by=User.objects.get(username=NAMES[i].lower()),
+					created_by=User.objects.get(username=NAMES[k].lower()),
 					name="Organization " + str(i),
 					description="abcde",
 					phone='+' + PHONE_TESTING[i], 
 					email= ORGANIZATION_NAMES[i] + '@gmail.com',
 					address="111 Le Thanh Ton, District 1",
 					city=City.objects.order_by('?')[0],
-					country=Country.objects.get(code2='VN'),
 					submit_date=datetime(year,month,day))
-				organization.normal_member.add(User.objects.get(username=NAMES[i+1].lower()))
-
+				organization.normal_member.add(User.objects.get(username=NAMES[k+1].lower()))
 				organization.save()
+
 				i += 1
+				k += 2
 			print "Generate Organization Successfully"
 		except:
 			print "Generate Organization Failed"

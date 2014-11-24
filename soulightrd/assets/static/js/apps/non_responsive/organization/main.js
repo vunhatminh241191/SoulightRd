@@ -6,8 +6,6 @@ $(function() {
 })
 /*****************/
 
-
-
 /* FORM VALIDATION */
 $(document).ready(function($){
     $('#create_organization_form').validate({
