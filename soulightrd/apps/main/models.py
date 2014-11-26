@@ -235,6 +235,9 @@ class Project(models.Model):
 	comments = models.ManyToManyField(Comment, related_name='project_comments',blank=True,null=True)
 	followers = models.ManyToManyField(User, related_name='project_followers',blank=True,null=True)
 
+	def __unicode__(self):
+		return self.title
+
 class ProjectBoardMember(models.Model):
 	user = models.ForeignKey(User, related_name='board_member_user_project')
 	project = models.ForeignKey(Project, related_name='board_member_project')
@@ -260,6 +263,9 @@ class Organization(models.Model):
 	submit_date = models.DateTimeField(auto_now_add=True)
 	verify_date = models.DateTimeField(blank=True,null=True)
 	projects = models.ManyToManyField(Project, related_name='organization_projects', blank=True, null=True)
+
+	def __unicode__(self):
+		return self.name
 
 	def get_board_members(self):
 		return OrganizationBoardMember.objects.filter(organization=self)

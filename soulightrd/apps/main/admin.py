@@ -46,6 +46,12 @@ class PhotoAdmin(admin.ModelAdmin):
     list_display = ['unique_id',"caption",'photo_type','object_unique_id','user_post','upload_date']
     list_filter = ["caption",'photo_type','unique_id','user_post','upload_date']
 
+class OrganizationAdmin(admin.ModelAdmin):
+    list_display = ['unique_id','created_by','name','description','website','email','phone','address','city','is_verified','submit_date','verify_date']
+
+class OrganizationBoardMemberAdmin(admin.ModelAdmin):
+    list_display = ['user','organization','role']
+
 ########################################
 #                                      #
 #            REGISTER AREA             #
@@ -60,7 +66,8 @@ admin.site.register(Message,MessageAdmin)
 admin.site.register(Conversation,ConversationAdmin)
 admin.site.register(SocialFriendList,SocialFriendListAdmin)
 admin.site.register(EmailTracking,EmailTrackingAdmin)
-
+admin.site.register(Organization,OrganizationAdmin)
+admin.site.register(OrganizationBoardMember,OrganizationBoardMemberAdmin)
 
 
 

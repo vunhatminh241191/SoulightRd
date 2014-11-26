@@ -1,109 +1,62 @@
+{% extends "sites/non_responsive/base.html" %}
+
+{% load socialaccount %}
+{% load i18n %}
+
 {% block header_scripts %}
 	{% providers_media_js %}
 {% endblock %}
 
 {% block main_section %}
-<div class="signin-section">
-	<div class="signin-header row">
-		<div class="header-text">
-			{% trans "Sign In" %}
-		</div>
-		<div class="social-login pull-right large-margin-right small-margin-bottom">
-			<a href="{% provider_login_url "facebook" method="js_sdk" %}">
-				<input src="{{STATIC_URL}}img/apps/account/signin-fb-btn.png" class="small-margin-top" type="image" alt="Signin with Facebook">
-			</a>
-		</div>
-	</div>
-	<div class="signin-content row">
-		 <form class="login" id="login_form" method="post" action="{% url 'account_login' %}">{% csrf_token %}
-			<div class='non-field-error row'>
-                {{ form.non_field_errors }}
-            </div>
-			<div class="data-section row">
-				<div class="form-group">
-					{{form.login.errors}}
-					{{form.login}}
-				</div>
-				<div class="form-group">
-					{{form.password.errors}}
-					{{form.password}}
-				</div>
+	<div class="signin-section">
+		<div class="signin-header row">
+			<div class="header-text">
+				{% trans "Sign In" %}
 			</div>
-			<div class="complete-section row">
-				 {% if redirect_field_value %}
-					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-				{% endif %}
-				<div class="signin-btn pull-left">
-					<button id="signin-btn" class="btn btn-warning btn-sm" alt="Sign in">{% trans "Sign in" %}</button>
-				</div>
-				<div class="remember-me pull-right mini-margin-top">
-					<input type="checkbox" name="remember_me" checked="checked" class="no-margin">
-					<span class="mini-text">{% trans "Remember Me" %}</span>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="signin-footer row">
-		<div class="forgot-section small-margin-top pull-left">
-			<div class="forgot-item pull-left">
-				<a href="{% url 'account_reset_password' %}" class="gray-color mini-text underline">{% trans "Forgot Password" %}?</a>
+			<div class="social-login pull-right large-margin-right small-margin-bottom">
+				<a href="{% provider_login_url "facebook" method="js_sdk" %}">
+					<input src="{{STATIC_URL}}img/apps/account/signin-fb-btn.png" class="small-margin-top" type="image" alt="Signin with Facebook">
+				</a>
 			</div>
 		</div>
-		<div class="content small-margin-top pull-right bold">
-			{% trans "New to SoulightRd" %}? <a href="{% url 'account_signup' %}">{% trans "Register" %}</a>
+		<div class="signin-content row">
+			<form class="login" id="login_form" method="post" action="{% url 'account_login' %}">{% csrf_token %}
+				<div class='non-field-error row'>
+					{{ form.non_field_errors }}
+				</div>
+			  	<div class="data-section row">
+				  	<div class="form-group">
+					  	{{form.login.errors}}
+					  	{{form.login}}
+				  	</div>
+				  	<div class="form-group">
+					  	{{form.password.errors}}
+					  	{{form.password}}
+				  	</div>
+				</div>
+				<div class="complete-section row">
+				 	{% if redirect_field_value %}
+						<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+					{% endif %}
+					<div class="signin-btn pull-left">
+						<button id="signin-btn" class="btn btn-warning btn-sm" alt="Sign in">{% trans "Sign in" %}</button>
+					</div>
+					<div class="remember-me pull-right mini-margin-top">
+						<input type="checkbox" name="remember_me" checked="checked" class="no-margin">
+						<span class="mini-text">{% trans "Remember Me" %}</span>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="signin-footer row">
+			<div class="forgot-section small-margin-top pull-left">
+				<div class="forgot-item pull-left">
+					<a href="{% url 'account_reset_password' %}" class="gray-color mini-text underline">{% trans "Forgot Password" %}?</a>
+				</div>
+			</div>
+			<div class="content small-margin-top pull-right bold">
+				{% trans "New to SoulightRd" %}? <a href="{% url 'account_signup' %}">{% trans "Register" %}</a>
+			</div>
 		</div>
 	</div>
-
-<!-- <div class="container">
-  <div class="row sign-in">
-    <div class="col-sm-6 col-md-3 facebook">
-      <h3>Started Quickly</h3>
-      <p>Sign in with Facebook is fastest way to join us as well as find your friends easier</p>
-      <button type="button" class="btn btn-primary btn-lg btn-block">Sign in with Facebook</button>
-    </div>
-    <div class="col-sm-6 col-md-4 white">
-      <h3>Sign Up</h3>
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label class="sr-only" for="exampleInputEmail2" > First Name</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="first-name" placeholder="First Name">
-          </div>
-          <label class="sr-only" for="exampleInputEmail2"> Last Name</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="last-name" placeholder="Last Name">
-          </div>
-          <label class="sr-only" for="exampleInputEmail2"> Email</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-          </div>
-          <label class="sr-only" for="exampleInputEmail2"> Password</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Password">
-          </div>
-        </div>
-      </form>
-      <button type="button" class="btn btn-warning btn-lg btn-block">Create an Account</button>
-    </div>
-    <div class="col-sm-6 col-md-4 white2">
-      <h3>Log in</h3>
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label class="sr-only" for="exampleInputEmail2"> Email</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputEmail2" placeholder="Email">
-          </div>
-          <label class="sr-only" for="exampleInputEmail2"> Password</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword2" placeholder="Password">
-          </div>
-        </div>
-      </form>
-      <button type="button" class="btn btn-danger btn-lg btn-block">Log in</button>
-      <p>...</p>
-    </div>
-  </div> -->
-
-</div>
-</body>
-</html>
+{% endblock %}

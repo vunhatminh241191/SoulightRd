@@ -25,9 +25,9 @@ def main():
 			for organization in organizations:
 				user = User.objects.get(username=NAMES[k].lower())
 				organization_board_member = OrganizationBoardMember.objects.create(
-					user=user,organization=organization)
+					user=user,organization=organization, role='tester 1')
 				organization_board_member_1 = OrganizationBoardMember.objects.create(
-					user=organization.created_by, organization=organization)
+					user=organization.created_by, organization=organization, role='tester 2')
 				organization_board_member.save()
 				organization_board_member_1.save()
 				k += 1

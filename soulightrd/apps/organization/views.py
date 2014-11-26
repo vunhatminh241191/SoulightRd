@@ -8,6 +8,7 @@ from django.core import serializers
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.urlresolvers import reverse
 
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import DetailView, ListView
@@ -64,12 +65,12 @@ class CreateOrganizationView(AppBaseView,FormView):
 		return super(CreateOrganizationView, self).dispatch(*args, **kwargs)
 
 	def get_initial(self):
-	    initial = {}
-	    try:
-	    	initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
-	    except Exception as e:
-	    	alarm.run("Cannot get user country",self.request,e)
-	    return initial
+		initial = {}
+		try:
+			initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+		except Exception as e:
+			alarm.run("Cannot get user country",self.request,e)
+		return initial
 
 	def form_valid(self, form):
 		user_login = get_user_login_object(self.request)
@@ -93,8 +94,7 @@ class CreateOrganizationView(AppBaseView,FormView):
 				organization=organization,
 				role=ORGANIZATION_FOUNDER
 			)
-			send_mail("Register new organization", "I would like to apply a new organization"
-				, user_login.email, ["soulightrd@gmail.com"])
+			#send_mail("Register new organization", "I would like to apply a new organization", user_login.email, ["soulightrd@gmail.com"])
 			return super(CreateOrganizationView, self).form_valid(form)
 		except Exception as e:
 			alarm.run("Fail to create organization",self.request,e)
@@ -111,36 +111,37 @@ class ListOrganizationView(ListView, AppBaseView):
 list_organization = ListOrganizationView.as_view()
 
 
-class UpdateOrganizationView(UpdateView, AppBaseView):
+class UpdateOrganizationView(AppBaseView,FormView):
 	app_name = APP_NAME
 	template_name = "update"
 	form_class = OrganizationUpdateForm
-	success_url = '/?action=edit_organization&result=changing_success'
+	success_url = '/?action=edit_organization&result=success'
+	item = None
 
 	def get_initial(self):
-		initial = super(UpdateOrganizationView, self).get_initial()
-		initial = initial.copy()
-		initial['user'] = get_user_login_object(self.request)
-		initial['organization'] = Organization.objects.get(
-			unique_id=self.kwargs['organization_unique_id'])
-		initial['obms'] = OrganizationBoardMember.objects.filter(
-			organization=initial['organization'])
+		initial = {}
+		try:
+			initial["organization_unique_id"] = self.item.unique_id
+		except Exception as e:
+			alarm.run("Fail to initialize data",self.request,e)
 		return initial
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
-		initial_objects = self.get_initial()
-		for obm in initial_objects['obms']:
-			if obm.user.username == initial_objects['user'].username:
+		self.item = get_object_or_404(Organization,unique_id=self.kwargs['organization_unique_id'])
+		board_members = OrganizationBoardMember.objects.filter(organization=self.item)
+		for board_member in board_members:
+			if board_member.user == get_user_login_object(self.request):
 				return super(UpdateOrganizationView, self).dispatch(*args, **kwargs)
-		return Http404()
+		raise Http404()
 
-	def get_object(self, queryset=None):
-		initial_objects = self.get_initial()
-		return initial_objects['organization']
+	def get_context_data(self, **kwargs):
+		ctx = super(UpdateOrganizationView, self).get_context_data(**kwargs)
+		ctx['organization'] = self.item
+		return ctx
 		
 	def form_valid(self, form):
-		organization = get_initial()['organization']
+		organization = self.item
 		try:
 			update_organization_form = form.cleaned_data
 			organization.name = update_organization_form['name']

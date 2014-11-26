@@ -14,7 +14,7 @@ from soulightrd.apps.main.models import Organization
 
 from cities_light.models import City, Country
 
-class OrganizationForm(forms.ModelForm):
+class OrganizationForm(forms.Form):
 
 	name = forms.CharField(
 			label = _("Name"),
@@ -53,7 +53,7 @@ class OrganizationSignUpForm(OrganizationForm):
 		self.helper.label_class = 'col-lg-2'
 		self.helper.field_class = 'col-lg-9'
 		self.helper.form_method = 'post'
-		self.helper.form_action = 'create_organization'
+		self.helper.form_action = '/organization/create'
 		self.helper.layout = Layout(
 		    'name',
 		    'description',
@@ -78,13 +78,14 @@ class OrganizationSignUpForm(OrganizationForm):
 class OrganizationUpdateForm(OrganizationForm):
 	def __init__(self, *args, **kwargs):
 		super(OrganizationUpdateForm, self).__init__(*args, **kwargs)
+		organization_unique_id = "Fdsfds"
 		self.helper = FormHelper()
 		self.helper.form_id = 'edit_organization_form'
 		self.helper.form_class = 'form-horizontal'
 		self.helper.label_class = 'col-lg-2'
 		self.helper.field_class = 'col-lg-9'
 		self.helper.form_method = 'post'
-		self.helper.form_action = 'edit_organization'
+		self.helper.form_action = "/organization/" + kwargs['initial']['organization_unique_id'] + "/edit"
 		self.helper.layout = Layout(
 		    'name',
 		    'description',

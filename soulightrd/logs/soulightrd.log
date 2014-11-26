@@ -3,3 +3,163 @@ Traceback (most recent call last):
   File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 81, in form_valid
     city = City.objects.get(id=create_organization_form['city_pk_value']),
 KeyError: 'city_pk_value'
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 133, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 69, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 133, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 123, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
+global name 'Country' is not defined
+Traceback (most recent call last):
+  File "/Users/dangn/Work/SoulightRd/Source/web/soulightrd/soulightrd/apps/organization/views.py", line 124, in get_initial
+    initial["country"] = Country.objects.get(code2=RequestContext(self.request)['current_country_code'])
+NameError: global name 'Country' is not defined
