@@ -39,9 +39,9 @@ class OrganizationForm(forms.Form):
 	address = forms.CharField(label = _("Address"), max_length = 200,
 			widget = forms.TextInput(attrs={'placeholder': 'Street address, district, etc'})
 		)
-	city = forms.CharField(label = _("City"), max_length = 10,
+	'''city = forms.CharField(label = _("City"), max_length = 10,
 			widget=forms.TextInput()
-		)
+		)'''
 
 
 class OrganizationSignUpForm(OrganizationForm):
@@ -60,8 +60,6 @@ class OrganizationSignUpForm(OrganizationForm):
 		    'email',
 		    'phone',
 		    'address',
-		    'city',
-		    'country',
 		    'website',
 		    Div(
 		    	Div(css_class='col-lg-2'),
@@ -78,22 +76,20 @@ class OrganizationSignUpForm(OrganizationForm):
 class OrganizationUpdateForm(OrganizationForm):
 	def __init__(self, *args, **kwargs):
 		super(OrganizationUpdateForm, self).__init__(*args, **kwargs)
-		organization_unique_id = "Fdsfds"
 		self.helper = FormHelper()
 		self.helper.form_id = 'edit_organization_form'
 		self.helper.form_class = 'form-horizontal'
 		self.helper.label_class = 'col-lg-2'
 		self.helper.field_class = 'col-lg-9'
 		self.helper.form_method = 'post'
-		self.helper.form_action = "/organization/" + kwargs['initial']['organization_unique_id'] + "/edit"
+		self.helper.form_show_errors = True
+		self.helper.form_action = "/organization/" + kwargs['initial']['organization_unique_id'] + "/edit/"
 		self.helper.layout = Layout(
 		    'name',
 		    'description',
 		    'email',
 		    'phone',
 		    'address',
-		    'city',
-		    'country',
 		    'website',
 		    Div(
 		    	Div(css_class='col-lg-2'),

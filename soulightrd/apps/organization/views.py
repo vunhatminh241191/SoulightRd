@@ -121,7 +121,13 @@ class UpdateOrganizationView(AppBaseView,FormView):
 	def get_initial(self):
 		initial = {}
 		try:
-			initial["organization_unique_id"] = self.item.unique_id
+			initial["organization_unique_id"]= self.item.unique_id
+			initial["name"] = self.item.name
+			initial["description"] = self.item.description
+			initial["website"] = self.item.website
+			initial["email"] = self.item.email
+			initial["phone"] = self.item.phone
+			initial["address"] = self.item.address
 		except Exception as e:
 			alarm.run("Fail to initialize data",self.request,e)
 		return initial
@@ -135,27 +141,24 @@ class UpdateOrganizationView(AppBaseView,FormView):
 				return super(UpdateOrganizationView, self).dispatch(*args, **kwargs)
 		raise Http404()
 
-	def get_context_data(self, **kwargs):
-		ctx = super(UpdateOrganizationView, self).get_context_data(**kwargs)
-		ctx['organization'] = self.item
-		return ctx
-		
 	def form_valid(self, form):
 		organization = self.item
 		try:
 			update_organization_form = form.cleaned_data
 			organization.name = update_organization_form['name']
-			organization.description = update_organization_form['description']
+			organization.description = update_organization_form['description'][3:-4]
 			organization.website = update_organization_form['website']
 			organization.email = update_organization_form['email']
 			organization.phone = update_organization_form['phone']
 			organization.address = update_organization_form['address']
-			organization.city = update_organization_form['city']
 			organization.save()
+			db.close_connection()
 			return super(UpdateOrganizationView, self).form_valid(form)
 		except Exception as e:
 			alarm.run("Fail to update organization", self.request, e)
+			print e
 			self.handle_fail_request()
+
 
 edit_organization = UpdateOrganizationView.as_view()
 

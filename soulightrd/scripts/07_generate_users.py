@@ -36,7 +36,8 @@ def main():
 			test_email = "test"+str(i)+"@soulightrd.com"
 			check_user = User.objects.filter(email=test_email)
 			if len(check_user) == 0:
-				user = User.objects.create(username=name.lower(),email=test_email,password='soulightrd4success')
+				user = User.objects.create(username=name.lower(),email=test_email)
+				user.set_password('soulightrd4success')
 				user.first_name = name 
 				user.save()
 				user.get_profile().avatar = avatar
