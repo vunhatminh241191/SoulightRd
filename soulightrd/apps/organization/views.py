@@ -115,7 +115,6 @@ class UpdateOrganizationView(AppBaseView,FormView):
 	app_name = APP_NAME
 	template_name = "update"
 	form_class = OrganizationUpdateForm
-	success_url = '/?action=edit_organization&result=success'
 	item = None
 
 	def get_initial(self):
@@ -156,8 +155,11 @@ class UpdateOrganizationView(AppBaseView,FormView):
 			return super(UpdateOrganizationView, self).form_valid(form)
 		except Exception as e:
 			alarm.run("Fail to update organization", self.request, e)
-			print e
 			self.handle_fail_request()
+
+	def get_success_url(self):
+		return reverse_lazy('organization_detail'
+			,kwargs={'organization_unique_id': self.item.unique_id})
 
 
 edit_organization = UpdateOrganizationView.as_view()
