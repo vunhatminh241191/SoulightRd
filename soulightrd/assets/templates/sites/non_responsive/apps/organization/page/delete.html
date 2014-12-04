@@ -1,0 +1,14 @@
+{% extends "sites/non_responsive/base.html" %}
+
+{% load socialaccount %}
+{% load i18n %}
+
+{% block header_scripts %}
+    {% providers_media_js %}
+{% endblock %}
+
+{% block main_section %}
+	<form method="POST" action="{% url 'delete_organization' organization.unique_id %}">
+   {% csrf_token %}<input type="submit" value="DELETE">
+	</form>
+{% endblock%}

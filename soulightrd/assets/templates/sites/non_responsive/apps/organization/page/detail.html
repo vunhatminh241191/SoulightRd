@@ -25,9 +25,22 @@
 		</ul>
 
 		<ul>
-			{% for user in users %}
-				<a> {{ user.user.username}} </a>
+			{% for user in board_members %}
+				<a> {{ user.username }} </a>
 			{% endfor %}
 		</ul>
+
+		<ul>
+			{% for user in normal_members %}
+				<a> {{ user.username }}
+			{% endfor %}
+		</ul>
+
+		{% for user in board_members %}
+			{% if request.user.username == user.username %}
+				<li><a href= {% url 'edit_organization' object.unique_id %}> Edit </a></li>
+				<li><a href= {% url 'delete_organization' object.unique_id %}> Delete </a></li>
+			{% endif %}
+		{% endfor %}
 	</div> 
 {% endblock%}

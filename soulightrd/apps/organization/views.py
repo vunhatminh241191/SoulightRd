@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
 
 from django.views.generic.edit import FormView, UpdateView
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, DeleteView
 from django import db
 from django.core.urlresolvers import reverse_lazy
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path, get_user_login_object
@@ -47,9 +47,14 @@ class DetailOrganizationView(DetailView, AppBaseView):
 
 	def get_context_data(self, **kwargs):
 		ctx = super(DetailOrganizationView, self).get_context_data(**kwargs)
+		board_users = []
 		ctx['projects'] = get_list_or_404(Project, organization=ctx['object'])
-		ctx['users'] = OrganizationBoardMember.objects.filter(
+		board_members = OrganizationBoardMember.objects.filter(
 			organization=ctx['object'])
+		for board_member in board_members:
+			board_users.append(board_member.user)
+		ctx['board_members'] = board_users
+		ctx['normal_members'] = ctx['object'].normal_member.all()
 		return ctx
 
 organization_detail = DetailOrganizationView.as_view()
@@ -161,9 +166,33 @@ class UpdateOrganizationView(AppBaseView,FormView):
 		return reverse_lazy('organization_detail'
 			,kwargs={'organization_unique_id': self.item.unique_id})
 
-
 edit_organization = UpdateOrganizationView.as_view()
 
-@login_required
-def delete_organization(request):
-	return HttpResponse("Delete organization Page")
+class DeleteOrganizationView(DeleteView, AppBaseView):
+	app_name = APP_NAME
+	template_name = "delete"
+	item = None
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		self.item = get_object_or_404(Organization, unique_id=self.kwargs['organization_unique_id'])
+		board_members = OrganizationBoardMember.objects.filter(organization=self.item)
+		for board_member in board_members:
+			if board_member.user == get_user_login_object(self.request):
+				return super(DeleteOrganizationView, self).dispatch(*args, **kwargs)
+		return Http404()
+
+	def get_object(self, queryset=None):
+		return self.item
+
+	def post(self, request, *args, **kwargs):
+		projects = Project.objects.filter(organization=self.item)
+		for project in projects:
+			project.delete()
+		return super(DeleteOrganizationView, self).delete(request, *args, **kwargs)
+
+	def get_success_url(self):
+		return reverse_lazy('list_organization')
+
+
+delete_organization = DeleteOrganizationView.as_view()
