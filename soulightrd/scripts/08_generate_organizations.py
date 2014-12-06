@@ -13,12 +13,10 @@ from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
 
 from dummy_database import NAMES, ORGANIZATION_NAMES, PHONE_TESTING
 
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import User
 
 from cities_light.models import City, Country
 from django import db
-
-edit_organization_permission = Permission.objects.get(codename='change_organization')
 
 def main():
 	print "... RUNNING GENERATE ORGANIZATION SCRIPT ..."

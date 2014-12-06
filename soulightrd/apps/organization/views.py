@@ -19,11 +19,13 @@ from django.core.urlresolvers import reverse_lazy
 from soulightrd.apps.app_helper import generate_unique_id, get_template_path, get_user_login_object
 from soulightrd.apps import AppBaseView
 from soulightrd.apps.main.models import Organization, Project, OrganizationBoardMember
+from soulightrd.apps.main.models import Donation, Rating, Volunteer
 from soulightrd.apps.main.constants import ORGANIZATION_FOUNDER
 from soulightrd.apps.organization.forms import OrganizationSignUpForm, OrganizationUpdateForm
 from soulightrd.apps.alarm import Alarm
 
 from cities_light.models import City
+from moneyed import Money
 
 import json, logging, datetime
 
@@ -48,12 +50,12 @@ class DetailOrganizationView(DetailView, AppBaseView):
 
 	def get_context_data(self, **kwargs):
 		ctx = super(DetailOrganizationView, self).get_context_data(**kwargs)
-		board_members = []
 		ctx['projects'] = get_list_or_404(Project, organization=ctx['object'])
 		ctx['board_members'] = self.get_organization_board_member_user(ctx['object'])
 		ctx['normal_members'] = ctx['object'].normal_member.all()
 		ctx['donation'] = self.get_donation(ctx['projects'])
 		ctx['volunteer_members'] = self.get_volunteer(ctx['projects'])
+		ctx['rating'] = self.get_rating(ctx['object'])
 		return ctx
 
 	def get_organization_board_member_user(self, organization):
@@ -74,8 +76,17 @@ class DetailOrganizationView(DetailView, AppBaseView):
 	def get_volunteer(self, projects):
 		volunteer_users = []
 		for project in projects:
-			volunteer_users.append(project.user)
+			volunteers = get_list_or_404(Volunteer, project=project)
+			for volunteer in volunteers:
+				volunteer_users.append(volunteer.user)
 		return volunteer_users
+
+	def get_rating(self, organization):
+		cur_rating = 0
+		ratings = get_list_or_404(Rating, object_id=organization.unique_id)
+		for rating in ratings:
+			cur_rating += rating.rating
+		return cur_rating/len(ratings)
 
 organization_detail = DetailOrganizationView.as_view()
 

@@ -127,6 +127,16 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'main', ['Report'])
 
+        # Adding model 'Rating'
+        db.create_table(u'main_rating', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('unique_id', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('rating_type', self.gf('django.db.models.fields.CharField')(max_length=20)),
+            ('object_id', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('rating', self.gf('django.db.models.fields.FloatField')()),
+        ))
+        db.send_create_signal(u'main', ['Rating'])
+
         # Adding model 'Project'
         db.create_table(u'main_project', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -351,6 +361,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Report'
         db.delete_table(u'main_report')
+
+        # Deleting model 'Rating'
+        db.delete_table(u'main_rating')
 
         # Deleting model 'Project'
         db.delete_table(u'main_project')
@@ -635,6 +648,14 @@ class Migration(SchemaMigration):
             'project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_project'", 'to': u"orm['main.Project']"}),
             'role': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'board_member_user_project'", 'to': u"orm['auth.User']"})
+        },
+        u'main.rating': {
+            'Meta': {'object_name': 'Rating'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'object_id': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'rating': ('django.db.models.fields.FloatField', [], {}),
+            'rating_type': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
+            'unique_id': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'main.report': {
             'Meta': {'object_name': 'Report'},

@@ -17,7 +17,7 @@ from soulightrd.settings import EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 from soulightrd.apps.main.constants import JOIN_REQUEST_STATUS, PENDING, BOARD_MEMBER_INVITATION_STATUS
 from soulightrd.apps.main.constants import PROJECT_TYPE, GENDER, NEW, OLD
 from soulightrd.apps.main.constants import PHOTO_TYPE, NOTIFICATION_STATUS, NOTIFICATION_TYPE
-from soulightrd.apps.main.constants import MESSAGE_STATUS, COMMENT_TYPE, REPORT_TYPE
+from soulightrd.apps.main.constants import MESSAGE_STATUS, COMMENT_TYPE, REPORT_TYPE, RATING_TYPE
 from soulightrd.apps.main.constants import PRIVACY_STATUS, PUBLIC
 from soulightrd.apps.app_settings import DEFAULT_SITE_NAME, DEFAULT_SERVER_EMAIL
 from soulightrd.apps.friend.provider.facebook_provider import FacebookFriendsProvider
@@ -216,6 +216,12 @@ class Report(models.Model):
 	user_report = models.ForeignKey(User,related_name='user_report',blank=True)
 	date = models.DateTimeField(auto_now_add=True)
 	report_content = models.TextField()
+
+class Rating(models.Model):
+	unique_id = models.CharField(max_length=100)
+	rating_type = models.CharField(max_length=20, choices = RATING_TYPE)
+	object_id = models.CharField(max_length=100)
+	rating = models.FloatField()
 	
 class Project(models.Model):
 	unique_id = models.CharField(max_length=100)

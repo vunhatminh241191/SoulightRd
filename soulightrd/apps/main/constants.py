@@ -179,6 +179,12 @@ REPORT_TYPE = (
     ("user","user")
 )
 
+RATING_TYPE = (
+  ('user','user'),
+  ('organization','organization'),
+  ('project','project')
+)
+
 PHOTO_TYPE = (
     ('user_profile','user_profile'),
     ("default_image","default_image")
@@ -203,6 +209,4 @@ BOARD_MEMBER_INVITATION_STATUS = (
   (ACCEPT,"Accept"),
   (DECLINE,"Decline"),
 )
-
-
 
