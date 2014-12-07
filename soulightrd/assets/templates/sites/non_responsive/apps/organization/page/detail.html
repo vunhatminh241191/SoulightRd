@@ -4,43 +4,44 @@
 {% load i18n %}
 
 {% block header_scripts %}
-    {% providers_media_js %}
+	<script src="{{STATIC_URL}}js/plugins/jquery.raty.js"></script>
 {% endblock %}
 
 {% block main_section %}
-	<div class="register-section">
-		<li> {{object.created_by.username}} </li>
-		<li> {{object.name}} </li>
-		<li> {{object.description}} </li>
-		<li> {{object.website}} </li>
-		<li> {{object.email}} </li>
-		<li> {{object.phone}} </li>
-		<li> {{object.address}} </li>
-		<li> {{object.city}} </li>
-		<li> {{object.normal_member.username}} </li>
-		<ul>
-			{% for project in projects %}
-				<a> {{ project.title }} </a>
-			{% endfor %}
-		</ul>
 
-		<ul>
-			{% for user in board_members %}
-				<a> {{ user.username }} </a>
-			{% endfor %}
-		</ul>
-
-		<ul>
-			{% for user in normal_members %}
-				<a> {{ user.username }}
-			{% endfor %}
-		</ul>
-
-		{% for user in board_members %}
-			{% if request.user.username == user.username %}
-				<li><a href= {% url 'edit_organization' object.unique_id %}> Edit </a></li>
-				<li><a href= {% url 'delete_organization' object.unique_id %}> Delete </a></li>
-			{% endif %}
+	<li> {{object.created_by.username}} </li>
+	<li> {{object.name}} </li>
+	<li> {{object.description}} </li>
+	<li> {{object.website}} </li>
+	<li> {{object.email}} </li>
+	<li> {{object.phone}} </li>
+	<li> {{object.address}} </li>
+	<li> {{object.city}} </li>
+	<li> {{object.normal_member.username}} </li>
+	<ul>
+		{% for project in projects %}
+			<a> {{ project.title }} </a>
 		{% endfor %}
-	</div> 
+	</ul>
+
+	<ul>
+		{% for user in board_members %}
+			<a> {{ user.username }} </a>
+		{% endfor %}
+	</ul>
+
+	<ul>
+		{% for user in normal_members %}
+			<a> {{ user.username }}
+		{% endfor %}
+	</ul>
+
+	{% for user in board_members %}
+		{% if request.user.username == user.username %}
+			<li><a href= {% url 'edit_organization' object.unique_id %}> Edit </a></li>
+			<li><a href= {% url 'delete_organization' object.unique_id %}> Delete </a></li>
+		{% endif %}
+	{% endfor %}
+
+	<div id="star" data-score="{{rating}}"></div>
 {% endblock%}
