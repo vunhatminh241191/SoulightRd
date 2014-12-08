@@ -3,12 +3,7 @@
 {% load socialaccount %}
 {% load i18n %}
 
-{% block header_scripts %}
-	<script src="{{STATIC_URL}}js/plugins/jquery.raty.js"></script>
-{% endblock %}
-
 {% block main_section %}
-
 	<li> {{object.created_by.username}} </li>
 	<li> {{object.name}} </li>
 	<li> {{object.description}} </li>
@@ -44,4 +39,16 @@
 	{% endfor %}
 
 	<div id="star" data-score="{{rating}}"></div>
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/plugins/global/stylesheets/jquery.raty.css">
+	<script type="text/javascript" src="{{STATIC_URL}}js/plugins/jquery-1.11.1.min.js "></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/plugins/jquery.raty.js"></script>
+	<script type="text/javascript">
+		$('#star').raty({
+	        path: '{{STATIC_URL}}img/global/raty/',
+	        readOnly: true,
+	        score: function() {
+				return $(this).attr('data-score');
+			} 
+	    });
+	</script>
 {% endblock%}
