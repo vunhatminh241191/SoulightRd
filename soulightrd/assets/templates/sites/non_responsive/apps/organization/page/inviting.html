@@ -1,0 +1,14 @@
+{% extends "sites/non_responsive/base.html" %}
+
+{% load socialaccount %}
+{% load i18n %}
+
+{% block header_scripts %}
+		{% providers_media_js %}
+{% endblock %}
+
+{% block main_section %}
+	{% for user in users %}
+		{{user.username}}
+	{% endfor %}
+{% endblock %}

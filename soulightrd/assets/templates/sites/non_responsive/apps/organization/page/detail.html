@@ -35,6 +35,7 @@
 		{% if request.user.username == user.username %}
 			<li><a href= {% url 'edit_organization' object.unique_id %}> Edit </a></li>
 			<li><a href= {% url 'delete_organization' object.unique_id %}> Delete </a></li>
+			<li><a href={% url 'organization_inviting_member' object.unique_id %}> Inviting member</a></li>
 		{% endif %}
 	{% endfor %}
 
@@ -43,12 +44,16 @@
 	<script type="text/javascript" src="{{STATIC_URL}}js/plugins/jquery-1.11.1.min.js "></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/plugins/jquery.raty.js"></script>
 	<script type="text/javascript">
-		$('#star').raty({
-	        path: '{{STATIC_URL}}img/global/raty/',
-	        readOnly: true,
-	        score: function() {
-				return $(this).attr('data-score');
-			} 
-	    });
+
+	</script>
+
+	<button onlick="join_request(object.unique_id);">Request</button>
+
+	<script type="text/javascript">
+		function join_request(organization_unique_id){
+			$.get('organization_accepting_member' organization_unique_id request.user.email, function(data){
+				alert("I am an alert box!");
+				});
+		}
 	</script>
 {% endblock%}

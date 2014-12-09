@@ -11,7 +11,8 @@ from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
 
 from django.views.generic.edit import FormView, UpdateView
-from django.views.generic import DetailView, ListView, DeleteView
+from django.views.generic import DetailView, ListView, DeleteView, TemplateView
+from django.views.generic import View
 from django import db
 from django.core.urlresolvers import reverse_lazy
 
@@ -206,11 +207,14 @@ class DeleteOrganizationView(DeleteView, AppBaseView):
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
-		self.item = get_object_or_404(Organization, unique_id=self.kwargs['organization_unique_id'])
-		board_members = OrganizationBoardMember.objects.filter(organization=self.item)
+		self.item = get_object_or_404(Organization
+			, unique_id=self.kwargs['organization_unique_id'])
+		board_members = OrganizationBoardMember.objects.filter(
+			organization=self.item)
 		for board_member in board_members:
 			if board_member.user == get_user_login_object(self.request):
-				return super(DeleteOrganizationView, self).dispatch(*args, **kwargs)
+				return super(DeleteOrganizationView, self).dispatch(
+					*args, **kwargs)
 		return Http404()
 
 	def get_object(self, queryset=None):
@@ -225,5 +229,39 @@ class DeleteOrganizationView(DeleteView, AppBaseView):
 	def get_success_url(self):
 		return reverse_lazy('list_organization')
 
-
 delete_organization = DeleteOrganizationView.as_view()
+
+class InvitingMember(TemplateView, AppBaseView):
+	app_name = APP_NAME
+	template_name = "inviting"
+	item = None
+
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		self.item = get_object_or_404(Organization
+			, unique_id=self.kwargs['organization_unique_id'])
+		board_members = OrganizationBoardMember.objects.filter(
+			organization=self.item)
+		for board_member in board_members:
+			if board_member.user == get_user_login_object(self.request):
+				return super(InvitingMember, self).dispatch(
+					*args, **kwargs)
+		return Http404()
+
+	def get_context_data(self, **kwargs):
+		ctx = super(InvitingMember, self).get_context_data(**kwargs)
+		ctx['users'] = User.objects.all()
+		return ctx
+
+organization_inviting_member = InvitingMember.as_view()
+
+class RequestJoiningOrganization(View):
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(RequestJoiningOrganization, self).dispatch(*args, **kwargs)
+
+	def post(self, request, *args, **kwargs):
+		print args
+		print kwargs
+
+organization_accepting_member = RequestJoiningOrganization.as_view()
