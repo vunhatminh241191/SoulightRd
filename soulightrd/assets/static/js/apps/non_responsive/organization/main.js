@@ -7,7 +7,7 @@ $(function() {
 /*****************/
 
 /* FORM VALIDATION */
-$(document).ready(function($){
+$(document).ready(function(){
     $('#create_organization_form').validate({
         errorPlacement: function(error, element) {
             $( element ).closest('.controls').prepend(error);
@@ -65,6 +65,17 @@ $(document).ready(function($){
                 required: "Please give us your organization website"
             }
         },
+    });
+    
+    $('#star').raty({
+        path: function() {
+            return this.getAttribute('data-path');
+        },
+        readOnly: true,
+        size: 24,
+        score: function() {
+            return $(this).attr('data-score');
+        }
     });
 });
 /********************/

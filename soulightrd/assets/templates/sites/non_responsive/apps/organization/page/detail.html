@@ -3,6 +3,9 @@
 {% load socialaccount %}
 {% load i18n %}
 
+{% block header_scripts %}
+{% endblock %}
+
 {% block main_section %}
 	<li> {{object.created_by.username}} </li>
 	<li> {{object.name}} </li>
@@ -39,21 +42,11 @@
 		{% endif %}
 	{% endfor %}
 
-	<div id="star" data-score="{{rating}}"></div>
-	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/plugins/global/stylesheets/jquery.raty.css">
-	<script type="text/javascript" src="{{STATIC_URL}}js/plugins/jquery-1.11.1.min.js "></script>
-	<script type="text/javascript" src="{{STATIC_URL}}js/plugins/jquery.raty.js"></script>
-	<script type="text/javascript">
+	<p id="star" data-score="{{rating|last}}" data-path="{{STATIC_URL}}img/global/raty">{{rating|first}} views</p>
 
-	</script>
-
-	<button onlick="join_request(object.unique_id);">Request</button>
-
-	<script type="text/javascript">
-		function join_request(organization_unique_id){
-			$.get('organization_accepting_member' organization_unique_id request.user.email, function(data){
-				alert("I am an alert box!");
-				});
-		}
-	</script>
+	{% if request.user not in board_members and request.user.is_authenticated %}
+		{% if request.user not in normal_members %}
+			<li><a button onclick=""></a>Request</li>
+		{% endif %}
+	{% endif %}
 {% endblock%}

@@ -84,10 +84,13 @@ class DetailOrganizationView(DetailView, AppBaseView):
 
 	def get_rating(self, organization):
 		cur_rating = 0
+		list_rating = []
 		ratings = get_list_or_404(Rating, object_id=organization.unique_id)
+		list_rating.append(len(ratings))
 		for rating in ratings:
 			cur_rating += rating.rating
-		return cur_rating/len(ratings)
+		list_rating.append(cur_rating/len(ratings))
+		return list_rating
 
 organization_detail = DetailOrganizationView.as_view()
 
