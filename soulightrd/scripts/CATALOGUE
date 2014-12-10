@@ -14,3 +14,4 @@
 13_generate_project_activity.py
 14_generate_volunteer.py
 15_generate_rating.py
+16_generate_photo.py

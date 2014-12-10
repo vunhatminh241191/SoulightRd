@@ -21,6 +21,7 @@ def main():
 		Donation.objects.all().delete()
 		ProjectActivity.objects.all().delete()
 		Volunteer.objects.all().delete()
+		Photo.objects.all().delete()
 		print "Clean Dummy Data Successfully"
 	except:
 		print "Clean Dummy Data Failed"

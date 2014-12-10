@@ -9,7 +9,7 @@ sys.path.append(PROJECT_PATH)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 from soulightrd.apps.main.models import Organization
-from soulightrd.apps.app_helper import get_any_admin_object, generate_unique_id
+from soulightrd.apps.app_helper import generate_unique_id
 
 from dummy_database import NAMES, ORGANIZATION_NAMES, PHONE_TESTING
 
