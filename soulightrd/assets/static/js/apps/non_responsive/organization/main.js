@@ -2,6 +2,20 @@
 $(function() {
     $("#button-id-cancel").click(function() {
         window.location.href = "/";
+    });
+
+    $("#wrapper").dialog({
+        autoOpen: false,
+        title: 'Basic Dialog',
+        open: function(event, ui) {
+            setTimeout(function(){
+                $('#wrapper').dialog('close');                
+            }, 5000);
+        },
+    });
+
+    $("#show").click(function(){
+        $("#wrapper").dialog('open');
     })
 })
 /*****************/
@@ -72,7 +86,6 @@ $(document).ready(function(){
             return this.getAttribute('data-path');
         },
         readOnly: true,
-        size: 24,
         score: function() {
             return $(this).attr('data-score');
         }

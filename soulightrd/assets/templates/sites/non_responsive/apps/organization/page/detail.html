@@ -46,7 +46,10 @@
 
 	{% if request.user not in board_members and request.user.is_authenticated %}
 		{% if request.user not in normal_members %}
-			<li><a button onclick=""></a>Request</li>
+			<button id="show">Request</button>
+			<div id="wrapper" src="{{STATIC_URL}}css/plugins/global/images">
+			<p>Some txt goes here</p>
+			</div>
 		{% endif %}
 	{% endif %}
 {% endblock%}
