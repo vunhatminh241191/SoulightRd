@@ -14,6 +14,7 @@ from soulightrd.apps.main.models import ProjectBoardMember
 from soulightrd.apps.app_helper import generate_unique_id
 
 from django.contrib.auth.models import User
+from django import db
 
 image_path = os.path.dirname(SETTING_PATH + '/assets/media/upload_storage/photo/images/')
 
@@ -36,7 +37,7 @@ def main():
 	print "... RUNNING GENERATE PHOTO SCRIPT "
 	photo = Photo.objects.all()
 
-	if len(photo) < 5:
+	if len(photo) < 10:
 		try:
 			organizations = Organization.objects.all()
 			projects = Project.objects.all()
@@ -45,17 +46,21 @@ def main():
 				for i in xrange(2):
 					user = OrganizationBoardMember.objects.filter(
 						organization=organization)[0].user
-					photo = create_photo_object(
-						organization, user)
+					photo = create_photo_object(organization, user)
 					photo.save()
 
-			for project in porjects:
+					organization.images.add(photo)
+					organization.save()
+
+			for project in projects:
 				for i in xrange(2):
 					user = ProjectBoardMember.objects.filter(
 						project=project)[0].user
-					photo = create_photo_object(
-						project, user)
+					photo = create_photo_object(project, user)
 					photo.save()
+
+					project.images.add(photo)
+					project.save()
 
 			print "Generate Photo Successfully"
 		except:
@@ -69,4 +74,3 @@ if __name__ == '__main__':
 	stage = sys.argv[1]
 	if stage != "prod":
 		main()
-

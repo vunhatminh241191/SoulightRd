@@ -8,7 +8,7 @@ sys.path.append(PROJECT_PATH)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 from soulightrd.apps.main.models import Organization, Project, OrganizationBoardMember
-from soulightrd.apps.main.models import Donation, ProjectActivity, Volunteer
+from soulightrd.apps.main.models import Donation, ProjectActivity, Volunteer, Photo
 
 from django import db
 

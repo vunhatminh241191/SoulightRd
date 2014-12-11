@@ -177,6 +177,15 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['project_id', 'user_id'])
 
+        # Adding M2M table for field images on 'Project'
+        m2m_table_name = db.shorten_name(u'main_project_images')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('project', models.ForeignKey(orm[u'main.project'], null=False)),
+            ('photo', models.ForeignKey(orm[u'main.photo'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['project_id', 'photo_id'])
+
         # Adding model 'ProjectBoardMember'
         db.create_table(u'main_projectboardmember', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -230,6 +239,15 @@ class Migration(SchemaMigration):
             ('project', models.ForeignKey(orm[u'main.project'], null=False))
         ))
         db.create_unique(m2m_table_name, ['organization_id', 'project_id'])
+
+        # Adding M2M table for field images on 'Organization'
+        m2m_table_name = db.shorten_name(u'main_organization_images')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('organization', models.ForeignKey(orm[u'main.organization'], null=False)),
+            ('photo', models.ForeignKey(orm[u'main.photo'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['organization_id', 'photo_id'])
 
         # Adding model 'OrganizationBoardMemberInvitation'
         db.create_table(u'main_organizationboardmemberinvitation', (
@@ -374,6 +392,9 @@ class Migration(SchemaMigration):
         # Removing M2M table for field followers on 'Project'
         db.delete_table(db.shorten_name(u'main_project_followers'))
 
+        # Removing M2M table for field images on 'Project'
+        db.delete_table(db.shorten_name(u'main_project_images'))
+
         # Deleting model 'ProjectBoardMember'
         db.delete_table(u'main_projectboardmember')
 
@@ -388,6 +409,9 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field projects on 'Organization'
         db.delete_table(db.shorten_name(u'main_organization_projects'))
+
+        # Removing M2M table for field images on 'Organization'
+        db.delete_table(db.shorten_name(u'main_organization_images'))
 
         # Deleting model 'OrganizationBoardMemberInvitation'
         db.delete_table(u'main_organizationboardmemberinvitation')
@@ -566,6 +590,7 @@ class Migration(SchemaMigration):
             'description': ('django.db.models.fields.TextField', [], {}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'images': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'organization_photo'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['main.Photo']"}),
             'is_verified': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
             'normal_member': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'organization_normal_member'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"}),
@@ -621,6 +646,7 @@ class Migration(SchemaMigration):
             'funding_goal': ('djmoney.models.fields.MoneyField', [], {'max_digits': '10', 'decimal_places': '2', 'default_currency': "'USD'"}),
             'funding_goal_currency': ('djmoney.models.fields.CurrencyField', [], {'default': "'USD'"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'images': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'project_photo'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['main.Photo']"}),
             'organization': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'project_organization'", 'to': u"orm['main.Organization']"}),
             'project_duration': ('django.db.models.fields.IntegerField', [], {'blank': 'True'}),
             'project_end_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),

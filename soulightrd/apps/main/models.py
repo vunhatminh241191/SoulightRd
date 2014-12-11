@@ -240,6 +240,7 @@ class Project(models.Model):
 	project_location = models.ForeignKey(City,related_name='project_location')
 	comments = models.ManyToManyField(Comment, related_name='project_comments',blank=True,null=True)
 	followers = models.ManyToManyField(User, related_name='project_followers',blank=True,null=True)
+	images = models.ManyToManyField(Photo, related_name='project_photo', blank=True, null=True)
 
 	def __unicode__(self):
 		return self.title
@@ -269,6 +270,7 @@ class Organization(models.Model):
 	submit_date = models.DateTimeField(auto_now_add=True)
 	verify_date = models.DateTimeField(blank=True,null=True)
 	projects = models.ManyToManyField(Project, related_name='organization_projects', blank=True, null=True)
+	images = models.ManyToManyField(Photo, related_name='organization_photo', blank=True, null=True)
 
 	def __unicode__(self):
 		return self.name
