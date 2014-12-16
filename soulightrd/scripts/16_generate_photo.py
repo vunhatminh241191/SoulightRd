@@ -26,7 +26,7 @@ def create_photo_object(target_object, user):
 	photo = Photo.objects.create(
 		unique_id=generate_unique_id("photo"),
 		caption="abcd",
-		image=random.choice(os.listdir(image_path)),
+		image= os.path.join(image_path, random.choice(os.listdir(image_path))),
 		upload_date = datetime(year,month,day),
 		user_post = user,
 		object_unique_id = target_object.unique_id
@@ -37,7 +37,7 @@ def main():
 	print "... RUNNING GENERATE PHOTO SCRIPT "
 	photo = Photo.objects.all()
 
-	if len(photo) < 10:
+	if len(Photo.objects.filter(object_unique_id=None)) < 10:
 		try:
 			organizations = Organization.objects.all()
 			projects = Project.objects.all()

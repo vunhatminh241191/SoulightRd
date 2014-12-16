@@ -6,11 +6,6 @@
 {% block header_scripts %}
     {% providers_media_js %}
     <script type="text/javascript">
-    	var canvas = document.createElement("canvas");
-		canvas.width = 100;
-		canvas.height = 100;
-		var ctx = canvas.getContext("2d");
-
 		function generate_ID(list_ID) {
 		    var generate_list_ID = [];
 		    for (var i = 0; i <list_ID.length; i++) {
@@ -26,10 +21,9 @@
 	        for (var k = 0; k < list_image.length; k++) {	        	
 	        	var list = document.createElement('ul');
 	        	list.id = list_ID[k];
-	        	list.innerHTML = 'ul';
 	            for (var l = 0; l <list_image[k][k+1].length; l++) {
 	            	var img = document.createElement("img");
-	            	img.src = canvas.toDataURL(list_image[k][k+1][l]);
+	            	img.src = list_image[k][k+1][l];
 	            	list.appendChild(img);
 	            }
 	        	div.appendChild(list);
@@ -40,10 +34,9 @@
 {% endblock %}
 
 {% block main_section %}
-	<div class="register-section">
-		<h2> Organization </h2>
-		<script>
-			makeUL(generate_ID({{list|safe}}), {{list_image|safe|escape}});
-		</script>
-	</div>
+	<h2> Organization </h2>
+	<script>
+		var list_id = generate_ID({{list|safe}});
+		document.getElementById("main_section").appendChild(makeUL(list_id, {{list_image|safe|escape}}));
+	</script>
 {% endblock%}

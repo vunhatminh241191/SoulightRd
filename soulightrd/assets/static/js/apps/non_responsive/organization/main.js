@@ -17,6 +17,16 @@ $(function() {
     $("#show").click(function(){
         $("#wrapper").dialog('open');
     })
+
+    var searchEles = document.getElementById("generate_image").children;
+    for (var i = 0; i < searchEles.length; i++) {
+        $(searchEles[i]).bxSlider({
+            mode: 'fade',
+            auto: true,
+            autoControls: true,
+            pause: 2000
+        });
+    }
 })
 /*****************/
 
