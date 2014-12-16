@@ -5,15 +5,45 @@
 
 {% block header_scripts %}
     {% providers_media_js %}
+    <script type="text/javascript">
+    	var canvas = document.createElement("canvas");
+		canvas.width = 100;
+		canvas.height = 100;
+		var ctx = canvas.getContext("2d");
+
+		function generate_ID(list_ID) {
+		    var generate_list_ID = [];
+		    for (var i = 0; i <list_ID.length; i++) {
+		        id = 'OR_' + i.toString();
+		        generate_list_ID.push(id);
+		    }
+		    return generate_list_ID;
+		}
+
+		function makeUL(list_ID, list_image) {
+		    var div = document.createElement('div');
+		    div.id = "generate_image";
+	        for (var k = 0; k < list_image.length; k++) {	        	
+	        	var list = document.createElement('ul');
+	        	list.id = list_ID[k];
+	        	list.innerHTML = 'ul';
+	            for (var l = 0; l <list_image[k][k+1].length; l++) {
+	            	var img = document.createElement("img");
+	            	img.src = canvas.toDataURL(list_image[k][k+1][l]);
+	            	list.appendChild(img);
+	            }
+	        	div.appendChild(list);
+	        }
+    		return div;
+		}
+	</script>
 {% endblock %}
 
 {% block main_section %}
 	<div class="register-section">
-		<h2> organization </h2>
-		<ul>
-			{% for organization in object_list %}
-				<a href = "{% url 'organization_detail' organization.unique_id %}"> {{ organization.name }} </a>
-			{% endfor %}
-		</ul>
+		<h2> Organization </h2>
+		<script>
+			makeUL(generate_ID({{list|safe}}), {{list_image|safe|escape}});
+		</script>
 	</div>
 {% endblock%}

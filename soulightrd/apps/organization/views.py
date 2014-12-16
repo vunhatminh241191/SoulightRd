@@ -148,6 +148,23 @@ class ListOrganizationView(ListView, AppBaseView):
 	model = Organization
 	paginate_by = 10
 
+	def get_context_data(self, **kwargs):
+		ctx = super(ListOrganizationView, self).get_context_data(**kwargs)
+		ctx['list'] = serializers.serialize("json", ctx['object_list'])
+		ctx['list_image'] = self.get_image_path(ctx['object_list'])
+		return ctx
+
+	def get_image_path(self, list_organization):
+		array = []
+		for organization in list_organization:
+			images = []
+			dictionary = {}
+			for image in organization.images.all():
+				images.append(image.image.url)
+			dictionary.update({organization.id:images})
+			array.append(dictionary)
+		return array
+
 list_organization = ListOrganizationView.as_view()
 
 
