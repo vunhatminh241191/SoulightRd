@@ -1,4 +1,4 @@
-import os, sys, string, random
+import os, sys, string, random, tempfile
 from datetime import datetime
 
 SETTING_PATH = os.path.abspath(__file__ + "/../../")
@@ -15,22 +15,28 @@ from soulightrd.apps.app_helper import generate_unique_id
 
 from django.contrib.auth.models import User
 from django import db
+from django.core import files
 
 image_path = os.path.dirname(SETTING_PATH + '/assets/media/upload_storage/photo/images/')
 
 def create_photo_object(target_object, user):
+	# random year
 	year = random.choice(range(2005, 2014))
 	month = random.choice(range(1, 12))
 	day = random.choice(range(1, 28))
 
+	# get image file
+	image_file = tempfile.NamedTemporaryFile()
+	image_file.name = os.path.join(image_path, random.choice(os.listdir(image_path)))
+
 	photo = Photo.objects.create(
 		unique_id=generate_unique_id("photo"),
 		caption="abcd",
-		image= os.path.join(image_path, random.choice(os.listdir(image_path))),
+		image= files.File(image_file),
 		upload_date = datetime(year,month,day),
 		user_post = user,
-		object_unique_id = target_object.unique_id
-		)
+		object_unique_id = target_object.unique_id)
+	photo.save()
 	return photo
 
 def main():
@@ -47,7 +53,6 @@ def main():
 					user = OrganizationBoardMember.objects.filter(
 						organization=organization)[0].user
 					photo = create_photo_object(organization, user)
-					photo.save()
 
 					organization.images.add(photo)
 					organization.save()
@@ -57,12 +62,12 @@ def main():
 					user = ProjectBoardMember.objects.filter(
 						project=project)[0].user
 					photo = create_photo_object(project, user)
-					photo.save()
 
 					project.images.add(photo)
 					project.save()
 
 			print "Generate Photo Successfully"
+			db.close_connection()
 		except:
 			print "Generate Photo Failed"
 			raise
