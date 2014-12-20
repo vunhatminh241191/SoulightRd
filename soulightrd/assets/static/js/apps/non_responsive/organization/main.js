@@ -18,15 +18,15 @@ $(function() {
         $("#wrapper").dialog('open');
     })
 
-    var searchEles = document.getElementById("generate_image").children;
-    for (var i = 0; i < searchEles.length; i++) {
-        $(searchEles[i]).bxSlider({
+    $("generate_organization").each(function(i){
+        $(this).attr("ul").bxslider({
             mode: 'fade',
             auto: true,
             autoControls: true,
             pause: 2000
         });
-    }
+    });
+
 })
 /*****************/
 

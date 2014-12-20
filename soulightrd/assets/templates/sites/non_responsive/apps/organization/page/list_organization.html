@@ -5,38 +5,18 @@
 
 {% block header_scripts %}
     {% providers_media_js %}
-    <script type="text/javascript">
-		function generate_ID(list_ID) {
-		    var generate_list_ID = [];
-		    for (var i = 0; i <list_ID.length; i++) {
-		        id = 'OR_' + i.toString();
-		        generate_list_ID.push(id);
-		    }
-		    return generate_list_ID;
-		}
-
-		function makeUL(list_ID, list_image) {
-		    var div = document.createElement('div');
-		    div.id = "generate_image";
-	        for (var k = 0; k < list_image.length; k++) {	        	
-	        	var list = document.createElement('ul');
-	        	list.id = list_ID[k];
-	            for (var l = 0; l <list_image[k][k+1].length; l++) {
-	            	var img = document.createElement("img");
-	            	img.src = list_image[k][k+1][l];
-	            	list.appendChild(img);
-	            }
-	        	div.appendChild(list);
-	        }
-    		return div;
-		}
-	</script>
 {% endblock %}
 
 {% block main_section %}
 	<h2> Organization </h2>
-	<script>
-		var list_id = generate_ID({{list|safe}});
-		document.getElementById("main_section").appendChild(makeUL(list_id, {{list_image|safe|escape}}));
-	</script>
+	<div id="generate_organization">
+		{% for organization in object_list %}
+			{{organization.pk}}
+			<ul id="slider{{organization.pk}}">
+				{% for image in organization.images.all %}
+					<li><img src="{{image.image.url}}" /></li>
+				{% endfor %}
+			</ul>
+		{% endfor %}
+	</div>
 {% endblock%}
