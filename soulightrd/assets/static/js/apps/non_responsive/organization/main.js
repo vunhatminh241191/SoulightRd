@@ -18,13 +18,8 @@ $(function() {
         $("#wrapper").dialog('open');
     })
 
-    $("generate_organization").each(function(i){
-        $(this).attr("ul").bxslider({
-            mode: 'fade',
-            auto: true,
-            autoControls: true,
-            pause: 2000
-        });
+    $("#generate_organization ul").each(function(i){
+        $(this).attr("id", "slider"+i).bxSlider({});
     });
 
 })
