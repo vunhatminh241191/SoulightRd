@@ -25,9 +25,15 @@ def create_photo_object(target_object, user):
 	month = random.choice(range(1, 12))
 	day = random.choice(range(1, 28))
 
+	each_image_path = os.path.join(image_path, random.choice(os.listdir(image_path)))
+
+	with open(each_image_path) as f:
+		data = f.read()
+
 	# get image file
-	image_file = tempfile.NamedTemporaryFile()
-	image_file.name = os.path.join(image_path, random.choice(os.listdir(image_path)))
+	image_file = tempfile.NamedTemporaryFile(delete=False)
+	image_file.write(data)
+	image_file.name = os.path.basename(each_image_path)
 
 	photo = Photo.objects.create(
 		unique_id=generate_unique_id("photo"),
@@ -39,7 +45,7 @@ def create_photo_object(target_object, user):
 	photo.save()
 	return photo
 
-def main():
+def main(): 
 	print "... RUNNING GENERATE PHOTO SCRIPT "
 	photo = Photo.objects.all()
 
