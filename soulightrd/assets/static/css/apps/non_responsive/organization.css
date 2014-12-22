@@ -18,6 +18,8 @@
 	background-color: #fff;
 }
 
-
-
-
+#generate_organization .bx-wrapper{
+	display: inline-block;
+	margin-bottom:5%;
+	margin-right:3%;
+}

@@ -19,7 +19,10 @@ $(function() {
     })
 
     $("#generate_organization ul").each(function(i){
-        $(this).attr("id", "slider"+i).bxSlider({});
+        $(this).attr("id", "slider"+i).bxSlider({
+            slideWidth: 300,
+            pager:false,
+        });
     });
 
 })
